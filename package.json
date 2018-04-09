@@ -1,5 +1,7 @@
 {
   "name": "hackerNews",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "cli-engine-command": "^9.0.7"
+  }
 }
