@@ -12,6 +12,7 @@
     </tr>
   </thead>
 
+<% if false %>
   <tbody>
     <% @submits.each do |submit| %>
       <tr>
@@ -24,8 +25,8 @@
       </tr>
     <% end %>
   </tbody>
-</table>
-
+</table> 
+<% end %>
 <br>
 
 <%= link_to 'New Submit', new_submit_path %>
