@@ -2,25 +2,52 @@
 
 <h1>Contributions</h1>
 
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemlist">
+
+<% @contributions.each_with_index do |contribution, index| %>
+  <tr class='athing' id='myIdTODO'>
+
+  <td align="right" valign="top" class="title">
+    <span class="rank"><%= index %>.</span>
+  </td>
+
+  <td valign="top" class="votelinks">
+    <center>
+      <a id='up_16837549' href='vote?id=16837549&amp;how=up&amp;goto=news'>
+        <div class='votearrow' title='upvote'></div>
+      </a>
+    </center>
+  </td>
+  <td class="title">
+    <% if !contribution.url.blank? %>
+      <span>Type url</span> |
+      <a href="<%= contribution.url %>" class="storylink"><%= contribution.title %></a>
+      <span class="sitebit comhead"> (
+        <a href="<%= contribution.url %>">
+          <span class="sitestr"><%= contribution.url %></span>
+        </a>)</span>
+    <% end %>
+    <% if contribution.url.blank? %>
+    <span>Type text</span> |
+    <a class="storylink"><%= contribution.title %></a>
+      <span>Text: <%= contribution.text %></span>
+    <% end %>
+  </td>
+  <td>Id: <%=contribution.id  %></td>
+  <td><%= link_to 'Show', contribution %></td>
+  <td><%= link_to 'Edit', edit_contribution_path(contribution) %></td>
+  <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+  </tr>
+<% end %>
+
+  </tr>
+</table>
+
+
 <table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Url</th>
-      <th>Text</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <% @contributions.each do |contribution| %>
-    <tr>
-      <td><%= contribution.title %></td>
-      <td><%= contribution.url %></td>
-      <td><%= contribution.text %></td>
-      <td><%= link_to 'Show', contribution %></td>
-      <td><%= link_to 'Edit', edit_contribution_path(contribution) %></td>
-      <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
+  
 </table>
 
 <br>

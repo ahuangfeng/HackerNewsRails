@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+
+.pagetop {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 10pt;
+  color: black;
+}
+
+a:visited {
+  color: black;
+}
+a:hover{
+  background-color: transparent;
+}
