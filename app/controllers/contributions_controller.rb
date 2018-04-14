@@ -4,7 +4,11 @@ class ContributionsController < ApplicationController
   # GET /contributions
   # GET /contributions.json
   def index
-    @contributions = Contribution.order(votes: :desc).all
+    if params[:type] == 'new'
+      @contributions = Contribution.order(votes: :desc).all
+    else
+      @contributions = Contribution.where("contributions.url IS NOT NULL").all;
+    end
   end
 
   # GET /contributions/1
