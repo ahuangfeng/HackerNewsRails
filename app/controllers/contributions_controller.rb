@@ -5,9 +5,9 @@ class ContributionsController < ApplicationController
   # GET /contributions.json
   def index
     if params[:type] == 'new'
-      @contributions = Contribution.order(votes: :desc).all
+      @contributions = Contribution.order(id: :desc).all
     else
-      @contributions = Contribution.where("contributions.url IS NOT NULL").all;
+      @contributions = Contribution.where("contributions.url IS NOT NULL").order(votes: :desc).all;
     end
   end
 
