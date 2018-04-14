@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   
   #get 'submit', to: 'contributions#new'
   #post 'submit', to: 'contributions#create'
+  get 'contributions/:id/vote' => 'contributions#vote'
 
 end
