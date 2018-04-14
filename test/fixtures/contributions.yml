@@ -3,9 +3,9 @@
 one:
   title: MyString
   url: MyString
-  text: MyString
+  text: MyText
 
 two:
   title: MyString
   url: MyString
-  text: MyString
+  text: MyText
