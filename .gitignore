@@ -21,3 +21,6 @@
 /yarn-error.log
 
 .byebug_history
+
+# Igonore .env used for storing keys and access tokens
+.env
