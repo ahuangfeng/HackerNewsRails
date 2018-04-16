@@ -22,12 +22,23 @@
                     <b class="brandname">
                       <a href="/contributions">Hacker News</a>
                     </b>
-                    <a href="/contributions?type=new">New</a>
-                    <a href="/contributions?type=ask">Ask</a> 
+                    <a href="/contributions?type=new">New</a> |
+                    <a href="/contributions?type=ask">Ask</a> | 
                     <a href="/users">Users</a> |
-                    <a href="/contributions/new">Submit</a> 
+                    <% if current_user %>
+                      <a href="/contributions/new">Submit</a>
+                    <% else %>
+                      <a href="/auth/twitter">Submit</a>
+                    <%end%>
                   </span>
                 </td>
+                <td style="text-align:right;padding-right:4px;"> 
+                  <% if current_user %>
+                    <%= link_to current_user.name, current_user %>
+                    <%= link_to 'Log Out', '/logout' %>
+                  <% else %>
+                    <a href="/auth/twitter">Login</a>
+                  <%end%>
               </tr>
             </table>
           </td>
