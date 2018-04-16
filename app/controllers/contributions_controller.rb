@@ -6,8 +6,10 @@ class ContributionsController < ApplicationController
   def index
     if params[:type] == 'new'
       @contributions = Contribution.order(id: :desc).all
+    elsif params[:type] == 'ask'
+      @contributions = Contribution.where(url: nil).order(id: :desc).all
     else
-      @contributions = Contribution.where("contributions.url IS NOT NULL").order(votes: :desc).all;
+      @contributions = Contribution.where.not(url: nil).order(votes: :desc).all;
     end
   end
 
