@@ -10,4 +10,5 @@
 
 # Per a fer deploy a Heroku
 - Si s'ha creat una nova taula a la BD : `heroku run rake db:migrate`
+- Si dona un error chungo al fer el migrate a heroku:  `heroku pg:reset`, i despres fer el migrate un altre cop
 - Deploy : `git push heroku master`
