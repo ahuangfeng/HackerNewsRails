@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # has_many :contributions
   validates :name, presence: true
-  validates :email, presence: true
+  #validates :email, presence: true
   validates :auth_token, uniqueness: true
   
   before_create :generate_authentication_token
