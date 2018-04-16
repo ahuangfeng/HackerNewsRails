@@ -2,7 +2,6 @@
 
 <h1>Contributions</h1>
 
-
 <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
 
 <% @contributions.each_with_index do |contribution, index| %>
@@ -14,9 +13,10 @@
 
   <td valign="top" class="votelinks">
     <center>
-      <a id='up_16837549' href='vote?id=16837549&amp;how=up&amp;goto=news'>
+      <a id='<%= contribution.id %>' href='contributions/<%= contribution.id %>/vote'>
         <div class='votearrow' title='upvote'></div>
       </a>
+      <%= contribution.votes %>
     </center>
   </td>
   <td class="title">
@@ -52,4 +52,4 @@
 
 <br>
 
-<%= link_to 'New Contribution', new_contribution_path %>
+<%-# <%= link_to 'New Contribution', new_contribution_path-%>

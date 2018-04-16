@@ -4,7 +4,11 @@ class ContributionsController < ApplicationController
   # GET /contributions
   # GET /contributions.json
   def index
-    @contributions = Contribution.all
+    if params[:type] == 'new'
+      @contributions = Contribution.order(id: :desc).all
+    else
+      @contributions = Contribution.where("contributions.url IS NOT NULL").order(votes: :desc).all;
+    end
   end
 
   # GET /contributions/1
@@ -25,6 +29,14 @@ class ContributionsController < ApplicationController
   # POST /contributions.json
   def create
     @contribution = Contribution.new(contribution_params)
+
+    if @contribution.url =~ /\s/ or @contribution.url == ''  #es vacio o con espacios trolls
+      @contribution.url = nil
+    end
+    if @contribution.url != nil #nil = null
+      @contribution.text = nil
+    end
+    @contribution.votes = 0
 
     respond_to do |format|
       if @contribution.save
@@ -57,6 +69,16 @@ class ContributionsController < ApplicationController
     @contribution.destroy
     respond_to do |format|
       format.html { redirect_to contributions_url, notice: 'Contribution was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def vote
+    @contribution = Contribution.find(params[:id])
+    @contribution.upVote()
+    @contribution.save
+    respond_to do |format|
+      format.html { redirect_to request.referrer}
       format.json { head :no_content }
     end
   end

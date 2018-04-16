@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   #get 'submit', to: 'contributions#new'
   #post 'submit', to: 'contributions#create'
 
+  #s'hauria de canviar per un altre metode
+  match 'contributions/:id/vote' => 'contributions#vote', :via => :get
+
 end
