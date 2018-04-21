@@ -4,6 +4,19 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
-  helper_method :current_user
+
+  def prevent_unauthorized_user_access
+    redirect_to root_path, notice: 'sorry, you cannot access that page', status: :found unless logged_in?
+  end
+
+  def prevent_logged_in_user_access
+    redirect_to root_path, notice: 'sorry, you cannot access that page', status: :found if logged_in?
+  end
+
+  def logged_in?
+    current_user.nil? ? false : true
+  end
+  
+  helper_method :current_user, :logged_in?
 
 end
