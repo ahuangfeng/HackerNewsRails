@@ -15,14 +15,11 @@
       <%= form.label :title, :title,  style: 'font-family: Verdana, Geneva, sans-serif; font-size: 10pt; color: #828282;   display: inline-block;' %>
       <%= form.text_field :title, id: :contribution_title, size: '50' %>
   </div>
-
   <div class="field">
     <%= form.label :url, :url , style: 'font-family: Verdana, Geneva, sans-serif; font-size: 10pt; color: #828282;   display: inline-block;' %>
     <%= form.text_field :url, id: :contribution_url, size: '50', style: 'margin-left: 1%;'%>
   </div>
-  <b>or</b>
-
-  <br>
+  <b style="font-family: Verdana, Geneva, sans-serif; font-size: 10pt; color: #828282; margin-left: 3%">or</b>
   <div class="field">
     <%= form.label :text, :ask, style: 'font-family: Verdana, Geneva, sans-serif; font-size: 10pt; color: #828282;   display: inline-block; position: absolute; margin-top:2.5%' %>
     <%= form.text_area :text, id: :contribution_text, rows: '4', cols: '70', style: 'margin-left:3%;' %>
