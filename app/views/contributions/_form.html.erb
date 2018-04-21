@@ -27,8 +27,10 @@
     <%= form.label :text, :ask, style: 'font-family: Verdana, Geneva, sans-serif; font-size: 10pt; color: #828282;   display: inline-block; position: absolute; margin-top:2.5%' %>
     <%= form.text_area :text, id: :contribution_text, rows: '4', cols: '70', style: 'margin-left:3%;' %>
   </div>
-
   <div class="actions">
-    <%= form.submit "Submit" %>
+    <%= form.submit "submit", style: 'font-family: monospace; font-size: 10pt; margin-left: 3%'  %>
   </div>
+  </br>
+      <p style="font-family: Verdana, Geneva, sans-serif; font-size: 10pt; color: #828282; margin-left:3%">Leave url blank to submit a question for discussion. If there is no url, the text (if any) will appear at the top of the thread.</p>
+    
 <% end %>
