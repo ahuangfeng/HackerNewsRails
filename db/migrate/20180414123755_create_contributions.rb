@@ -7,7 +7,7 @@ class CreateContributions < ActiveRecord::Migration[5.1]
       t.references :comment, foreign_key: true
       t.timestamps
     end
-      add_index :contributions, [:comment_id, :created_at]
+    add_index :contributions, [:comment_id, :created_at]
 
   end
 end

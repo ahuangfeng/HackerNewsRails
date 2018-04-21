@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :contributions, dependent: :destroy
+  has_many :comments
   validates :name, presence: true
   #validates :email, presence: true
   validates :auth_token, uniqueness: true
@@ -19,6 +20,10 @@ class User < ApplicationRecord
 
   def owns_contribution?(contribution)
     self == contribution.user
+  end
+
+  def owns_comment?(comment)
+    self == comment.user
   end
   
   def generate_authentication_token
