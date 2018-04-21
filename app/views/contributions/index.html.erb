@@ -23,17 +23,18 @@
     <% if !contribution.url.blank? %>
       <span>Type url</span> |
       <a href="<%= contribution.url %>" class="storylink"><%= contribution.title %></a>
-      <span class="sitebit comhead"> (
-        <a href="<%= contribution.url %>">
-          <span class="sitestr"><%= contribution.url %></span>
+
+      <span class="sitebit comhead"> (<a href="<%= contribution.url %>"><span class="sitestr"><%= contribution.url %></span>
         </a>)</span>
+
     <% end %>
     <% if contribution.url.blank? %>
     <span>Type text</span> |
     <a class="storylink"><%= contribution.title %></a>
       <span>Text: <%= contribution.text %></span>
     <% end %>
-    <%= time_ago_in_words(contribution.created_at) %> ago</span>
+    <span>by <%= contribution.user%></span>
+    <span><%= time_ago_in_words(contribution.created_at) %> ago</span>
             |
      <%if contribution.numComments == 0%>
         <a href="/contributions/<%=contribution.id%>">Discuss</a>
@@ -46,8 +47,12 @@
   <td>Id: <%=contribution.id  %></td> 
 
   <td><%= link_to 'Show', contribution %></td>
-  <td><%= link_to 'Edit', edit_contribution_path(contribution) %></td>
-  <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+  <% if current_user.owns_contribution?(contribution) %>
+    <td><%= link_to 'Edit', edit_contribution_path(contribution) %></td>
+    <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <% end %>
+
 
   </tr>
 <% end %>

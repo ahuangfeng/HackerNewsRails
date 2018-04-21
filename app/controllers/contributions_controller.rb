@@ -47,12 +47,21 @@ class ContributionsController < ApplicationController
 
   # GET /contributions/1/edit
   def edit
+    contribution = Contribution.find_by(id: params[:id])
+
+    if current_user.owns_contribution?(contribution)
+      @contribution = contribution
+    else
+      redirect_to root_path, notice: "Not authorized to edit this link"
+    end
+
   end
 
   # POST /contributions
   # POST /contributions.json
   def create
-    @contribution = Contribution.new(contribution_params)
+    # @contribution = Contribution.new(contribution_params)
+    @contribution = current_user.contributions.new(contribution_params)
 
     if @contribution.url =~ /\s/ or @contribution.url == ''  #es vacio o con espacios trolls
       @contribution.url = nil
@@ -96,10 +105,15 @@ class ContributionsController < ApplicationController
   # DELETE /contributions/1
   # DELETE /contributions/1.json
   def destroy
-    @contribution.destroy
-    respond_to do |format|
-      format.html { redirect_to contributions_url}
-      format.json { head :no_content }
+
+    contribution = Contribution.find_by(id: params[:id])
+
+    if current_user.owns_contribution?(contribution)
+      @contribution = contribution
+      contribution.destroy
+      redirect_to root_path, notice: "Link successful deleted"
+    else
+      redirect_to root_path, notice: "Not authorized to edit this link"
     end
   end
 
@@ -121,6 +135,6 @@ class ContributionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contribution_params
-      params.require(:contribution).permit(:title, :url, :text, :comment_id)
+      params.require(:contribution).permit(:title, :url, :text, :comment_id) #TODO: perquè comment_id?
     end
 end
