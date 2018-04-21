@@ -48,7 +48,7 @@
 
   <td><%= link_to 'Show', contribution %></td>
 
-  <% if current_user.owns_contribution?(contribution) %>
+  <% if logged_in? && current_user.owns_contribution?(contribution) %>
     <td><%= link_to 'Edit', edit_contribution_path(contribution) %></td>
     <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   <% end %>
