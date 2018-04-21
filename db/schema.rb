@@ -24,19 +24,17 @@ ActiveRecord::Schema.define(version: 20180421104646) do
   end
   add_index "contributions", ["comment_id", "created_at"], name: "index_contributions_on_comment_id_and_created_at"
 
-  create_table "submits", force: :cascade do |t|
-    t.string "title"
-    t.string "url"
-    t.string "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "about"
+    t.string "provider"
+    t.string "uid"
+    t.string "token"
+    t.string "secret"
+    t.string "auth_token"
   end
 
 end

@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'contributions#index'
   
-  #get 'submit', to: 'contributions#new'
-  #post 'submit', to: 'contributions#create'
+  get '/auth/:provider/callback', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'
 
   #s'hauria de canviar per un altre metode
   match 'contributions/:id/vote' => 'contributions#vote', :via => :get
