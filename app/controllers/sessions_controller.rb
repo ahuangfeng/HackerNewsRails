@@ -18,9 +18,6 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
-  def logged_in?
-    current_user.nil? ? false : true
-  end
   
   protected
  
