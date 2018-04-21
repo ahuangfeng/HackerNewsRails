@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # get 'comments/edit'
 
   resources :users
-  # resources :contributions
+  resources :contributions
 
   resources :contributions, except: :index do
     resources :comments, only: [:create, :edit, :update, :destroy]
