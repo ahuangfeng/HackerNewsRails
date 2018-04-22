@@ -33,7 +33,7 @@
     <a class="storylink"><%= contribution.title %></a>
       <span>Text: <%= contribution.text %></span>
     <% end %>
-    <span>by <%= contribution.user%></span>
+    <span>by @<%= contribution.user.name %></span>
     <span><%= time_ago_in_words(contribution.created_at) %> ago</span>
             |
      <%if contribution.numComments == 0%>
