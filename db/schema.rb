@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 20180422101637) do
     t.integer "contributions_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "contribution_id"
+    t.index ["contribution_id"], name: "index_comments_on_contribution_id"
     t.index ["contributions_id"], name: "index_comments_on_contributions_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -31,10 +33,10 @@ ActiveRecord::Schema.define(version: 20180422101637) do
     t.integer "votes"
     t.integer "numComments", default: 0
     t.integer "user_id"
-    t.integer "comment_id"
-    t.index ["comment_id", "created_at"], name: "index_contributions_on_comment_id_and_created_at"
-    t.index ["comment_id"], name: "index_contributions_on_comment_id"
+    t.integer "comments_id"
+    t.index ["comments_id"], name: "index_contributions_on_comments_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
+    t.index [nil, "created_at"], name: "index_contributions_on_comment_id_and_created_at"
   end
 
   create_table "users", force: :cascade do |t|
