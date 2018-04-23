@@ -82,7 +82,7 @@ class ContributionsController < ApplicationController
         format.html { redirect_to Contribution.find(@contribution.comment_id), notice: 'Contribution was successfully created.' }
         format.json { render :show, status: :created, location: @contribution }
       else
-        format.html { render :show }
+        format.html { render :new }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
       end
     end
