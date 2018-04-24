@@ -10,7 +10,7 @@
   <%= time_ago_in_words(@user.created_at) %> ago
 </p>
 
-<% if logged_in? %>
+<% if logged_in? and current_user.id==@user.id%>
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
