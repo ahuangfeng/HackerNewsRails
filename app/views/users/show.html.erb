@@ -6,8 +6,20 @@
 </p>
 
 <p>
+  <strong>Created:</strong>
+  <%= time_ago_in_words(@user.created_at) %> ago
+</p>
+
+<% if logged_in? %>
+<p>
   <strong>Email:</strong>
   <%= @user.email %>
+</p>
+<% end %>
+
+<p>
+  <strong>About:</strong>
+  <%= @user.about %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
