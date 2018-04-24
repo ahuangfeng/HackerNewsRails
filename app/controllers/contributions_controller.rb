@@ -1,6 +1,6 @@
 class ContributionsController < ApplicationController
   before_action :set_contribution, only: [:show, :edit, :update, :destroy]
-
+  before_action :prevent_unauthorized_user_access, except: [:show, :index]
   # GET /contributions
   # GET /contributions.json
   def index
@@ -103,6 +103,7 @@ class ContributionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+ 
 
   private
     # Use callbacks to share common setup or constraints between actions.
