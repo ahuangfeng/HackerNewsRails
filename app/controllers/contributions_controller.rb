@@ -16,29 +16,11 @@ class ContributionsController < ApplicationController
     end
   end
   
-  def get_replies
-    query = "contributions.comment_id ="+params[:id]
-    @replies = Contribution.where(query)
-  end
+
 
   # GET /contributions/1
   # GET /contributions/1.json
-  def show
-    query = "contributions.comment_id ="+@contribution.id.to_s
-    @comments = Contribution.where(query)
-  #   
-  #   Post 1
-  #     Comment A
-  #       R1
-  #       R2
-  #     Comment B
-  #       R3
-  #       R4
-        
-  #   R1,R2,R3,R4
-     @replies = Contribution.where("comment_id in (select c1.id from 
-      contributions c1 where c1.comment_id ="+@contribution.id.to_s+ ")")
-  end
+
 
   # GET /contributions/new
   def new
@@ -75,12 +57,7 @@ class ContributionsController < ApplicationController
       if @contribution.save
         format.html { redirect_to contributions_url}
         format.json { render :show, status: :created, location: @contribution }
-      elsif @contribution.title == nil && Contribution.find(@contribution.comment_id).title != nil && @contribution.save   #es un comment de un post
-        @aux = Contribution.find(@contribution.comment_id)
-        @aux.numComments = @aux.numComments + 1
-        @aux.save
-        format.html { redirect_to Contribution.find(@contribution.comment_id), notice: 'Contribution was successfully created.' }
-        format.json { render :show, status: :created, location: @contribution }
+    
       else
         format.html { render :new }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
@@ -136,6 +113,6 @@ class ContributionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contribution_params
-      params.require(:contribution).permit(:title, :url, :text, :comment_id) #TODO: perquè comment_id?
+      params.require(:contribution).permit(:title, :url, :text) #TODO: perquè comment_id?
     end
 end

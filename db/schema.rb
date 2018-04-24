@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20180422101637) do
     t.integer "comments_id"
     t.index ["comments_id"], name: "index_contributions_on_comments_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
-    t.index [nil, "created_at"], name: "index_contributions_on_comment_id_and_created_at"
   end
 
   create_table "users", force: :cascade do |t|
