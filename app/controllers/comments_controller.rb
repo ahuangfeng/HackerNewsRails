@@ -2,6 +2,9 @@ class CommentsController < ApplicationController
   before_action :prevent_unauthorized_user_access, except: :index
 
   def index
+    if params[:type] == 'threads'
+      @comments = Comment.order(id: :desc).all
+    end
   end
 
   def edit

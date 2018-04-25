@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    if params[:type] == 'threads'
+      @comments = Comment.where(user: :current_user).all
+    end
   end
 
   # GET /users/1

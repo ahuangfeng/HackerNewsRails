@@ -1,2 +1,18 @@
-<h1>Comments#index</h1>
-<p>Find me in app/views/comments/index.html.erb</p>
+<h1>Comments made by <%=current_user.name%></h1>
+<table border="0" cellpadding="0" cellspacing="0" class="itemlist">
+
+  <% @comments.each_with_index do |comment, index| %>
+    <% if comment.user == current_user %>
+      <tr class='athing' id='myIdTODO'>
+        <td align="right" valign="top" class="title">
+            <span class="rank"><%= index %>.</span>
+        </td> 
+        <td>
+          <a href="/contributions/<%=comment.contribution_id%>"><%=comment.body%></a>
+        </td>
+      </tr>
+    <%end%>
+    
+  <%end%>
+
+</table>

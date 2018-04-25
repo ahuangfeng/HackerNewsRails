@@ -8,8 +8,8 @@ class ContributionsController < ApplicationController
       @contributions = Contribution.order(id: :desc).all
     elsif params[:type] == 'ask'
       @contributions = Contribution.where(url: nil).order(id: :desc).all
-    elsif params[:type] == 'threads'
-      @contributions = Contribution.where(url: nil, title: nil)
+    # elsif params[:type] == 'threads'
+    #   @contributions = Contribution.where(url: nil).order(id: :asc).all
       
      else
        @contributions = Contribution.where.not(url: nil).order(votes: :desc).all;
