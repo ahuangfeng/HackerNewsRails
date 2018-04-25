@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180422101637) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "votes"
-    t.integer "numComments", default: 0
+    t.integer "numComments"
     t.integer "user_id"
     t.integer "comments_id"
     t.index ["comments_id"], name: "index_contributions_on_comments_id"

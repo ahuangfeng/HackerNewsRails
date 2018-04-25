@@ -6,4 +6,7 @@ class Contribution < ApplicationRecord
   def upVote()
     self.votes += 1
   end
+  def upComments()
+    self.numComments += 1
+  end
 end

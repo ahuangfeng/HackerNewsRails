@@ -11,8 +11,8 @@ class ContributionsController < ApplicationController
     elsif params[:type] == 'threads'
       @contributions = Contribution.where(url: nil, title: nil)
       
-    else
-      @contributions = Contribution.where.not(url: nil).order(votes: :desc).all;
+     else
+       @contributions = Contribution.where.not(url: nil).order(votes: :desc).all;
     end
   end
   
@@ -52,6 +52,7 @@ class ContributionsController < ApplicationController
       @contribution.text = nil
     end
     @contribution.votes = 0
+    @contribution.numComments = 0
 
     respond_to do |format|
       if @contribution.save
@@ -104,7 +105,7 @@ class ContributionsController < ApplicationController
     end
   end
  
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contribution

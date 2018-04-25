@@ -10,7 +10,8 @@ class CommentsController < ApplicationController
   def create
     @contribution = Contribution.find(params[:contribution_id])
     @comment = @contribution.comments.new(user: current_user, body: comment_params[:body])
-  
+    @contribution.upComments()
+    @contribution.save
     if @comment.save
       redirect_to @contribution, notice: 'Comment created'
     else
