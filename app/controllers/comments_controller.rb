@@ -6,6 +6,10 @@ class CommentsController < ApplicationController
       @comments = Comment.order(id: :desc).all
     end
   end
+  
+  def show 
+    @comment = Comment.find(params[:id])
+  end
 
   def edit
   end

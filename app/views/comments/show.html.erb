@@ -1,0 +1,8 @@
+<h1>Add a reply</h1>
+  <p style="  font-family: Verdana, Geneva, sans-serif; color: #828282; font-size: 8pt;"><%= @comment.user.name%> 
+  <%= time_ago_in_words(@comment.created_at) %> ago 
+  | on  <a href="/contributions/<%=@comment.contribution.id%>"><%=@comment.contribution.title %></a> </p>
+  <p>
+    <%=  @comment.body  %>
+  </p>
+  
