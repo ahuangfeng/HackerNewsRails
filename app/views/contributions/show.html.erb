@@ -68,15 +68,15 @@
           <% comment.replies.each do |reply| %>
           <div style="margin-left: 40px;">
             <p class="comment-owner">
-            <strong>
-              @<%= link_to reply.user.name, reply.user%>
-            </strong>
+              <strong>
+                @<%= link_to reply.user.name, reply.user%>
+              </strong>
 
-            <span class="comment-created small">
-              <%= time_ago_in_words(reply.created_at) %> ago
-            </span>
+              <span class="comment-created small">
+                <%= time_ago_in_words(reply.created_at) %> ago
+              </span>
+            </p>
             <p><%= reply.body %></p>
-          </p>
           </div>
           <% end %>
         </div>
