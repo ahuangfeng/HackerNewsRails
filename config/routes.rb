@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   get '/comments' => 'comments#index'
   get '/comments/:id' => 'comments#show'
-
+  post '/comments/:id' => 'comments#show'
   #s'hauria de canviar per un altre metode
   match 'contributions/:id/vote' => 'contributions#vote', :via => :get
 

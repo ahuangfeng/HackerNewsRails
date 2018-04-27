@@ -64,6 +64,9 @@
           </p>
            <a href="/comments/<%=comment.id%>">Reply</a>
         </div>
+        <% comment.replies.each do |reply| %>
+          <%= reply.body %>
+        <% end %>
       <% end %>
     </div>
   </div>
