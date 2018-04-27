@@ -3,6 +3,7 @@
   <%= time_ago_in_words(@comment.created_at) %> ago 
   | on  <a href="/contributions/<%=@comment.contribution.id%>"><%=@comment.contribution.title %></a> </p>
   <p>
+  <strong>Comment: </strong>
     <%=  @comment.body  %>
   </p>
     <% if @comment.replies.present? %>
@@ -28,7 +29,7 @@
   <% if logged_in? %>
     <div class="add-comment row">
       <div class="col-sm-6">
-        <%= form_for :reply, url: contribution_comment_replies_path(@contribution,@comment) do |f| %>
+        <%= form_for :reply, url: contribution_comment_replies_path(@contribution, @comment) do |f| %>
           <div class="form-group">
             <%= f.text_area :body, class: "form-control", rows: 10, required: true %>
           </div>
