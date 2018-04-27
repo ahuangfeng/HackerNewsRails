@@ -2,7 +2,6 @@ class RepliesController < ApplicationController
 
   def create
     @comment = Comment.find(params[:comment_id])
-    logger.debug "Article should be valid: #{@comment.present?}"
     @contribution = @comment.contribution
     @reply = @comment.replies.new(user: current_user, body: reply_params[:body])
     @comment.contribution.upComments()
