@@ -43,7 +43,7 @@
     <div class="col-sm-12">
       <% if @contribution.comments.present? %>
         <h3>
-            Comments
+          Comments
         </h3>
       <% end %>
       
@@ -62,11 +62,24 @@
           <p>
             <%= comment.body %>
           </p>
-           <a href="/comments/<%=comment.id%>">Reply</a>
+          <%= link_to "Reply", controller: "comments", action: "show", id: comment.id %>
         </div>
-        <% comment.replies.each do |reply| %>
-          <%= reply.body %>
-        <% end %>
+        <div>
+          <% comment.replies.each do |reply| %>
+          <div style="margin-left: 40px;">
+            <p class="comment-owner">
+            <strong>
+              @<%= link_to reply.user.name, reply.user%>
+            </strong>
+
+            <span class="comment-created small">
+              <%= time_ago_in_words(reply.created_at) %> ago
+            </span>
+            <p><%= reply.body %></p>
+          </p>
+          </div>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

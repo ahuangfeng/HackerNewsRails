@@ -4,9 +4,12 @@ Rails.application.routes.draw do
 
   resources :users
   resources :contributions
+  resources :replies
 
   resources :contributions, except: :index do
-    resources :comments, only: [:create, :edit, :update, :destroy]
+    resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
+      resources :replies, only: [:create, :edit, :update, :destroy]
+    end
   end
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -16,7 +19,8 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   get '/comments' => 'comments#index'
   get '/comments/:id' => 'comments#show'
-  post '/comments/:id' => 'comments#show'
+  post '/comments/:id' => 'replies#create'
+  # post '/replies/:id' => 'replies#create'
   #s'hauria de canviar per un altre metode
   match 'contributions/:id/vote' => 'contributions#vote', :via => :get
 

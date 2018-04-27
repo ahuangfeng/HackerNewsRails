@@ -9,6 +9,7 @@ class CommentsController < ApplicationController
   
   def show 
     @comment = Comment.find(params[:id])
+    @contribution = @comment.contribution;
   end
 
   def edit
