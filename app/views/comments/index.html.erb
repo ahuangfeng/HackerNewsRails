@@ -1,4 +1,4 @@
-<h1>Comments made by <%=current_user.name%></h1>
+<h3>Comments made by <%=current_user.name%></h3>
 <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
 
   <% @comments.each_with_index do |comment, index| %>
@@ -15,7 +15,28 @@
         </td>
         </tr>
     <%end%>
-    
   <%end%>
+</table>
+
+<h3>Replies made by <%=current_user.name%></h3>
+<table border="0" cellpadding="0" cellspacing="0" class="itemlist">
   
+  <% @comments.each_with_index do |comment, index| %>
+    <% if comment.user == current_user %>
+        <% comment.replies.each_with_index do |reply, index| %>
+          <tr class='athing' id='myIdTODO'>
+          <td align="right" valign="top" class="title">
+            <span class="rank"><%= index %>.</span>
+          </td> 
+          <td>
+            <span><%= link_to reply.user.name, reply.user %></span>
+            <span><%= link_to time_ago_in_words(reply.created_at), reply.comment.contribution %> ago</span> | on:
+            <span><%= link_to reply.comment.contribution.title, reply.comment.contribution%></span> | 
+            <span><%= reply.body %></span>
+          </td>
+          </tr>
+        <%end%>
+    <%end%>
+  <%end%>
+
 </table>
