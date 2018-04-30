@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  # before_action :prevent_logged_in_user_access
+  before_action :prevent_unauthorized_user_access, except: [:show, :index]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -23,6 +23,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if logged_in? and current_user.id==@user.id
+      
+    else
+      redirect_to root_path, notice: "Not authorized to edit this user"
+    end
   end
 
   # POST /users
