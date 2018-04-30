@@ -12,7 +12,7 @@
   <% if @comment.replies.present? %>
     <div>
       <h4>Replies</h4>
-      <%= @comment.replies.each do |reply| %>
+      <% @comment.replies.each do |reply| %>
         <p class="comment-owner">
           <strong>
             @<%= link_to reply.user.name, reply.user%>
@@ -43,4 +43,3 @@
       </div>
     </div>
   <% end %>
-  
