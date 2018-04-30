@@ -23,7 +23,7 @@
   
   <% @comments.each_with_index do |comment, index| %>
     <% comment.replies.each_with_index do |reply, index| %>
-    <% if comment.reply.user == current_user %>
+    <% if reply.user == current_user %>
       <tr class='athing' id='myIdTODO'>
       <td align="right" valign="top" class="title">
         <span class="rank"><%= index %>.</span>
