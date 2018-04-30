@@ -3,16 +3,19 @@
 
   <% @comments.each_with_index do |comment, index| %>
     <% if comment.user == current_user %>
-      <tr class='athing' id='myIdTODO'>
+        <tr class='athing' id='myIdTODO'>
         <td align="right" valign="top" class="title">
             <span class="rank"><%= index %>.</span>
         </td> 
         <td>
-          <a href="/contributions/<%=comment.contribution_id%>"><%=comment.body%></a>
+          <span><%= link_to comment.user.name, comment.user %></span>
+          <span><%= link_to time_ago_in_words(comment.created_at), comment.contribution %> ago</span> | on:
+          <span><%= link_to comment.contribution.title, comment.contribution%></span> | 
+          <span><%= comment.body %></span>
         </td>
-      </tr>
+        </tr>
     <%end%>
     
   <%end%>
-
+  
 </table>
