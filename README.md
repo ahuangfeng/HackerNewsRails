@@ -9,7 +9,7 @@
 - Sergi Ventura
 
 ## Aplicació desplegada a Heroku
-[Apliació a Heroku](https://g11d-hackernews.herokuapp.com/)
+[Aplicació a Heroku](https://g11d-hackernews.herokuapp.com/)
 
 ### Per a fer deploy a Heroku
 - Si s'ha creat una nova taula a la BD : `heroku run rake db:migrate`
