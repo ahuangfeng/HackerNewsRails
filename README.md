@@ -3,13 +3,13 @@
 
 ## Integrants del equip
 - Alex Huang Feng
-- Pau Gonz·lez Montiel
+- Pau Gonz√°lez Montiel
 - Carla Varea Parra
 - Sara Bourjila
 - Sergi Ventura
 
-## AplicaciÛ desplegada a Heroku
-[AplicaciÛ a Heroku](https://g11d-hackernews.herokuapp.com/)
+## Aplicaci√≥ desplegada a Heroku
+[Aplicaci√≥ a Heroku](https://g11d-hackernews.herokuapp.com/)
 
 ### Per a fer deploy a Heroku
 - Si s'ha creat una nova taula a la BD : `heroku run rake db:migrate`
