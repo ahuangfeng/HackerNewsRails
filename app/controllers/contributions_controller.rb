@@ -7,7 +7,7 @@ class ContributionsController < ApplicationController
     if params[:type] == 'new'
       @contributions = Contribution.order(id: :desc).all
     elsif params[:type] == 'ask'
-      @contributions = Contribution.where(url: nil).order(id: :desc).all
+      @contributions = Contribution.where(url: nil).order(points: :desc).all
     # elsif params[:type] == 'threads'
     #   @contributions = Contribution.where(url: nil).order(id: :asc).all
       
@@ -90,7 +90,9 @@ class ContributionsController < ApplicationController
 
     if current_user.owns_contribution?(contribution)
       @contribution = contribution
-      contribution.destroy
+      @contribution.comments.destroy
+      @contribution.votes.destroy
+      @contribution.destroy
       redirect_to root_path, notice: "Link successful deleted"
     else
       redirect_to root_path, notice: "Not authorized to edit this link"
