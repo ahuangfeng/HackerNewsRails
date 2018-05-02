@@ -13,7 +13,7 @@ class ContributionsController < ApplicationController
       
      else
       # .order(votes: :desc)
-       @contributions = Contribution.where.not(url: nil).all;
+       @contributions = Contribution.hottest;
     end
   end
   
@@ -114,6 +114,7 @@ class ContributionsController < ApplicationController
     else
       current_user.upvote(contribution)
     end
+    contribution.calc_hot_score
 
     redirect_to root_path
   end
