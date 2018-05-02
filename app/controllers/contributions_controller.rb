@@ -13,7 +13,7 @@ class ContributionsController < ApplicationController
       
      else
       # .order(votes: :desc)
-       @contributions = Contribution.hottest;
+       @contributions = Contribution.where(text: nil).hottest;
     end
   end
   
