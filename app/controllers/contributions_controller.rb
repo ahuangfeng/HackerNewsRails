@@ -54,6 +54,7 @@ class ContributionsController < ApplicationController
     end
     # @contribution.votes = 0
     @contribution.numComments = 0
+    @contribution.points = 0
 
     respond_to do |format|
       if @contribution.save
