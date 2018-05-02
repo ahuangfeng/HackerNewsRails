@@ -12,7 +12,8 @@ class ContributionsController < ApplicationController
     #   @contributions = Contribution.where(url: nil).order(id: :asc).all
       
      else
-       @contributions = Contribution.where.not(url: nil).order(votes: :desc).all;
+      # .order(votes: :desc)
+       @contributions = Contribution.where.not(url: nil).all;
     end
   end
   
@@ -51,7 +52,7 @@ class ContributionsController < ApplicationController
     if @contribution.url != nil #nil = null
       @contribution.text = nil
     end
-    @contribution.votes = 0
+    # @contribution.votes = 0
     @contribution.numComments = 0
 
     respond_to do |format|
@@ -95,16 +96,27 @@ class ContributionsController < ApplicationController
     end
   end
 
-  def vote
-    @contribution = Contribution.find(params[:id])
-    @contribution.upVote()
-    @contribution.save
-    respond_to do |format|
-      format.html { redirect_to request.referrer}
-      format.json { head :no_content }
+  # def vote
+  #   @contribution = Contribution.find(params[:id])
+  #   @contribution.upVote()
+  #   @contribution.save
+  #   respond_to do |format|
+  #     format.html { redirect_to request.referrer}
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def upvote
+    contribution = Contribution.find_by(id: params[:id])
+
+    if current_user.upvoted?(contribution)
+      current_user.remove_vote(contribution)
+    else
+      current_user.upvote(contribution)
     end
+
+    redirect_to root_path
   end
- 
   
   private
     # Use callbacks to share common setup or constraints between actions.

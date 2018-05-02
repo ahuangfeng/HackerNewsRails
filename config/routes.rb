@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
       resources :replies, only: [:create, :edit, :update, :destroy]
     end
+    post :upvote, on: :member
   end
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -22,6 +23,6 @@ Rails.application.routes.draw do
   post '/comments/:id' => 'replies#create'
   # post '/replies/:id' => 'replies#create'
   #s'hauria de canviar per un altre metode
-  match 'contributions/:id/vote' => 'contributions#vote', :via => :get
+  # match 'contributions/:id/vote' => 'contributions#vote', :via => :get
 
 end
