@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Contributions</h1>
+<h2>Contributions</h2>
 
 <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
 
@@ -13,10 +13,13 @@
 
   <td valign="top" class="votelinks">
     <center>
-      <a id='<%= contribution.id %>' href='contributions/<%= contribution.id %>/vote' style="text-decoration:none;" >
-        <div>▲</div>
-      </a>
-      <%= contribution.votes %>
+      <div>
+      <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+      </div>
+      <%# <div> %>
+      <%# <%= link_to "▼", upvote_contribution_path(contribution), method: :post, class: "votearrow" %> 
+      <%# </div> %>
+      <%= contribution.upvotes %>
     </center>
   </td>
   <td class="title">
@@ -44,7 +47,6 @@
         <a href="/contributions/<%=contribution.id%>"><%=contribution.numComments%> comments</a>
     <%end%>
   </td>
-  <td>Id: <%=contribution.id  %></td> 
 
   <td><%= link_to 'Show', contribution %></td>
 

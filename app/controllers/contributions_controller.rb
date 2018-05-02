@@ -7,12 +7,13 @@ class ContributionsController < ApplicationController
     if params[:type] == 'new'
       @contributions = Contribution.order(id: :desc).all
     elsif params[:type] == 'ask'
-      @contributions = Contribution.where(url: nil).order(id: :desc).all
+      @contributions = Contribution.where(url: nil).order(points: :desc).all
     # elsif params[:type] == 'threads'
     #   @contributions = Contribution.where(url: nil).order(id: :asc).all
       
      else
-       @contributions = Contribution.where.not(url: nil).order(votes: :desc).all;
+      # .order(votes: :desc)
+       @contributions = Contribution.hottest;
     end
   end
   
@@ -51,8 +52,9 @@ class ContributionsController < ApplicationController
     if @contribution.url != nil #nil = null
       @contribution.text = nil
     end
-    @contribution.votes = 0
+    # @contribution.votes = 0
     @contribution.numComments = 0
+    @contribution.points = 0
 
     respond_to do |format|
       if @contribution.save
@@ -88,23 +90,37 @@ class ContributionsController < ApplicationController
 
     if current_user.owns_contribution?(contribution)
       @contribution = contribution
-      contribution.destroy
+      @contribution.comments.destroy
+      @contribution.votes.destroy
+      @contribution.destroy
       redirect_to root_path, notice: "Link successful deleted"
     else
       redirect_to root_path, notice: "Not authorized to edit this link"
     end
   end
 
-  def vote
-    @contribution = Contribution.find(params[:id])
-    @contribution.upVote()
-    @contribution.save
-    respond_to do |format|
-      format.html { redirect_to request.referrer}
-      format.json { head :no_content }
+  # def vote
+  #   @contribution = Contribution.find(params[:id])
+  #   @contribution.upVote()
+  #   @contribution.save
+  #   respond_to do |format|
+  #     format.html { redirect_to request.referrer}
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+  def upvote
+    contribution = Contribution.find_by(id: params[:id])
+
+    if current_user.upvoted?(contribution)
+      current_user.remove_vote(contribution)
+    else
+      current_user.upvote(contribution)
     end
+    contribution.calc_hot_score
+
+    redirect_to root_path
   end
- 
   
   private
     # Use callbacks to share common setup or constraints between actions.

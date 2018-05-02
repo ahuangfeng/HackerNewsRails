@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   #validates :email, presence: true
   validates :auth_token, uniqueness: true
+  has_many :votes
   
   before_create :generate_authentication_token
   
@@ -26,6 +27,18 @@ class User < ApplicationRecord
 
   def owns_comment?(comment)
     self == comment.user
+  end
+
+  def upvote(contribution)
+    votes.create(upvote: 1, contribution: contribution)
+  end  
+
+  def upvoted?(contribution)
+    votes.exists?(upvote: 1, contribution: contribution)
+  end
+  
+  def remove_vote(contribution)
+    votes.find_by(contribution: contribution).destroy
   end
   
   def generate_authentication_token
