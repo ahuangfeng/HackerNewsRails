@@ -9,25 +9,6 @@
     <strong>Comment: </strong>
     <%=  @comment.body  %>
   </p>
-  <% if @comment.replies.present? %>
-    <div>
-      <h4>Replies</h4>
-      <% @comment.replies.each do |reply| %>
-        <p class="comment-owner">
-          <strong>
-            @<%= link_to reply.user.name, reply.user%>
-          </strong>
-
-          <span class="comment-created small">
-            <%= time_ago_in_words(reply.created_at) %> ago
-          </span>
-        </p>
-        <p>
-          <%= reply.body %>
-        </p>
-      <% end %>
-    </div>
-  <% end %>
   
   <% if logged_in? %>
     <div class="add-comment row">
