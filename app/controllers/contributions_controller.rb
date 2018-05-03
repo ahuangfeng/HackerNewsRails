@@ -45,26 +45,33 @@ class ContributionsController < ApplicationController
   def create
     # @contribution = Contribution.new(contribution_params)
     @contribution = current_user.contributions.new(contribution_params)
-
-    if @contribution.url =~ /\s/ or @contribution.url == ''  #es vacio o con espacios trolls
-      @contribution.url = nil
-    end
-    if @contribution.url != nil #nil = null
-      @contribution.text = nil
-    end
-    # @contribution.votes = 0
     @contribution.numComments = 0
     @contribution.points = 0
-
-    respond_to do |format|
+    if @contribution.url == '' and @contribution.text != '' #es vacio o con espacios trolls
+        @contribution.url = nil
+       respond_to do |format|
       if @contribution.save
-        format.html { redirect_to contributions_url}
+        format.html { redirect_to "/contributions?type=ask"}
         format.json { render :show, status: :created, location: @contribution }
     
       else
         format.html { render :new }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
       end
+    end
+    end
+    if @contribution.url != '' and @contribution.text == '' #nil = null
+      @contribution.text = nil
+       respond_to do |format|
+      if @contribution.save
+        format.html { redirect_to "/contributions"}
+        format.json { render :show, status: :created, location: @contribution }
+    
+      else
+        format.html { render :new }
+        format.json { render json: @contribution.errors, status: :unprocessable_entity }
+      end
+    end
     end
   end
 
