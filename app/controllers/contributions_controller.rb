@@ -75,7 +75,7 @@ class ContributionsController < ApplicationController
     end
     elsif @contribution.url != '' and @contribution.text != ''
         respond_to do |format|
-        format.html { render :new, notice: "no es pot crear" }
+        format.html { redirect_to "/contributions/new", notice: "no es pot crear" }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
         end
     end
