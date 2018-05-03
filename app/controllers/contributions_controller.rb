@@ -55,12 +55,13 @@ class ContributionsController < ApplicationController
         format.json { render :show, status: :created, location: @contribution }
     
       else
+        
         format.html { render :new }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
       end
     end
-    end
-    if @contribution.url != '' and @contribution.text == '' #nil = null
+    
+    elsif @contribution.url != '' and @contribution.text == '' #nil = null
       @contribution.text = nil
        respond_to do |format|
       if @contribution.save
@@ -72,6 +73,11 @@ class ContributionsController < ApplicationController
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
       end
     end
+    elsif @contribution.url != '' and @contribution.text != ''
+        respond_to do |format|
+        format.html { render :new, notice: "no es pot crear" }
+        format.json { render json: @contribution.errors, status: :unprocessable_entity }
+        end
     end
   end
 
