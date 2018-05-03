@@ -131,8 +131,7 @@ class ContributionsController < ApplicationController
       current_user.upvote(contribution)
     end
     contribution.calc_hot_score
-
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
   end
   
   private
