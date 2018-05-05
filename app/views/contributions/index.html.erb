@@ -13,13 +13,19 @@
 
   <td valign="top" class="votelinks">
     <center>
-      <div>
-        <% if current_user.hasvoted?(contribution) %>
-          <%= link_to "▼", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+      <% if logged_in? %>
+        <div>
+          <% if current_user.hasvoted?(contribution) %>
+            <%= link_to "▼", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+          <% else %>
+            <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+          <% end %>
+        </div>
         <% else %>
-          <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
-        <% end %>
-      </div>
+          <div>
+            <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+          </div>
+      <% end %>
       <%= contribution.upvotes %>
     </center>
   </td>

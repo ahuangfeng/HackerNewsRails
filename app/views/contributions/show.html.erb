@@ -61,6 +61,7 @@
 
           <p>
             <%= comment.body %>
+            <%#= render comment.replies if comment.replies.any? %>
           </p>
           <%= link_to "Reply", controller: "comments", action: "show", id: comment.id %>
         </div>
@@ -77,6 +78,7 @@
               </span>
             </p>
             <p><%= reply.body %></p>
+            <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
           </div>
           <% end %>
         </div>
