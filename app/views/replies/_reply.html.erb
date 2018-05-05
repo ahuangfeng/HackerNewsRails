@@ -1,0 +1,21 @@
+<div>
+  <% reply.replies.each do |rep| %>
+  <div style="margin-left: 40px;">
+    <p class="comment-owner">
+      <strong>
+        @<%= link_to rep.user.name, rep.user%>
+      </strong>
+
+      <span class="comment-created small">
+        <%= time_ago_in_words(rep.created_at) %> ago
+      </span>
+    </p>
+    <p><%= rep.body %></p>
+
+    <div>
+      <%= render partial: "replies/reply", locals: { reply: rep } %>
+    </div>
+    <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
+  </div>
+  <% end %>
+</div>

@@ -3,20 +3,21 @@ class RepliesController < ApplicationController
   def createWithParent
     @parentReply = Reply.find(reply_params[:parent_id])
     @comment = @parentReply.comment
-    commentID = @comment.id
+    commentID = @comment.id.to_s
     # {"utf8"=>"✓",
     #   "authenticity_token"=>"eCG5eL7LJzYkBElyVK/xqKW5pmQgvLunf5s+3+Xh2N8WFyXlARbyEJSx628fPcS1Cck15cUzTBQH8RlIOQKNKA==",
     #   "reply"=>{"body"=>"asdf"},
     #   "button"=>"",
     #   "contribution_id"=>"3",
     #   "comment_id"=>"4"}
-    @reply = @parentReply.replies.new(user: current_user, body: reply_params[:body])
+    @reply = @parentReply.replies.new(user: current_user, body: reply_params[:body],comment: @comment)
     if @reply.save
       @comment.contribution.upComments()
       @comment.contribution.save
-      redirect_to "/contributions/"+params[:contribution_id], notice: 'Reply created'
+      redirect_to "/contributions/"+commentID, notice: 'Reply created'
     else
-      redirect_to "/comments/"+commentID, notice: 'Reply was not saved. Ensure you have entered a Reply'
+      redirect_to "/comments/"+commentID, notice: @reply.save!
+      # notice: 'Reply was not saved. Ensure you have entered a Reply'
     end
   end
 
@@ -29,8 +30,7 @@ class RepliesController < ApplicationController
       @comment.contribution.save
       redirect_to "/contributions/"+params[:contribution_id], notice: 'Reply created'
     else
-      redirect_to "/comments/"+params[:comment_id], notice: @reply.save! 
-      # notice: 'Reply was not saved. Ensure you have entered a Reply'
+      redirect_to "/comments/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
     end
   end
 
@@ -41,6 +41,6 @@ class RepliesController < ApplicationController
 
   private
     def reply_params
-      params.require(:reply).permit(:body)
+      params.require(:reply).permit(:body, :parent_id)
     end
 end

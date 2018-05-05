@@ -1,15 +1,37 @@
 <h2>Add a reply</h2>
 <p id="notice"><%= notice %></p>
-<p style="  font-family: Verdana, Geneva, sans-serif; color: #828282; font-size: 8pt;"><%= @comment.user.name%> 
-  <%= time_ago_in_words(@comment.created_at) %> ago | on  
-  <a href="/contributions/<%=@comment.contribution.id%>">
-    <%=@comment.contribution.title %>
-  </a> 
-</p>
-<p>
-  <strong>Comment: </strong>
-  <%=  @comment.body  %>
-</p>
+<div>
+  <p style="  font-family: Verdana, Geneva, sans-serif; color: #828282; font-size: 8pt;"><%= @comment.user.name%> 
+    <%= time_ago_in_words(@comment.created_at) %> ago | on  
+    <a href="/contributions/<%=@comment.contribution.id%>">
+      <%=@comment.contribution.title %>
+    </a> 
+  </p>
+  <p>
+    <strong>Comment: </strong>
+    <%=  @comment.body  %>
+  </p>
+</div>
+<div>
+  <% @comment.replies.each do |reply| %>
+  <div style="margin-left: 40px;">
+    <p class="comment-owner">
+      <strong>
+        @<%= link_to reply.user.name, reply.user%>
+      </strong>
+
+      <span class="comment-created small">
+        <%= time_ago_in_words(reply.created_at) %> ago
+      </span>
+    </p>
+    <p><%= reply.body %></p>
+
+    <%= render partial: "replies/reply", locals: { reply: reply } %>
+
+    <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
+  </div>
+  <% end %>
+</div>
   
 <% if logged_in? %>
   <div class="add-comment row">

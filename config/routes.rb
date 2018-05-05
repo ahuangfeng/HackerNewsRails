@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   get '/comments' => 'comments#index'
   get '/comments/:id' => 'comments#show'
   post '/comments/:id' => 'replies#create'
-  get '/replies/:id' => 'replies#show'
   post '/replies/:id' => 'replies#createWithParent'
+  get '/replies/:id' => 'replies#show'
   # post '/replies/:id' => 'replies#create'
   #s'hauria de canviar per un altre metode
   # match 'contributions/:id/vote' => 'contributions#vote', :via => :get
