@@ -10,13 +10,10 @@ class ContributionsController < ApplicationController
       @contributions = Contribution.where(url: nil).order(points: :desc).all
     # elsif params[:type] == 'threads'
     #   @contributions = Contribution.where(url: nil).order(id: :asc).all
-      
-     else
-      # .order(votes: :desc)
-       @contributions = Contribution.where(text: nil).hottest;
+    else
+      @contributions = Contribution.where(text: nil).hottest;
     end
   end
-  
 
 
   # GET /contributions/1
@@ -111,16 +108,6 @@ class ContributionsController < ApplicationController
       redirect_to root_path, notice: "Not authorized to edit this link"
     end
   end
-
-  # def vote
-  #   @contribution = Contribution.find(params[:id])
-  #   @contribution.upVote()
-  #   @contribution.save
-  #   respond_to do |format|
-  #     format.html { redirect_to request.referrer}
-  #     format.json { head :no_content }
-  #   end
-  # end
 
   def upvote
     contribution = Contribution.find_by(id: params[:id])

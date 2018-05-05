@@ -14,11 +14,12 @@
   <td valign="top" class="votelinks">
     <center>
       <div>
-      <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+        <% if current_user.hasvoted?(contribution) %>
+          <%= link_to "▼", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+        <% else %>
+          <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+        <% end %>
       </div>
-      <%# <div> %>
-      <%# <%= link_to "▼", upvote_contribution_path(contribution), method: :post, class: "votearrow" %> 
-      <%# </div> %>
       <%= contribution.upvotes %>
     </center>
   </td>

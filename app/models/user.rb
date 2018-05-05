@@ -36,6 +36,10 @@ class User < ApplicationRecord
   def upvoted?(contribution)
     votes.exists?(upvote: 1, contribution: contribution)
   end
+
+  def hasvoted?(contribution)
+    votes.exists?(contribution: contribution)
+  end
   
   def remove_vote(contribution)
     votes.find_by(contribution: contribution).destroy
