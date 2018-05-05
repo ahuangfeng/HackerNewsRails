@@ -11,11 +11,9 @@
       </span>
     </p>
     <p><%= rep.body %></p>
+    <%= link_to "Reply", controller: "replies", action: "show", id: rep.id%>
 
-    <div>
-      <%= render partial: "replies/reply", locals: { reply: rep } %>
-    </div>
-    <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
+    <%= render partial: "replies/reply", locals: { reply: rep } %>
   </div>
   <% end %>
 </div>
