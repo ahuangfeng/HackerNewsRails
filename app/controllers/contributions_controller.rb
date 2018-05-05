@@ -45,36 +45,44 @@ class ContributionsController < ApplicationController
     @contribution.numComments = 0
     @contribution.points = 0
     if @contribution.url == '' and @contribution.text != '' #es vacio o con espacios trolls
-        @contribution.url = nil
-       respond_to do |format|
-      if @contribution.save
-        format.html { redirect_to "/contributions?type=ask"}
-        format.json { render :show, status: :created, location: @contribution }
-    
-      else
-        
-        format.html { render :new }
-        format.json { render json: @contribution.errors, status: :unprocessable_entity }
+      @contribution.url = nil
+      respond_to do |format|
+        if @contribution.save
+          format.html { redirect_to "/contributions?type=ask"}
+          format.json { render :show, status: :created, location: @contribution }
+        else
+          format.html { render :new }
+          format.json { render json: @contribution.errors, status: :unprocessable_entity }
+        end
       end
-    end
-    
     elsif @contribution.url != '' and @contribution.text == '' #nil = null
       @contribution.text = nil
-       respond_to do |format|
-      if @contribution.save
-        format.html { redirect_to "/contributions"}
-        format.json { render :show, status: :created, location: @contribution }
-    
-      else
-        format.html { render :new }
-        format.json { render json: @contribution.errors, status: :unprocessable_entity }
-      end
-    end
-    elsif @contribution.url != '' and @contribution.text != ''
+      existant = Contribution.find_by(url: @contribution.url)
+      
+      if existant
+        @contribution = existant
+        idTo = existant.id.to_s
         respond_to do |format|
+          format.html { redirect_to "/contributions/"+idTo, notice: "This contribution already exists."}
+          format.json { render :show, status: :created, location: @contribution }
+        end
+      else
+        respond_to do |format|
+          if @contribution.save
+            format.html { redirect_to "/contributions"}
+            format.json { render :show, status: :created, location: @contribution }
+          else
+            format.html { render :new }
+            format.json { render json: @contribution.errors, status: :unprocessable_entity }
+          end
+        end
+      end
+
+    elsif @contribution.url != '' and @contribution.text != ''
+      respond_to do |format|
         format.html { redirect_to "/contributions/new", notice: "Unable to create, you must choose between type url or type ask" }
         format.json { render json: @contribution.errors, status: :unprocessable_entity }
-        end
+      end
     end
   end
 
