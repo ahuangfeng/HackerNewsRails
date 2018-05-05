@@ -29,7 +29,8 @@ class RepliesController < ApplicationController
       @comment.contribution.save
       redirect_to "/contributions/"+params[:contribution_id], notice: 'Reply created'
     else
-      redirect_to "/comments/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
+      redirect_to "/comments/"+params[:comment_id], notice: @reply.save! 
+      # notice: 'Reply was not saved. Ensure you have entered a Reply'
     end
   end
 
