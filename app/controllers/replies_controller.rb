@@ -28,6 +28,24 @@ class RepliesController < ApplicationController
     end
   end
 
+  def destroy
+    reply = Reply.find_by(id: params[:id])
+    if current_user.owns_reply?(reply)
+      @reply = reply
+      count = @reply.replies.count
+      @contribution = @reply.comment.contribution
+      # TODO: s'ha de baixar el numComments! (no funciona!)
+      @contribution.downComments(count)
+      @contribution.save
+      @reply.replies.destroy
+      # @reply.votes.destroy
+      @reply.destroy
+      redirect_to root_path, notice: "Reply successful deleted"
+    else
+      redirect_to root_path, notice: "Not authorized to edit this link"
+    end
+  end
+
   def show 
     @newreply = Reply.new
     @reply = Reply.find(params[:id])
