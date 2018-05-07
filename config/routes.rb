@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # get 'comments/edit'
   Rails.application.routes.draw do  
     mount API::Base, at: "/"
-    # mount GrapeSwaggerRails::Engine, at: "/documentation"
+    mount GrapeSwaggerRails::Engine, at: "/documentation"
   end  
 
   resources :users

@@ -13,6 +13,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'grape'
 gem 'grape-active_model_serializers'
 gem 'grape-swagger'
+gem 'grape-swagger-rails'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
