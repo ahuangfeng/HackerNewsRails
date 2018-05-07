@@ -11,11 +11,10 @@ module API
 
         desc "Return a contribution"
         params do
-          requires :id, type: String, desc: "ID of the 
-            contribution"
+          requires :id, type: String, desc: "ID of the contribution"
         end
         get ":id", root: "contribution" do
-          "Contribution.where(id: permitted_params[:id]).first!"
+          "Contribution.where(id: permitted_params[:id]).first! # Got param: " + params[:id]
         end
       end
     end
