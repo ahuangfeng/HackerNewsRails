@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20180502190914) do
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "votes"
     t.integer "numComments"
     t.integer "user_id"
     t.integer "comments_id"
