@@ -14,6 +14,10 @@ class Contribution < ApplicationRecord
     self.numComments += 1
   end 
 
+  def downComments(count)
+    self.numComments -= count
+  end
+
   def calc_hot_score
     points = upvotes
     time_ago_in_hours = ((Time.now - created_at) / 3600).round

@@ -18,7 +18,9 @@ class ContributionsController < ApplicationController
 
   # GET /contributions/1
   # GET /contributions/1.json
-
+  def show
+    
+  end
 
   # GET /contributions/new
   def new
