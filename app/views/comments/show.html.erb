@@ -1,4 +1,6 @@
 <h2>Add a reply</h2>
+<p id="notice"><%= notice %></p>
+<div>
   <p style="  font-family: Verdana, Geneva, sans-serif; color: #828282; font-size: 8pt;"><%= @comment.user.name%> 
     <%= time_ago_in_words(@comment.created_at) %> ago | on  
     <a href="/contributions/<%=@comment.contribution.id%>">
@@ -9,18 +11,44 @@
     <strong>Comment: </strong>
     <%=  @comment.body  %>
   </p>
-  
-  <% if logged_in? %>
-    <div class="add-comment row">
-      <div class="col-sm-6">
-        <%= form_for :reply, url: contribution_comment_replies_path(@contribution, @comment) do |f| %>
-          <div class="form-group">
-            <%= f.text_area :body, class: "form-control", rows: 10, required: true %>
-          </div>
-          <div class="form-group">
-            <%= f.button "reply", class: "btn btn-success" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
+</div>
+<div>
+  <% @comment.replies.each do |reply| %>
+  <div style="margin-left: 40px;">
+    <p class="comment-owner">
+      <strong>
+        @<%= link_to reply.user.name, reply.user%>
+      </strong>
+
+      <span class="comment-created small">
+        <%= time_ago_in_words(reply.created_at) %> ago
+      </span>
+    </p>
+    <p><%= reply.body %></p>
+
+    <%= render partial: "replies/reply", locals: { reply: reply } %>
+
+    <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
+    <% if logged_in? %>
+      <% if current_user.owns_reply?(reply) %>
+        <%= link_to 'Destroy', reply, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    <% end %>
+  </div>
   <% end %>
+</div>
+  
+<% if logged_in? %>
+  <div class="add-comment row">
+    <div class="col-sm-6">
+      <%= form_for :reply, url: contribution_comment_replies_path(@contribution, @comment) do |f| %>
+        <div class="form-group">
+          <%= f.text_area :body, class: "form-control", rows: 10, required: true %>
+        </div>
+        <div class="form-group">
+          <%= f.button "reply", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

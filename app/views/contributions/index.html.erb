@@ -17,9 +17,10 @@
         <% if logged_in? && current_user.hasvoted?(contribution) %>
           <%= link_to "▼", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
         <% else %>
-          <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+          <div>
+            <%= link_to "▲", upvote_contribution_path(contribution), method: :post, class: "votearrow" %>
+          </div>
         <% end %>
-      </div>
       <%= contribution.upvotes %>
     </center>
   </td>

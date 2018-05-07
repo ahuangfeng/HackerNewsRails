@@ -66,18 +66,29 @@
         </div>
         <div>
           <% comment.replies.each do |reply| %>
-          <div style="margin-left: 40px;">
-            <p class="comment-owner">
-              <strong>
-                @<%= link_to reply.user.name, reply.user%>
-              </strong>
+            <% if reply.parent == nil %>
+              <div style="margin-left: 40px;">
+                <p class="comment-owner">
+                  <strong>
+                    @<%= link_to reply.user.name, reply.user%>
+                  </strong>
 
-              <span class="comment-created small">
-                <%= time_ago_in_words(reply.created_at) %> ago
-              </span>
-            </p>
-            <p><%= reply.body %></p>
-          </div>
+                  <span class="comment-created small">
+                    <%= time_ago_in_words(reply.created_at) %> ago
+                  </span>
+                </p>
+                <p><%= reply.body %></p>
+                <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
+                <% if logged_in?%>
+                  <% if current_user.owns_reply?(reply) %>
+                  <%= link_to 'Destroy', reply, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  
+                  <% end %>
+                <% end %>
+
+                <%= render partial: "replies/reply", locals: { reply: reply } %>
+              </div>
+            <% end %>
           <% end %>
         </div>
       <% end %>

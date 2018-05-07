@@ -29,6 +29,10 @@ class User < ApplicationRecord
     self == comment.user
   end
 
+  def owns_reply?(reply)
+    self == reply.user
+  end
+
   def upvote(contribution)
     votes.create(upvote: 1, contribution: contribution)
   end  
