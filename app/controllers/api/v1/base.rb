@@ -5,7 +5,7 @@ module API
     class Base < Grape::API
       mount API::V1::Contribution
       # mount API::V1::AnotherResource
-
+      
       add_swagger_documentation(
         api_version: "v1",
         hide_documentation_path: true,

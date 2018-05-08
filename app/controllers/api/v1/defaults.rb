@@ -20,6 +20,20 @@ module API
           def logger
             Rails.logger
           end
+          
+          def authenticate!
+            error!('Unauthorized.', 401) unless current_user
+          end
+
+          def current_user
+            user = User.find_by_api_key(headers['Authorization'])
+            if user.nil?
+              false
+            else
+              @current_user = user
+            end
+          end
+          
         end
 
         rescue_from ActiveRecord::RecordNotFound do |e|

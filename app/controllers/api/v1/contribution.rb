@@ -2,8 +2,11 @@ module API
   module V1
     class Contribution < Grape::API
       include API::V1::Defaults
-
+      
       resource :contributions do
+        before do
+         authenticate!
+        end
         desc "Return all contributions filtered if type is defined"
         params do
           #aqui dirli al swagger que tinc un parametre type amb els seus estats etc
@@ -15,7 +18,8 @@ module API
             elsif params[:type] == "new"
               ::Contribution.order(id: :desc).all
             else
-              status :bad_request #mirar si retorna be el status
+              #status :bad_request #mirar si retorna be el status
+              error!('Bad Request', 400)
             end
           else
             ::Contribution.where(text: nil).hottest;
@@ -26,9 +30,8 @@ module API
         params do
           requires :id, type: String, desc: "ID of the contribution"
         end
-        get "?type=ask"do
-          
-          #::Contribution.where(id: permitted_params[:id]).first! # Got param: " + params[:id]
+        get ":id" do
+          ::Contribution.where(id: permitted_params[:id]).first! # Got param: " + params[:id]
         end
       end
     end
