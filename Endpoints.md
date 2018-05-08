@@ -1,4 +1,8 @@
 # Endpoints
+
+https://www.sitepoint.com/build-great-apis-grape/
+
+
 Treure amb `rake routes`
 
                          Prefix Verb   URI Pattern                                                                     Controller#Action
