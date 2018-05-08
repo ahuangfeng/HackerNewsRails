@@ -13,6 +13,9 @@ class User < ApplicationRecord
   # poder alguns camps que es guarden no ens faran falta o haurem d'afegir mes
   def self.find_or_create_from_auth_hash(auth_hash)
     user = where(provider: auth_hash.provider, uid: auth_hash.uid).first_or_create
+    if user.api_key.length == 0
+      user.update(api_key: SecureRandom.hex)
+    end
     user.update(
       name: auth_hash.info.nickname,
       token: auth_hash.credentials.token,
