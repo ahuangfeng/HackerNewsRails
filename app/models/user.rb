@@ -4,11 +4,8 @@ class User < ApplicationRecord
   has_many :comments
   has_many :replies
   validates :name, presence: true
-  #validates :email, presence: true
-  validates :auth_token, uniqueness: true
+  validates :api_key, uniqueness: true
   has_many :votes
-  
-  before_create :generate_authentication_token
   
   # poder alguns camps que es guarden no ens faran falta o haurem d'afegir mes
   def self.find_or_create_from_auth_hash(auth_hash)
@@ -50,13 +47,6 @@ class User < ApplicationRecord
   
   def remove_vote(contribution)
     votes.find_by(contribution: contribution).destroy
-  end
-  
-  def generate_authentication_token
-      loop do
-        self.auth_token = SecureRandom.base64(64)
-        break unless User.find_by(auth_token: auth_token)
-      end
   end
   
 end

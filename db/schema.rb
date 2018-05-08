@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508151129) do
+ActiveRecord::Schema.define(version: 20180508153421) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 20180508151129) do
     t.string "uid"
     t.string "token"
     t.string "secret"
-    t.string "auth_token"
     t.string "api_key", default: ""
   end
 
