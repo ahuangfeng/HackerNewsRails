@@ -50,7 +50,7 @@
       <% @contribution.comments.each do |comment| %>
         <div class="comment">
           <p class="comment-owner">
-            <% if current_user.upvotedcomment?(comment) %>
+            <% if logged_in? && current_user.upvotedcomment?(comment) %>
               <%= link_to "▼", upvotecomment_contribution_path(comment), method: :post, class: "votearrow" %>
             <% else %>
               <%= link_to "▲", upvotecomment_contribution_path(comment), method: :post, class: "votearrow" %>
@@ -75,7 +75,7 @@
             <% if reply.parent == nil %>
               <div style="margin-left: 40px;">
                 <p class="comment-owner">
-                  <% if current_user.upvotedreply?(reply) %>
+                  <% if logged_in? && current_user.upvotedreply?(reply) %>
                     <%= link_to "▼", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
                   <% else %>
                     <%= link_to "▲", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>

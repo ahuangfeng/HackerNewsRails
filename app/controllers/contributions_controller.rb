@@ -127,7 +127,7 @@ class ContributionsController < ApplicationController
   else
     current_user.upvotereply(@reply)
   end
-  redirect_back(fallback_location: root_path)
+   redirect_back(fallback_location: root_path)
 
 
   end
