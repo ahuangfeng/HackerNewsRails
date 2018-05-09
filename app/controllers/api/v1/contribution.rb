@@ -7,23 +7,22 @@ module API
         before do
          authenticate!
         end
-        desc "Return all contributions filtered if type is defined"
+        desc "Return all contributions filtered by type"
         params do
+          optional :type, type: String, desc: "Type of the contribution, ask or new. If no type is specified, return all url contributions"
         end
         get "" do
-          if params.has_key?(:type)
-            if params[:type] == "ask"
-              ::Contribution.where(url: nil).order(points: :desc).all
-            elsif params[:type] == "new"
-              ::Contribution.order(id: :desc).all
-            else
-              error!('Bad Request', 400)
-            end
-          else
+          if params[:type] == "ask"
+            ::Contribution.where(url: nil).order(points: :desc).all
+          elsif params[:type] == "new"
+            ::Contribution.order(id: :desc).all
+          elsif params[:type] == nil
             ::Contribution.where(text: nil).hottest;
+          else
+            error!("Bad Request", 400)
           end
         end
-        
+      
         desc "Return a contribution"
         params do
           requires :id, type: String, desc: "ID of the contribution"
@@ -34,7 +33,7 @@ module API
         
         desc "Create a contribution" 
         params do
-          requires :user_id, type: Integer, desc: "User id of the contribution"
+          requires :user_id, type: Integer, desc: "ID of the user"
           requires :title, type: String, desc: "Title of the contribution"
           optional :url, type: String, desc: "Url of the contribution" 
           optional :text, type: String, desc: "Text of the contribution"
@@ -55,6 +54,33 @@ module API
           end
         end
         
+        desc "Modify a contribution"
+        params do
+          requires :user_id, type: Integer, desc: "ID of the user"
+          requires :id, type: String, desc: "ID of the contribution"
+          optional :title, type: String, desc: "Title of the contributions"
+          optional :url, type: String, desc: "Url of the contribution" 
+          optional :text, type: String, desc: "Text of the contribution"
+        end
+        put ":id" do
+          owner!
+          ::Contribution.update(contribution.id)
+        end
+        
+        desc "Destroy a contribution"
+        params do
+          requires :user_id, type: Integer, desc: "ID of the user"
+          requires :id, type: String, desc: "ID of the contribution"
+        end
+        delete ":id" do
+          owner!
+          contribution = ::Contribution.where(id: permitted_params[:id]).first!
+          if contribution != nil
+            ::Contribution.destroy(contribution.id)
+          else
+            error!("Bad Request", 400)
+          end
+        end
       end
     end
   end
