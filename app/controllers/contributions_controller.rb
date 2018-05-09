@@ -118,6 +118,19 @@ class ContributionsController < ApplicationController
       redirect_to root_path, notice: "Not authorized to edit this link"
     end
   end
+  
+  def upvotecomment
+    @comment = Comment.find(params[:id])
+
+  if current_user.upvotedcomment?(@comment)
+    current_user.remove_votecomment(@comment)
+  else
+    current_user.upvotecomment(@comment)
+  end
+  redirect_back(fallback_location: root_path)
+
+
+  end
 
   def upvote
     contribution = Contribution.find_by(id: params[:id])

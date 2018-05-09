@@ -48,6 +48,12 @@
       <% end %>
       
       <% @contribution.comments.each do |comment| %>
+          <% if current_user.upvotedcomment?(comment) %>
+            <%= link_to "▼", upvotecomment_contribution_path(comment), method: :post, class: "votearrow" %>
+          <% else %>
+            <%= link_to "▲", upvotecomment_contribution_path(comment), method: :post, class: "votearrow" %>
+          <% end %>
+           <%= comment.upvotecomments %>
         <div class="comment">
           <p class="comment-owner">
             <strong>

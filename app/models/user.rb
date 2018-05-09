@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :api_key, uniqueness: true
   has_many :votes
+  has_many :votecomments
   before_create :generate_api_key
   
   # poder alguns camps que es guarden no ens faran falta o haurem d'afegir mes
@@ -30,7 +31,19 @@ class User < ApplicationRecord
   def owns_reply?(reply)
     self == reply.user
   end
+  
+  def upvotecomment(comment)
+     votecomments.create(upvotecom: 1, comment: comment)
+  end
+  
+  def upvotedcomment?(comment)
+     votecomments.exists?(upvotecom: 1, comment: comment)
+  end
 
+  def remove_votecomment(comment)
+    votecomments.find_by(comment: comment).destroy
+  end
+  
   def upvote(contribution)
     votes.create(upvote: 1, contribution: contribution)
   end  
