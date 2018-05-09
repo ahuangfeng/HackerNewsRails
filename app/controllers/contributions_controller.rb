@@ -119,6 +119,19 @@ class ContributionsController < ApplicationController
     end
   end
   
+   def upvotereply
+    @reply = Reply.find(params[:id])
+
+  if current_user.upvotedreply?(@reply)
+    current_user.remove_votereply(@reply)
+  else
+    current_user.upvotereply(@reply)
+  end
+  redirect_back(fallback_location: root_path)
+
+
+  end
+  
   def upvotecomment
     @comment = Comment.find(params[:id])
 

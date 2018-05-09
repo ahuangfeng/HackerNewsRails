@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :api_key, uniqueness: true
   has_many :votes
   has_many :votecomments
+  has_many :votereplies
   before_create :generate_api_key
   
   # poder alguns camps que es guarden no ens faran falta o haurem d'afegir mes
@@ -42,6 +43,18 @@ class User < ApplicationRecord
 
   def remove_votecomment(comment)
     votecomments.find_by(comment: comment).destroy
+  end
+  
+  def upvotereply(reply)
+     votereplies.create(upvoterep: 1, reply: reply)
+  end
+  
+  def upvotedreply?(reply)
+     votereplies.exists?(upvoterep: 1, reply: reply)
+  end
+
+  def remove_votereply(reply)
+    votereplies.find_by(reply: reply).destroy
   end
   
   def upvote(contribution)

@@ -8,5 +8,9 @@ class Comment < ApplicationRecord
   def upvotecomments
     votecomments.sum(:upvotecom)
   end
+  
+  def upvotereplies
+    votereplies.sum(:upvotereply)
+  end
 
 end

@@ -75,6 +75,12 @@
             <% if reply.parent == nil %>
               <div style="margin-left: 40px;">
                 <p class="comment-owner">
+                  <% if current_user.upvotedreply?(reply) %>
+                    <%= link_to "▼", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
+                  <% else %>
+                    <%= link_to "▲", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
+                  <% end %>
+                  <%= reply.upvotereplies %>
                   <strong>
                     @<%= link_to reply.user.name, reply.user%>
                   </strong>

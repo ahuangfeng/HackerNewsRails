@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     end
     post :upvote, on: :member
     post :upvotecomment, on: :member
+    post :upvotereply, on: :member
+
 
   end
   
