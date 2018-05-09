@@ -34,6 +34,13 @@ module API
             end
           end
           
+          def owner!
+            user = User.find_by_id(params[:user_id])
+            if @current_user.api_key != user.api_key
+              error!('Unauthorized.', 401)
+            end
+          end
+          
         end
 
         rescue_from ActiveRecord::RecordNotFound do |e|
