@@ -26,7 +26,7 @@ module API
           end
 
           def current_user
-            user = User.find_by_api_key(headers['Authorization'])
+            user = ::User.find_by_api_key(headers['Authorization'])
             if user.nil?
               false
             else
