@@ -1,6 +1,7 @@
 info:
-  title: API title
+  description: "This is the API documentation for the Hacker News we created"
   version: 0.0.1
+  title: "Hacker News - G11D"
 swagger: '2.0'
 produces:
   - application/xml
