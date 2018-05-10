@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   end
 
   def prevent_unauthorized_user_access
-    redirect_to root_path, notice: 'sorry, you cannot access that page', status: :found unless logged_in?
+    redirect_back(fallback_location: root_path, notice: "sorry, you have to login to access that page")
   end
 
   def prevent_logged_in_user_access
-    redirect_to root_path, notice: 'sorry, you cannot access that page', status: :found if logged_in?
+      redirect_back(fallback_location: root_path, notice: "sorry, you have to login to access that page")
   end
 
   def logged_in?

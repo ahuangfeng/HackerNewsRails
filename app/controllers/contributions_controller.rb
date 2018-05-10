@@ -128,9 +128,7 @@ class ContributionsController < ApplicationController
     current_user.upvotereply(@reply)
   end
    redirect_back(fallback_location: root_path)
-
-
-  end
+   end
   
   def upvotecomment
     @comment = Comment.find(params[:id])
