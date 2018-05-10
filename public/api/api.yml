@@ -11,15 +11,16 @@ produces:
 host: localhost:3000 
 basePath: "/api/v1"
 tags:
-  - name: contributions
+  - name: Contributions
     description: "All comtributions REST calls"
 schemes:
 - "http"
+- "https"
 paths:
   /contributions:
     get:
       tags:
-      - contributions
+      - Contributions
       summary: "Return all the contributions. They can be filtered"
       operationId: getAllContributions
       produces:
@@ -31,15 +32,85 @@ paths:
         type: string
         enum: [ask, new]
       responses:
-        204:
-          description: "No contributions found"
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/Contribution'
         400:
           description: "Invalid query"
+          schema:
+            $ref: '#/definitions/errorMessage'
+        401:
+          description: "Not authorized"
+          schema:
+            $ref: '#/definitions/errorMessage'
+        501:
+          description: "Function not implemented"
+          schema:
+            $ref: '#/definitions/errorMessage'
       security:
       - api_key: []
-
+  /contributions/{id}:
+    get:
+      tags:
+      - Contributions
+      summary: "Return all the contributions. They can be filtered"
+      operationId: getContributionById
+      produces:
+      - application/json
+      parameters:
+       - name: id
+         in: path
+         type: string
+         required: true
+         description: Id of the Contribution
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/Contribution'
+        404:
+          description: "Contribution not found"
+          schema:
+            $ref: '#/definitions/errorMessage'
+        401:
+          description: "Not authorized"
+          schema:
+            $ref: '#/definitions/errorMessage'
+        501:
+          description: "Function not implemented"
+          schema:
+            $ref: '#/definitions/errorMessage'
+      security:
+      - api_key: []
 securityDefinitions:
   api_key:
     type: apiKey
     name: Authorization
     in: header
+definitions:
+  Contribution:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+      title:
+        type: "string"
+      url:
+        type: "string"
+      username:
+        type: "string"
+      createdAt:
+        type: "string"
+      numComments:
+        type: "number"
+        default: 0
+      points:
+        type: "number"
+    xml:
+      name: "Order"
+  errorMessage:
+    type: "object"
+    properties:
+      message:
+        type: "string"
