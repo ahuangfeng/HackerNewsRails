@@ -1,16 +1,10 @@
 Rails.application.routes.draw do
   # get 'comments/index'
   # get 'comments/edit'
-  Rails.application.routes.draw do  
-    mount API::Base, at: "/"
-    mount GrapeSwaggerRails::Engine, at: "/documentation"
-  end  
-
   resources :users
   resources :contributions
   resources :replies
 
-  # mount GrapeSwaggerRails::Engine, at: "/documentation"
 
   resources :contributions, except: :index do
     resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
@@ -38,4 +32,28 @@ Rails.application.routes.draw do
   # post '/replies/:id' => 'replies#create'
   #s'hauria de canviar per un altre metode
 
+  #api
+  namespace :api do
+    namespace :v1 do
+      resources :users
+      resources :contributions
+      resources :replies
+      
+      resources :contributions, except: :index do
+        resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
+          resources :replies, only: [:create, :edit, :update, :destroy]
+        end
+        post :upvote, on: :member
+        post :upvotecomment, on: :member
+        post :upvotereply, on: :member
+      end
+  
+      resources :comments, except: :index do
+        post :downvotecomment, on: :member
+      end
+      get 'contributions/:id', to: 'contributions#show'
+      post 'contributions', to: 'contributions#create'
+    end
+  end
+  
 end
