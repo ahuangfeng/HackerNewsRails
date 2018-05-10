@@ -2,12 +2,12 @@
   <% reply.replies.each do |rep| %>
   <div style="margin-left: 40px;">
     <p class="comment-owner">
-      <% if logged_in? && current_user.upvotedreply?(reply) %>
-                <%= link_to "▼", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
+      <% if logged_in? && current_user.upvotedreply?(rep) %>
+        <%= link_to "▼", upvotereply_contribution_path(rep), method: :post, class: "votearrow" %>
       <% else %>
-        <%= link_to "▲", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
+        <%= link_to "▲", upvotereply_contribution_path(rep), method: :post, class: "votearrow" %>
       <% end %>
-      <%= reply.upvotereplies %>
+      <%= rep.upvotereplies %>
       <strong>
         @<%= link_to rep.user.name, rep.user%>
       </strong>
