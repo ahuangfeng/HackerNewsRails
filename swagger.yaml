@@ -1,0 +1,170 @@
+info:
+  title: API title
+  version: 0.0.1
+swagger: '2.0'
+produces:
+  - application/xml
+  - application/json
+  - application/octet-stream
+  - text/plain
+host: 9a4175f3ab0e4304b8304cee06367a06.vfs.cloud9.us-east-2.amazonaws.com
+tags:
+  - name: contributions
+    description: Operations about contributions
+  - name: users
+    description: Operations about users
+paths:
+  '/api/v1/contributions/{id}':
+    delete:
+      summary: Destroy a contribution
+      description: Destroy a contribution
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: user_id
+          description: ID of the user
+          type: integer
+          format: int32
+          required: true
+        - in: path
+          name: id
+          description: ID of the contribution
+          type: string
+          required: true
+      responses:
+        '204':
+          description: Destroy a contribution
+      tags:
+        - contributions
+      operationId: deleteApiV1ContributionsId
+    put:
+      summary: Modify a contribution
+      description: Modify a contribution
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: formData
+          name: user_id
+          description: ID of the user
+          type: integer
+          format: int32
+          required: true
+        - in: path
+          name: id
+          description: ID of the contribution
+          type: string
+          required: true
+        - in: formData
+          name: title
+          description: Title of the contributions
+          type: string
+          required: false
+        - in: formData
+          name: url
+          description: Url of the contribution
+          type: string
+          required: false
+        - in: formData
+          name: text
+          description: Text of the contribution
+          type: string
+          required: false
+      responses:
+        '200':
+          description: Modify a contribution
+      tags:
+        - contributions
+      operationId: putApiV1ContributionsId
+    get:
+      summary: Return a contribution
+      description: Return a contribution
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: ID of the contribution
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Return a contribution
+      tags:
+        - contributions
+      operationId: getApiV1ContributionsId
+  /api/v1/contributions:
+    post:
+      summary: Create a contribution
+      description: Create a contribution
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: formData
+          name: user_id
+          description: ID of the user
+          type: integer
+          format: int32
+          required: true
+        - in: formData
+          name: title
+          description: Title of the contribution
+          type: string
+          required: true
+        - in: formData
+          name: url
+          description: Url of the contribution
+          type: string
+          required: false
+        - in: formData
+          name: text
+          description: Text of the contribution
+          type: string
+          required: false
+      responses:
+        '201':
+          description: Create a contribution
+      tags:
+        - contributions
+      operationId: postApiV1Contributions
+    get:
+      summary: Return all contributions filtered by type
+      description: Return all contributions filtered by type
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: type
+          description: >-
+            Type of the contribution, ask or new. If no type is specified,
+            return all url contributions
+          type: string
+          required: false
+      responses:
+        '200':
+          description: Return all contributions filtered by type
+      tags:
+        - contributions
+      operationId: getApiV1Contributions
+  '/api/v1/users/{id}':
+    get:
+      summary: Return a user
+      description: Return a user
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: ID of the user
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Return a user
+      tags:
+        - users
+      operationId: getApiV1UsersId
