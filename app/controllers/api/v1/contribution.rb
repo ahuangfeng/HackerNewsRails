@@ -2,7 +2,9 @@ module API
   module V1
     class Contribution < Grape::API
       include API::V1::Defaults
-      
+      # @Deprecated !
+      # FIXME: aquesta api era el que hi havia abans --> s'ha de desenvolupar a contributions_controller.rb de la carpeta api/v1
+
       resource :contributions do
         before do
          authenticate!
