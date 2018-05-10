@@ -19,7 +19,12 @@ Rails.application.routes.draw do
     post :upvote, on: :member
     post :upvotecomment, on: :member
     post :upvotereply, on: :member
+    post :destroy, on: :member
 
+  end
+  
+  resources :comments, except: :index do
+      post :destroy, on: :member
 
   end
   

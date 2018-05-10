@@ -69,6 +69,11 @@
             <%= comment.body %>
           </p>
           <%= link_to "Reply", controller: "comments", action: "show", id: comment.id %>
+          <% if logged_in?%>
+            <% if current_user.owns_comment?(comment) %>
+               <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+             <% end %>
+          <% end %>
         </div>
         <div>
           <% comment.replies.each do |reply| %>

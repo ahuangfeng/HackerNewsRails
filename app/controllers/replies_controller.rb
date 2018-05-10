@@ -34,17 +34,17 @@ class RepliesController < ApplicationController
     reply = Reply.find_by(id: params[:id])
     if current_user.owns_reply?(reply)
       @reply = reply
-      count = @reply.replies.count
+      count = @reply.replies.size+1
       @contribution = @reply.comment.contribution
       # TODO: s'ha de baixar el numComments! (no funciona!)
       @contribution.downComments(count)
       @contribution.save
       @reply.replies.destroy
-      # @reply.votes.destroy
+      #@reply.votes.destroy
       @reply.destroy
-      redirect_to root_path, notice: "Reply successful deleted"
+      redirect_back(fallback_location: root_path, notice: "Reply successful deleted")
     else
-      redirect_to root_path, notice: "Not authorized to edit this link"
+      redirect_back(fallback_location: root_path, notice: "Not authorized to delete this reply")
     end
   end
 
