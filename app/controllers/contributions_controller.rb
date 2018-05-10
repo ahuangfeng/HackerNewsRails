@@ -106,16 +106,15 @@ class ContributionsController < ApplicationController
   # DELETE /contributions/1.json
   def destroy
 
-    contribution = Contribution.find_by(id: params[:id])
-
-    if current_user.owns_contribution?(contribution)
-      @contribution = contribution
+    @contribution = Contribution.find_by(id: params[:id])
+    if current_user.owns_contribution?(@contribution)
       @contribution.comments.destroy
       @contribution.votes.destroy
       @contribution.destroy
-      redirect_to root_path, notice: "Link successful deleted"
+      redirect_back(fallback_location: root_path, notice: "Contribution successful deleted")
+
     else
-      redirect_to root_path, notice: "Not authorized to edit this link"
+      redirect_back(fallback_location: root_path, notice: "Not authorized to edit this contribution")
     end
   end
   
