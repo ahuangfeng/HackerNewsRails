@@ -40,9 +40,10 @@ Rails.application.routes.draw do
   #api
   namespace :api do
     namespace :v1 do
-      # resources :users
-      resources :contributions
-      # resources :replies
+      resources :users, only: [:index, :show, :update, :destroy]
+      resources :contributions, only: [:index, :show, :update, :destroy] # afegit aixo per a que no renderitzi els altres endpoints
+      resources :comments, only: [:index, :show, :update, :destroy]
+      resources :replies, only: [:index, :show, :update, :destroy]
       
       # resources :contributions, except: :index do
       #   resources :comments, only: [:create, :edit, :update, :destroy], except: :index do

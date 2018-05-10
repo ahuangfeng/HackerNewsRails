@@ -31,6 +31,14 @@ class Api::V1::ContributionsController <  ActionController::Base
       end
     end
   end
+
+  def new
+    notImplemented
+  end
+
+  def create
+    notImplemented
+  end
   
   #aqui s'hauria de mirar de agefir els commentaris i les replies
   def show
@@ -40,6 +48,22 @@ class Api::V1::ContributionsController <  ActionController::Base
     else
       render json: @contribution, status: 200
     end
+  end
+
+  def edit
+    notImplemented
+  end
+
+  def update
+    notImplemented
+  end
+
+  def destroy
+    notImplemented
+  end
+
+  def notImplemented
+    render json: {message: "Endpoint not implemented"}, :status => 501
   end
   
 end
