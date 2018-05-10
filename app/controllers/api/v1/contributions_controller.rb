@@ -2,6 +2,15 @@ class Api::V1::ContributionsController <  ActionController::Base
   protect_from_forgery with: :null_session
   before_action :destroy_session
 
+  #FIXME: Aixo es lo que fa resources
+  # GET 	      /photos 	-->         photos#index 	display a list of all photos
+  # GET 	      /photos/new 	-->     photos#new 	return an HTML form for creating a new photo
+  # POST 	      /photos 	-->         photos#create 	create a new photo
+  # GET       	/photos/:id 	-->     photos#show 	display a specific photo
+  # GET       	/photos/:id/edit 	--> photos#edit 	return an HTML form for editing a photo
+  # PATCH/PUT   /photos/:id 	-->     photos#update 	update a specific photo
+  # DELETE     	/photos/:id 	-->     photos#destroy 	delete a specific photo
+
   def destroy_session
     request.session_options[:skip] = true
   end
