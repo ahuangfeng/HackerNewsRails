@@ -3,6 +3,8 @@ info:
   version: 0.0.1
   title: "Hacker News - G11D"
 swagger: '2.0'
+consumes:
+  - application/json
 produces:
   - application/xml
   - application/json

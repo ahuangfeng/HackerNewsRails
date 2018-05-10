@@ -39,7 +39,37 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized 
     else
-      notImplemented
+      body = request.body.read
+      if params[:text] != '' && params[:url] != ''
+        render json: {message: "Unable to create, you must choose between type url or type ask"}, status: 400 and return
+      elsif params[:text] == '' && params[:url] == ''
+        render json: {message: "Cannot create a Contribution without text nor url"}, status: 400 and return
+      end
+      
+      @contribution = Contribution.new
+      @contribution.title = params[:title]
+      @contribution.user_id = @current_user.id
+      @contribution.numComments = 0
+      @contribution.points = 0
+
+      if params[:url] == '' and params[:text] != '' #es vacio o con espacios trolls
+        @contribution.text = params[:text]
+      elsif params[:url] != '' and @contribution.text == ''
+        existant = Contribution.find_by(url: params[:url])
+        if existant != nil
+          render json: {message: "This contribution already exists. Id of this contribution:" + existant.id}, status: 400 and return
+        else
+          @contribution.url = params[:url]
+        end
+      else
+        render json: {message: "Invalid contribution"}, status: 400 and return
+      end
+      
+      if @contribution.save
+        render json: @contribution, status: 200 and return
+      else
+        render json: @contribution.errors, status: 400 and return
+      end
     end
   end
   
@@ -87,7 +117,7 @@ class Api::V1::ContributionsController <  ActionController::Base
   end
 
   def send_unauthorized
-    render json: { message: "Invalid Token" }, status: 403
+    render json: { message: "Invalid Token or missing token" }, status: 403
   end
 
   private
