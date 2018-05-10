@@ -27,6 +27,22 @@ class CommentsController < ApplicationController
     end
   end
   
+  def destroy
+    @comment = Comment.find(params[:id])
+    if current_user.owns_comment?(@comment)
+      count = @comment.replies.size+1
+      @contribution = @comment.contribution
+      @contribution.downComments(count)
+      @contribution.save
+      @comment.replies.destroy
+      @comment.destroy
+        redirect_back(fallback_location: root_path, notice: "Comment successful deleted")
+    else
+        redirect_back(fallback_location: root_path, notice: "Not authorized to delete this reply")
+    end
+  end
+
+  
   
   private
     def comment_params
