@@ -12,9 +12,8 @@ class Api::V1::ContributionsController <  ActionController::Base
   # DELETE     	/photos/:id 	-->     photos#destroy 	delete a specific photo --> s'implementa
 
   def index
-    key = request.headers["Authorization"]
-    if key.nil?
-      render json: { message: "Missing/Wrong api-key" }, status: 401    
+    if !@current_user
+      send_unauthorized
     else
       if params[:type] == "ask"
         render json: ::Contribution.where(url: nil).order(points: :desc).all, status: 200
@@ -29,38 +28,66 @@ class Api::V1::ContributionsController <  ActionController::Base
   end
 
   def new
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   def create
-    notImplemented
+    if !@current_user
+      send_unauthorized 
+    else
+      notImplemented
+    end
   end
   
   #aqui s'hauria de mirar de agefir els commentaris i les replies
   # controlar autorització (error 501)
   def show
-    @contribution = ::Contribution.find_by_id(params[:id])
-    if @contribution.nil?
-      render json: { message: "Contribution not found"}, status: 404
+    if !@current_user
+      send_unauthorized
     else
-      render json: @contribution, status: 200
+      @contribution = ::Contribution.find_by_id(params[:id])
+      if @contribution.nil?
+        render json: { message: "Contribution not found"}, status: 404
+      else
+        render json: @contribution, status: 200
+      end
     end
   end
 
   def edit
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   def update
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   def destroy
-    notImplemented
+    if !@current_user
+      send_unauthorized 
+    else
+      notImplemented
+    end
   end
 
   def notImplemented
     render json: {message: "Endpoint not implemented"}, :status => 501
+  end
+
+  def send_unauthorized
+    render json: { message: "Invalid Token" }, status: 403
   end
 
   private
