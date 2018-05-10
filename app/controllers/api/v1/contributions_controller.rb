@@ -1,6 +1,5 @@
 class Api::V1::ContributionsController <  ActionController::Base
   protect_from_forgery with: :null_session
-  before_action :destroy_session
 
   #FIXME: Aixo es lo que fa resources
   # GET 	      /photos 	-->         photos#index 	display a list of all photos --> s'implementa
@@ -11,10 +10,6 @@ class Api::V1::ContributionsController <  ActionController::Base
   # PATCH/PUT   /photos/:id 	-->     photos#update 	update a specific photo --> s'implementa
   # DELETE     	/photos/:id 	-->     photos#destroy 	delete a specific photo --> s'implementa
 
-  def destroy_session
-    request.session_options[:skip] = true
-  end
- 
   def index
     key = request.headers["Authorization"]
     if key.nil?
