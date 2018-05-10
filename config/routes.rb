@@ -38,7 +38,10 @@ Rails.application.routes.draw do
   #api
   namespace :api do
     namespace :v1 do
-      get 'contributions' => 'contributions#index'
+      resources :users
+      resources :contributions
+      resources :replies
+      
       resources :contributions, except: :index do
         resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
           resources :replies, only: [:create, :edit, :update, :destroy]
@@ -52,6 +55,7 @@ Rails.application.routes.draw do
         post :downvotecomment, on: :member
       end
       
+      post 'contributions', to: 'contributions#create'
     end
   end
   
