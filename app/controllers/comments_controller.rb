@@ -25,12 +25,12 @@ class CommentsController < ApplicationController
     else
       redirect_to @contribution, notice: 'Comment was not saved. Ensure you have entered a comment'
     end
+  end
   
   
   private
     def comment_params
       params.require(:comment).permit(:body)
     end
-  end
   
 end
