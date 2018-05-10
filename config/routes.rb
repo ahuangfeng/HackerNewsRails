@@ -54,7 +54,7 @@ Rails.application.routes.draw do
       resources :comments, except: :index do
         post :downvotecomment, on: :member
       end
-      
+      get 'contributions/:id', to: 'contributions#show'
       post 'contributions', to: 'contributions#create'
     end
   end

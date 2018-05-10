@@ -12,8 +12,6 @@ host: 9a4175f3ab0e4304b8304cee06367a06.vfs.cloud9.us-east-2.amazonaws.com
 tags:
   - name: contributions
     description: Operations about contributions
-  - name: users
-    description: Operations about users
 paths:
   '/api/v1/contributions/{id}':
     delete:
