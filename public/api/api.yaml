@@ -172,7 +172,68 @@ paths:
             $ref: '#/definitions/Message'
       security:
       - api_key: []
-  /comments/{contributionId}:
+  /users/{id}:
+    get:
+      tags:
+      - Users
+      summary: "Return a user"
+      operationId: getUser
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the Users
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: "Invalid query"
+          schema:
+            $ref: '#/definitions/Message'
+        401:
+          description: "Not authorized"
+          schema:
+            $ref: '#/definitions/Message'
+      security:
+      - api_key: []
+    put:
+      tags:
+      - Users
+      summary: "Update a user"
+      operationId: updateUser
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the User
+      - name: body
+        in: body
+        schema:
+          $ref: "#/definitions/UpdateUserBody"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/Contribution'
+        404:
+          description: "User not found"
+          schema:
+            $ref: '#/definitions/Message'
+        401:
+          description: "Not authorized"
+          schema:
+            $ref: '#/definitions/Message'
+      security:
+      - api_key: []
+  /comments/{contributions_id}:
     get:
       tags:
       - Comments
@@ -181,7 +242,7 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: id
+      - name: contributions_id
         in: path
         type: string
         required: true
@@ -227,6 +288,15 @@ definitions:
         type: "string"
       text:
         type: "string"
+  UpdateUserBody:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      about:
+        type: "string"
   Contribution:
     type: "object"
     properties:
@@ -249,6 +319,21 @@ definitions:
         type: "number"
     xml:
       name: "Contribution"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      about:
+        type: "string"
+      createdAt:
+        type: "string"
+      api-key:
+        type: "string"
   Message:
     type: "object"
     properties:

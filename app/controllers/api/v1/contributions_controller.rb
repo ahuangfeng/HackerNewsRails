@@ -30,13 +30,6 @@ class Api::V1::ContributionsController <  ActionController::Base
     end
   end
 
-  def new
-    if !@current_user
-      send_unauthorized
-    else
-      notImplemented
-    end
-  end
 
   def create
     if !@current_user
@@ -80,7 +73,7 @@ class Api::V1::ContributionsController <  ActionController::Base
     end
   end
   
-  #aqui s'hauria de mirar de agefir els commentaris i les replies
+
   def show
     if !@current_user
       send_unauthorized
@@ -93,14 +86,7 @@ class Api::V1::ContributionsController <  ActionController::Base
       end
     end
   end
-
-  def edit # No s'implementa
-    if !@current_user
-      send_unauthorized
-    else
-      notImplemented
-    end
-  end
+  
 
   def update
     if !@current_user
@@ -110,7 +96,7 @@ class Api::V1::ContributionsController <  ActionController::Base
       if @contribution == nil
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       end
-      # TODO: Provar que un usuario amb un altre usuari no pot modificar una contribution no seva
+      
       if !@current_user.owns_contribution?(@contribution)
         render json: { message: "Not authorized to update this contribution"}, status: 403 and return
       end
@@ -162,10 +148,6 @@ class Api::V1::ContributionsController <  ActionController::Base
         render json: { message: "Not authorized to delete this contribution"}, status: 403 and return
       end
     end
-  end
-
-  def notImplemented
-    render json: {message: "Endpoint not implemented"}, :status => 501
   end
 
   def send_unauthorized
