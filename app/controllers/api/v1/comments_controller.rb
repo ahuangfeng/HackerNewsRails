@@ -11,7 +11,7 @@ class Api::V1::CommentsController <  ActionController::Base
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       else
         @comments = Comment.where(contribution_id: params[:contribution_id])
-        render json: @comments, status: 200
+        render json: @comments, each_serializer: CommentSimpleSerializer, status: 200 and return
       end
     end
   end
@@ -26,7 +26,21 @@ class Api::V1::CommentsController <  ActionController::Base
   end
   
   def show
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      @contribution = Contribution.find_by_id(params[:contribution_id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      else
+        @comment = Comment.find_by_id(params[:comment_id])
+        if @comment.nil?
+          render json: { message: "This comment doesn't exist"}, status: 404 and return
+        else
+          render json: @comment, each_serializer: CommentSerializer, status: 200 and return
+        end
+      end
+    end
   end
 
   # no hauria de entrar mai aqui

@@ -264,6 +264,42 @@ paths:
             $ref: '#/definitions/Message'
       security:
       - api_key: []
+  /contributions/{contribution_id}/comments/{comment_id}:
+    get:
+      tags:
+      - Comments
+      summary: "Return all the comments from a contribution."
+      operationId: getCommetsfromContributions
+      produces:
+      - application/json
+      parameters:
+      - name: contribution_id
+        in: path
+        type: string
+        required: true
+        description: Id of the Contribution
+      - name: comment_id
+        in: path
+        type: string
+        required: true
+        description: Id of the Comment
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comment"
+        401:
+          description: "Not authorized"
+          schema:
+            $ref: '#/definitions/Message'
+        404:
+          description: "Contribution not found"
+          schema:
+            $ref: '#/definitions/Message'
+      security:
+      - api_key: []
 securityDefinitions:
   api_key:
     type: apiKey

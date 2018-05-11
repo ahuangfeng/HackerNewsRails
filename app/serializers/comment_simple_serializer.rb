@@ -2,8 +2,11 @@ require 'action_view'
 require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 class CommentSimpleSerializer < ActiveModel::Serializer
-  attributes :id, :username, :created_at, :body
-  #has_many :votecomments
+  attributes :id, :points, :username, :created_at, :body
+  
+  def points
+    object.votecomments.count
+  end
   
   def username
     #object es el this o self en C
