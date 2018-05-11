@@ -65,10 +65,11 @@ class Api::V1::CommentsController <  ActionController::Base
           render json: { message: "This comment doesn't exist"}, status: 404 and return
         else
           if @current_user.owns_comment?(@comment)
+            #TODO: MIRAR ABANS DE BORRAR EL NUMCOMMENTS QUE BAIXI
             @comment.replies.destroy
             @comment.votecomments.destroy
             @comment.destroy
-            render json: { message: "Contribution deleted successfully"}, status: 200 and return
+            render json: { message: "Comment deleted successfully"}, status: 200 and return
           else
             render json: { message: "Not authorized to delete this contribution"}, status: 403 and return
           end
