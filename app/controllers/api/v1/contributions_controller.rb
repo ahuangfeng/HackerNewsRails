@@ -25,9 +25,8 @@ class Api::V1::ContributionsController <  ActionController::Base
         render json: { message: "Bad Request" }, status: 400 and return
       end
       
-      # desde front el 204 no se fins a quin punt esta guay
       if @contributions.count == 0
-        render json: @contributions, status: 204
+        render json: @contributions, status: 200
       else
         render json: @contributions, status: 200
       end
@@ -85,7 +84,6 @@ class Api::V1::ContributionsController <  ActionController::Base
   end
   
   #aqui s'hauria de mirar de agefir els commentaris i les replies
-  # controlar autorització (error 501)
   def show
     if !@current_user
       send_unauthorized

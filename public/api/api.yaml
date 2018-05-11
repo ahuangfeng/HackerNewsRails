@@ -14,7 +14,7 @@ host: localhost:3000
 basePath: "/api/v1"
 tags:
   - name: Contributions
-    description: "All contributions REST calls"
+    description: "All Contributions REST calls"
   - name: Comments
     description: "All Comments REST calls"
   - name: Users
@@ -140,10 +140,6 @@ paths:
             $ref: '#/definitions/Message'
         401:
           description: "Not authorized"
-          schema:
-            $ref: '#/definitions/Message'
-        501:
-          description: "Function not implemented"
           schema:
             $ref: '#/definitions/Message'
       security:
