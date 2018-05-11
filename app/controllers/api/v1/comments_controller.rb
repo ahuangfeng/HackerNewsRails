@@ -53,7 +53,28 @@ class Api::V1::CommentsController <  ActionController::Base
   end
 
   def destroy
-    notImplemented
+    if !@current_user
+      send_unauthorized 
+    else
+      @contribution = Contribution.find_by(id: params[:id])
+      if @contribution == nil
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      else
+         @comment = Comment.find_by_id(params[:id])
+        if @comment.nil?
+          render json: { message: "This comment doesn't exist"}, status: 404 and return
+        else
+          if @current_user.owns_comment?(@comment)
+            @comment.replies.destroy
+            @comment.votecomments.destroy
+            @comment.destroy
+            render json: { message: "Contribution deleted successfully"}, status: 200 and return
+          else
+            render json: { message: "Not authorized to delete this contribution"}, status: 403 and return
+          end
+        end
+      end
+    end
   end
 
   def notImplemented
