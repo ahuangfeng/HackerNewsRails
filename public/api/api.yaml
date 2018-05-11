@@ -268,8 +268,8 @@ paths:
     get:
       tags:
       - Comments
-      summary: "Return all the comments from a contribution."
-      operationId: getCommetsfromContributions
+      summary: "Return a comment from a contribution."
+      operationId: getCommetfromContribution
       produces:
       - application/json
       parameters:
