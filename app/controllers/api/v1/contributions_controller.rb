@@ -88,7 +88,7 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized
     else
-      @contribution = ::Contribution.find_by_id(params[:id])
+      @contribution = Contribution.find_by_id(params[:id])
       if @contribution.nil?
         render json: { message: "Contribution not found"}, status: 404 and return 
       else
