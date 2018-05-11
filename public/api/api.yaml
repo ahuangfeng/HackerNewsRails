@@ -14,7 +14,11 @@ host: localhost:3000
 basePath: "/api/v1"
 tags:
   - name: Contributions
-    description: "All comtributions REST calls"
+    description: "All contributions REST calls"
+  - name: Comments
+    description: "All Comments REST calls"
+  - name: Users
+    description: "All Comments REST calls"
 schemes:
 - "http"
 - "https"
@@ -77,10 +81,6 @@ paths:
           description: "Contribution already exists"
           schema:
             $ref: '#/definitions/Message'
-        500:
-          description: "Internal server Error"
-          schema:
-            $ref: '#/definitions/Message'
       security:
       - api_key: []
   /contributions/{id}:
@@ -92,11 +92,11 @@ paths:
       produces:
       - application/json
       parameters:
-       - name: id
-         in: path
-         type: string
-         required: true
-         description: Id of the Contribution
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the Contribution
       responses:
         200:
           description: "Successful operation"
@@ -120,15 +120,15 @@ paths:
       produces:
       - application/json
       parameters:
-       - name: id
-         in: path
-         type: string
-         required: true
-         description: Id of the Contribution
-       - name: body
-         in: body
-         schema:
-           $ref: "#/definitions/UpdateContributionBody"
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the Contribution
+      - name: body
+        in: body
+        schema:
+          $ref: "#/definitions/UpdateContributionBody"
       responses:
         200:
           description: "Successful operation"
@@ -156,11 +156,11 @@ paths:
       produces:
       - application/json
       parameters:
-       - name: id
-         in: path
-         type: string
-         required: true
-         description: Id of the Contribution
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the Contribution
       responses:
         200:
           description: "Successful operation"
@@ -172,6 +172,37 @@ paths:
             $ref: '#/definitions/Message'
         404:
           description: "Contribution not found"
+          schema:
+            $ref: '#/definitions/Message'
+      security:
+      - api_key: []
+  /comments/{contributionId}:
+    get:
+      tags:
+      - Comments
+      summary: "Return all the comments from a contribution."
+      operationId: getCommetsfromContributions
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the Contribution
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comment"
+        400:
+          description: "Invalid query"
+          schema:
+            $ref: '#/definitions/Message'
+        401:
+          description: "Not authorized"
           schema:
             $ref: '#/definitions/Message'
       security:
@@ -226,4 +257,12 @@ definitions:
     type: "object"
     properties:
       message:
+        type: "string"
+  Comment: 
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "A definir el objeto comment"
+      content:
         type: "string"
