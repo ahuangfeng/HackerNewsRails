@@ -242,7 +242,7 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: contributions_id
+      - name: contribution_id
         in: path
         type: string
         required: true
