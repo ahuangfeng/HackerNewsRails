@@ -108,6 +108,10 @@ class Api::V1::ContributionsController <  ActionController::Base
       if @contribution == nil
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       end
+      # TODO: Provar que un usuario amb un altre usuari no pot modificar una contribution no seva
+      if !@current_user.owns_contribution?(@contribution)
+        render json: { message: "Not authorized to destroy this contribution"}, status: 403 and return
+      end
 
       if params[:title] != nil
         @contribution.title = params[:title]
@@ -143,7 +147,18 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized 
     else
-      notImplemented
+      @contribution = Contribution.find(params[:id]);
+      if @contribution == nil
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      end
+      if @current_user.owns_contribution?(@contribution)
+        @contribution.comments.destroy
+        @contribution.votes.destroy
+        @contribution.destroy
+        render json: { message: "Contribution deleted successfully"}, status: 202 and return
+      else
+        render json: { message: "Not authorized to destroy this contribution"}, status: 403 and return
+      end
     end
   end
 
