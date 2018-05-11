@@ -16,13 +16,20 @@ class Api::V1::ContributionsController <  ActionController::Base
       send_unauthorized
     else
       if params[:type] == "ask"
-        render json: ::Contribution.where(url: nil).order(points: :desc).all, status: 200
+        @contributions = Contribution.where(url: nil).order(points: :desc).all
       elsif params[:type] == "new"
-        render json: ::Contribution.order(id: :desc).all, status: 200
+        @contributions = Contribution.order(id: :desc).all
       elsif params[:type] == nil
-        render json: ::Contribution.where(text: nil).hottest, status: 200
+        @contributions = Contribution.where(text: nil).hottest
       else
-        render json: { message: "Bad Request" }, status: 400
+        render json: { message: "Bad Request" }, status: 400 and return
+      end
+      
+      # desde front el 204 no se fins a quin punt esta guay
+      if @contributions.count == 0
+        render json: @contributions, status: 204
+      else
+        render json: @contributions, status: 200
       end
     end
   end
@@ -110,7 +117,7 @@ class Api::V1::ContributionsController <  ActionController::Base
       end
       # TODO: Provar que un usuario amb un altre usuari no pot modificar una contribution no seva
       if !@current_user.owns_contribution?(@contribution)
-        render json: { message: "Not authorized to destroy this contribution"}, status: 403 and return
+        render json: { message: "Not authorized to update this contribution"}, status: 403 and return
       end
 
       if params[:title] != nil
@@ -157,7 +164,7 @@ class Api::V1::ContributionsController <  ActionController::Base
         @contribution.destroy
         render json: { message: "Contribution deleted successfully"}, status: 202 and return
       else
-        render json: { message: "Not authorized to destroy this contribution"}, status: 403 and return
+        render json: { message: "Not authorized to delete this contribution"}, status: 403 and return
       end
     end
   end
