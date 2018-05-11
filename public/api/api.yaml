@@ -87,7 +87,7 @@ paths:
     get:
       tags:
       - Contributions
-      summary: "Return all the contributions. They can be filtered"
+      summary: "Return a contribution by Id."
       operationId: getContributionById
       produces:
       - application/json
