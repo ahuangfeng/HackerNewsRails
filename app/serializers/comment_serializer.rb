@@ -1,4 +1,7 @@
 class CommentSerializer < ActiveModel::Serializer
-  attributes :id, :body
-  has_many :replies
+  attributes :id, :body, :replies
+  
+  def replies
+    object.replies
+  end
 end
