@@ -104,7 +104,7 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized
     else
-      @contribution = Contribution.find(params[:id]);
+      @contribution = Contribution.find_by(id: params[:id])
       if @contribution == nil
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       end
@@ -147,7 +147,7 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized 
     else
-      @contribution = Contribution.find(params[:id]);
+      @contribution = Contribution.find_by(id: params[:id])
       if @contribution == nil
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       end
