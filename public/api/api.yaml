@@ -46,10 +46,6 @@ paths:
           description: "Not authorized"
           schema:
             $ref: '#/definitions/errorMessage'
-        501:
-          description: "Function not implemented"
-          schema:
-            $ref: '#/definitions/errorMessage'
       security:
       - api_key: []
     post:
@@ -65,20 +61,20 @@ paths:
         schema:
           $ref: "#/definitions/ContributionBody"
       responses:
-        200:
-          description: "Successful operation"
+        201:
+          description: "Successfully created"
           schema:
             $ref: '#/definitions/Contribution'
         400:
-          description: "Contribution already exists"
+          description: "Bad Request"
           schema:
             $ref: '#/definitions/errorMessage'
         401:
           description: "Not authorized"
           schema:
             $ref: '#/definitions/errorMessage'
-        501:
-          description: "Function not implemented"
+        409:
+          description: "Contribution already exists"
           schema:
             $ref: '#/definitions/errorMessage'
       security:
@@ -102,16 +98,12 @@ paths:
           description: "Successful operation"
           schema:
             $ref: '#/definitions/Contribution'
-        404:
-          description: "Contribution not found"
-          schema:
-            $ref: '#/definitions/errorMessage'
         401:
           description: "Not authorized"
           schema:
             $ref: '#/definitions/errorMessage'
-        501:
-          description: "Function not implemented"
+        404:
+          description: "Contribution not found"
           schema:
             $ref: '#/definitions/errorMessage'
       security:

@@ -57,7 +57,7 @@ class Api::V1::ContributionsController <  ActionController::Base
       elsif params[:url] != '' and @contribution.text == ''
         existant = Contribution.find_by(url: params[:url])
         if existant != nil
-          render json: {message: "This contribution already exists. Id of this contribution:" + existant.id}, status: 400 and return
+          render json: {message: "This contribution already exists. Id of this contribution:" + existant.id}, status: 409 and return
         else
           @contribution.url = params[:url]
         end
@@ -66,9 +66,9 @@ class Api::V1::ContributionsController <  ActionController::Base
       end
       
       if @contribution.save
-        render json: @contribution, status: 200 and return
+        render json: @contribution, status: 201 and return
       else
-        render json: @contribution.errors, status: 400 and return
+        render json: @contribution.errors, status: 500 and return
       end
     end
   end
@@ -117,7 +117,7 @@ class Api::V1::ContributionsController <  ActionController::Base
   end
 
   def send_unauthorized
-    render json: { message: "Invalid Token or missing token" }, status: 403
+    render json: { message: "Invalid Token or missing token" }, status: 401
   end
 
   private
