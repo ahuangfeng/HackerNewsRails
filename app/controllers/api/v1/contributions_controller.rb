@@ -25,11 +25,8 @@ class Api::V1::ContributionsController <  ActionController::Base
         render json: { message: "Bad Request" }, status: 400 and return
       end
       
-      if @contributions.count == 0
-        render json: @contributions, status: 200
-      else
-        render json: @contributions, status: 200
-      end
+      render json: @contributions, each_serializer: ContributionSimpleSerializer, status: 200
+      
     end
   end
 
@@ -76,7 +73,7 @@ class Api::V1::ContributionsController <  ActionController::Base
       end
       
       if @contribution.save
-        render json: @contribution, status: 201 and return
+        render json: @contribution, serializer: ContributionSimpleSerializer, status: 201 and return
       else
         render json: @contribution.errors, status: 500 and return
       end
@@ -88,11 +85,11 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized
     else
-      @contribution = ::Contribution.find_by_id(params[:id])
+      @contribution = Contribution.find_by_id(params[:id])
       if @contribution.nil?
         render json: { message: "Contribution not found"}, status: 404 and return 
       else
-        render json: @contribution, status: 200
+        render json: @contribution, each_serializer: ContributionSerializer, status: 200
       end
     end
   end
@@ -138,12 +135,12 @@ class Api::V1::ContributionsController <  ActionController::Base
 
       if @contribution.changed?
         if @contribution.save
-          render json: @contribution, status: 200 and return 
+          render json: @contribution, serializer: ContributionSimpleSerializer, status: 200 and return 
         else
           render json: @contribution.errors, status: 500 and return 
         end
       else
-        render json: @contribution, status: 200 and return
+        render json: @contribution, serializer: ContributionSimpleSerializer, status: 200 and return
       end
     end
   end
@@ -160,7 +157,7 @@ class Api::V1::ContributionsController <  ActionController::Base
         @contribution.comments.destroy
         @contribution.votes.destroy
         @contribution.destroy
-        render json: { message: "Contribution deleted successfully"}, status: 202 and return
+        render json: { message: "Contribution deleted successfully"}, status: 200 and return
       else
         render json: { message: "Not authorized to delete this contribution"}, status: 403 and return
       end
