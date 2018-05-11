@@ -264,7 +264,7 @@ paths:
             $ref: '#/definitions/Message'
       security:
       - api_key: []
-  /contributions/{contribution_id}/comments/{comment_id}:
+  /contributions/{contribution_id}/comments/{id}:
     get:
       tags:
       - Comments
@@ -278,7 +278,7 @@ paths:
         type: string
         required: true
         description: Id of the Contribution
-      - name: comment_id
+      - name: id
         in: path
         type: string
         required: true

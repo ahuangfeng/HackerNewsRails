@@ -33,7 +33,7 @@ class Api::V1::CommentsController <  ActionController::Base
       if @contribution.nil?
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       else
-        @comment = Comment.find_by_id(params[:comment_id])
+        @comment = Comment.find_by_id(params[:id])
         if @comment.nil?
           render json: { message: "This comment doesn't exist"}, status: 404 and return
         else
