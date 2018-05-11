@@ -12,9 +12,9 @@ class Api::V1::UsersController <  ActionController::Base
         render json: { message: "Contribution not found"}, status: 404 and return
       else
         if @user.id == @current_user.id
-          render json: @user, each_serializer: UserSerializer, status: 200
+          render json: @user, serializer: UserSerializer, status: 200 and return
         else
-          render json: @user, each_serializer: UserSimpleSerializer, status: 200
+          render json: @user, serializer: UserSimpleSerializer, status: 200 and return
         end
       end
     end
