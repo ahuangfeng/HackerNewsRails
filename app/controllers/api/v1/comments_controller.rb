@@ -56,7 +56,7 @@ class Api::V1::CommentsController <  ActionController::Base
     if !@current_user
       send_unauthorized 
     else
-      @contribution = Contribution.find_by(id: params[:id])
+      @contribution = Contribution.find_by(id: params[:contribution_id])
       if @contribution == nil
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       else
