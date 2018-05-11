@@ -256,7 +256,7 @@ paths:
           description: "Not found"
       security:
       - api_key: []
-    destroy:
+    delete:
       tags:
       - Comments
       summary: "Delete a Comment"
