@@ -25,7 +25,7 @@ class Api::V1::ContributionsController <  ActionController::Base
         render json: { message: "Bad Request" }, status: 400 and return
       end
       
-      render json: @contributions, serializer: ContributionSimpleSerializer, status: 200
+      render json: @contributions, each_serializer: ContributionSimpleSerializer, status: 200
       
     end
   end
@@ -89,7 +89,7 @@ class Api::V1::ContributionsController <  ActionController::Base
       if @contribution.nil?
         render json: { message: "Contribution not found"}, status: 404 and return 
       else
-        render json: @contribution, serializer: ContributionSerializer, status: 200
+        render json: @contribution, each_serializer: ContributionSerializer, status: 200
       end
     end
   end
@@ -157,7 +157,7 @@ class Api::V1::ContributionsController <  ActionController::Base
         @contribution.comments.destroy
         @contribution.votes.destroy
         @contribution.destroy
-        render json: { message: "Contribution deleted successfully"}, status: 202 and return
+        render json: { message: "Contribution deleted successfully"}, status: 200 and return
       else
         render json: { message: "Not authorized to delete this contribution"}, status: 403 and return
       end
