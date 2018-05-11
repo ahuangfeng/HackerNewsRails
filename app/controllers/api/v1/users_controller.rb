@@ -2,6 +2,10 @@ class Api::V1::UsersController <  ActionController::Base
   protect_from_forgery with: :null_session
   before_action :current_user
 
+  def create
+    
+  end
+  
   
   def show
     if !@current_user
@@ -55,7 +59,11 @@ class Api::V1::UsersController <  ActionController::Base
       end
     end
   end
-
+  
+  def destroy
+    
+  end
+  
   def send_unauthorized
     render json: { message: "Invalid Token or missing token" }, status: 401
   end

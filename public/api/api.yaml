@@ -18,7 +18,7 @@ tags:
   - name: Comments
     description: "All Comments REST calls"
   - name: Users
-    description: "All Comments REST calls"
+    description: "All Users REST calls"
 schemes:
 - "http"
 - "https"
@@ -233,7 +233,7 @@ paths:
             $ref: '#/definitions/Message'
       security:
       - api_key: []
-  /comments/{contributions_id}:
+  /contributions/{contribution_id}/comments:
     get:
       tags:
       - Comments
@@ -254,12 +254,12 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Comment"
-        400:
-          description: "Invalid query"
-          schema:
-            $ref: '#/definitions/Message'
         401:
           description: "Not authorized"
+          schema:
+            $ref: '#/definitions/Message'
+        404:
+          description: "Contribution not found"
           schema:
             $ref: '#/definitions/Message'
       security:
