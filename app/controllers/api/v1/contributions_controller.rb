@@ -39,10 +39,9 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized 
     else
-      if params[:text] != '' && params[:url] != ''
-        render json: {message: "Unable to create, you must choose between type url or type ask"}, status: 400 and return
-      elsif params[:text] == '' && params[:url] == ''
-        render json: {message: "Cannot create a Contribution without text nor url"}, status: 400 and return
+
+      if params[:title] == nil or params[:title] == ''
+        render json: {message: "The title field is required"}, status: 400 and return
       end
       
       @contribution = Contribution.new
@@ -51,17 +50,23 @@ class Api::V1::ContributionsController <  ActionController::Base
       @contribution.numComments = 0
       @contribution.points = 0
 
-      if params[:url] == '' and params[:text] != '' #es vacio o con espacios trolls
-        @contribution.text = params[:text]
-      elsif params[:url] != '' and @contribution.text == ''
+      if params[:url] != nil and params[:url] != ''
+        if params[:text] != nil and params[:text] != ''
+          render json: {message: "Unable to create, you must choose between type url or type ask"}, status: 400 and return
+        end
         existant = Contribution.find_by(url: params[:url])
         if existant != nil
-          render json: {message: "This contribution already exists. Id of this contribution:" + existant.id}, status: 409 and return
+          render json: {message: "This contribution already exists. Id of this contribution:" + existant.id.to_s}, status: 409 and return
         else
           @contribution.url = params[:url]
         end
+      elsif params[:text] != nil and params[:text] != ''
+        if params[:url] != nil and params[:url] != ''
+          render json: {message: "Unable to create, you must choose between type url or type ask"}, status: 400 and return
+        end
+        @contribution.text = params[:text]
       else
-        render json: {message: "Invalid contribution"}, status: 400 and return
+        render json: {message: "Cannot create a Contribution without text nor url"}, status: 400 and return
       end
       
       if @contribution.save
