@@ -39,7 +39,6 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized 
     else
-      body = request.body.read
       if params[:text] != '' && params[:url] != ''
         render json: {message: "Unable to create, you must choose between type url or type ask"}, status: 400 and return
       elsif params[:text] == '' && params[:url] == ''
@@ -81,14 +80,14 @@ class Api::V1::ContributionsController <  ActionController::Base
     else
       @contribution = ::Contribution.find_by_id(params[:id])
       if @contribution.nil?
-        render json: { message: "Contribution not found"}, status: 404
+        render json: { message: "Contribution not found"}, status: 404 and return 
       else
         render json: @contribution, status: 200
       end
     end
   end
 
-  def edit
+  def edit # No s'implementa
     if !@current_user
       send_unauthorized
     else
@@ -100,7 +99,38 @@ class Api::V1::ContributionsController <  ActionController::Base
     if !@current_user
       send_unauthorized
     else
-      notImplemented
+      @contribution = Contribution.find(params[:id]);
+      if @contribution == nil
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      end
+
+      if params[:title] != nil
+        @contribution.title = params[:title]
+      end
+
+      if params[:url] != nil and params[:url] != ''
+        if params[:text] != nil and params[:text] != ''
+          render json: { message: "Unable to update, you must choose between type url or type ask"}, status: 400 and return
+        end
+        @contribution.url = params[:url]
+        @contribution.text = nil
+      elsif params[:text] != nil and params[:text] != ''
+        if params[:url] != nil and params[:url] != ''
+          render json: { message: "Unable to update, you must choose between type url or type ask"}, status: 400 and return
+        end
+        @contribution.text = params[:text]
+        @contribution.url = nil
+      end
+
+      if @contribution.changed?
+        if @contribution.save
+          render json: @contribution, status: 200 and return 
+        else
+          render json: @contribution.errors, status: 500 and return 
+        end
+      else
+        render json: @contribution, status: 200 and return
+      end
     end
   end
 
