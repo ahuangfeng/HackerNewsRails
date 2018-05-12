@@ -34,11 +34,11 @@ class RepliesController < ApplicationController
     reply = Reply.find_by(id: params[:id])
     if current_user.owns_reply?(reply)
       @reply = reply
-      count = @reply.replies.size+1
       @contribution = @reply.comment.contribution
       # TODO: s'ha de baixar el numComments! (no funciona!)
       # @contribution.downComments(count)
-      @contribution.numComments -= @reply.deep_count - 1
+      @contribution.numComments -= @reply.deep_count
+      @contribution.numComments -= 1
       @contribution.save
       @reply.replies.destroy
       #@reply.votes.destroy
