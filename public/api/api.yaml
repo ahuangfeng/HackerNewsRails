@@ -228,7 +228,7 @@ paths:
     delete:
       tags:
       - Users
-      summary: "Deletes a user"
+      summary: "Deletes a user and all its data"
       operationId: deleteUser
       produces:
       - application/json

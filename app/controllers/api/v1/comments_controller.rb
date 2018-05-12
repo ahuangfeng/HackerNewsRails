@@ -11,7 +11,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       else
         @comments = Comment.where(contribution_id: params[:contribution_id])
-        render json: @comments, each_serializer: CommentSimpleSerializer, status: 200 and return
+        render json: @comments, each_serializer: CommentSerializer, status: 200 and return
       end
     end
   end
@@ -33,7 +33,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         
         if @contribution.save
           if @comment.save
-            render json: @comment, serializer: CommentSimpleSerializer, status: 201 and return
+            render json: @comment, serializer: CommentSerializer, status: 201 and return
           else
             render json: @comment.errors, status: 500 and return
           end
@@ -57,7 +57,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         if @comment.nil?
           render json: { message: "This comment doesn't exist"}, status: 404 and return
         else
-          render json: @comment, each_serializer: CommentSerializer, status: 200 and return
+          render json: @comment, serializer: CommentRepliesSerializer, status: 200 and return
         end
       end
     end
@@ -81,12 +81,12 @@ class Api::V1::CommentsController <  Api::V1::ApiController
             
             if @comment.changed?
               if @comment.save
-                render json: @comment, serializer: CommentSimpleSerializer, status: 200 and return
+                render json: @comment, serializer: CommentSerializer, status: 200 and return
               else
                 render json: @comment.errors, status: 500 and return
               end
             else
-              render json: @comment, serializer: CommentSimpleSerializer, status: 200 and return
+              render json: @comment, serializer: CommentSerializer, status: 200 and return
             end
             
           else

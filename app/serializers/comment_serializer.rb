@@ -2,7 +2,7 @@ require 'action_view'
 require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 class CommentSerializer < ActiveModel::Serializer
-  attributes :id, :points, :username, :created_at, :body, :replies
+  attributes :id, :points, :username, :created_at, :body
   
   def points
     object.votecomments.count
@@ -17,7 +17,4 @@ class CommentSerializer < ActiveModel::Serializer
     time_ago_in_words(object.created_at) + " ago"
   end
   
-  def replies
-    object.replies
-  end
 end
