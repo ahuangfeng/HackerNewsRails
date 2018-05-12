@@ -25,7 +25,7 @@ class Api::V1::ContributionsController <  Api::V1::ApiController
         render json: { message: "Bad Request" }, status: 400 and return
       end
       
-      render json: @contributions, each_serializer: ContributionSimpleSerializer, status: 200
+      render json: @contributions, each_serializer: ContributionSimpleSerializer, status: 200 and return
       
     end
   end
@@ -82,7 +82,7 @@ class Api::V1::ContributionsController <  Api::V1::ApiController
       if @contribution.nil?
         render json: { message: "Contribution not found"}, status: 404 and return 
       else
-        render json: @contribution, each_serializer: ContributionSerializer, status: 200
+        render json: @contribution, each_serializer: ContributionSerializer, status: 200 and return
       end
     end
   end
@@ -151,7 +151,7 @@ class Api::V1::ContributionsController <  Api::V1::ApiController
   end
 
   def send_unauthorized
-    render json: { message: "Invalid Token or missing token" }, status: 401
+    render json: { message: "Invalid Token or missing token" }, status: 401 and return
   end
 
 end

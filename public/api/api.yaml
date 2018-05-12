@@ -241,6 +241,8 @@ paths:
         description: Id of the Contribution
       - name: body
         in: body
+        type: string
+        required: true
         schema:
           $ref: "#/definitions/CommentBody"
       responses:
@@ -304,6 +306,8 @@ paths:
         description: Id of the Comment
       - name: body
         in: body
+        type: string
+        required: true
         schema:
           $ref: "#/definitions/UpdateCommentBody"
       responses:

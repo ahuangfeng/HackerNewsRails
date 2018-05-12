@@ -65,7 +65,36 @@ class Api::V1::CommentsController <  Api::V1::ApiController
   
 
   def update
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+       @contribution = Contribution.find_by_id(params[:contribution_id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      else
+        @comment = Comment.find_by_id(params[:id])
+        if @comment.nil?
+          render json: { message: "This comment doesn't exist"}, status: 404 and return
+        else
+          if @current_user.owns_comment?(@comment)
+            @comment.body = params[:body]
+            
+            if @comment.changed?
+              if @comment.save
+                render json: @comment, serializer: CommentSimpleSerializer, status: 200 and return
+              else
+                render json: @comment.errors, status: 500 and return
+              end
+            else
+              render json: @comment, serializer: CommentSimpleSerializer, status: 200 and return
+            end
+            
+          else
+            render json: { message: "Not authorized to update this comment"}, status: 403 and return
+          end
+        end 
+      end
+    end
   end
 
   def destroy
@@ -92,15 +121,15 @@ class Api::V1::CommentsController <  Api::V1::ApiController
                render json: @contribution.errors, status: 500 and return 
             end
           else
-            render json: { message: "Not authorized to delete this contribution"}, status: 403 and return
+            render json: { message: "Not authorized to delete this comment"}, status: 403 and return
           end
         end
       end
     end
   end
 
-  def notImplemented
-    render json: {message: "Endpoint not implemented"}, :status => 501
+  def send_unauthorized
+    render json: { message: "Invalid Token or missing token" }, status: 401 and return
   end
   
 end
