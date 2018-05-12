@@ -582,7 +582,31 @@ paths:
           description: "Not found"
       security:
       - api_key: []
-
+  /replies/{id}/reply:
+    post:
+      tags:
+      - Replies
+      summary: "Reply another reply"
+      operationId: replyAnotherReply
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the reply
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/Reply'
+        401:
+          description: "Not authorized"
+        404:
+          description: "Not found"
+      security:
+      - api_key: []
 securityDefinitions:
   api_key:
     type: apiKey

@@ -21,7 +21,6 @@ class Api::V1::UsersController < Api::V1::ApiController
     else
       render json: @user.errors, status: 500 and return
     end
-
   end
   
   def show

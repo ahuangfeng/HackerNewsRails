@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       end
       
       get 'users/:id/comments', to: 'users#threads'
+      post 'replies/:id/reply' => 'replies#createWithParent'
       
     end
   end

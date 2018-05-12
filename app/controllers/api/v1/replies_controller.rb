@@ -60,6 +60,25 @@ class Api::V1::RepliesController <  Api::V1::ApiController
       end
     end
   end
+
+
+  def createWithParent
+    send_unauthorized
+    # @parentReply = Reply.find(reply_params[:id])
+    # @comment = @parentReply.comment
+    # contributionID = @comment.contribution.id.to_s
+
+    # commentID = @comment.id.to_s
+    # @reply = @parentReply.replies.new(user: current_user, body: reply_params[:body],comment: @comment)
+    # if @reply.save
+    #   @comment.contribution.upComments()
+    #   @comment.contribution.save
+    #   redirect_to "/contributions/"+contributionID, notice: 'Reply created'
+    # else
+    #   redirect_to "/comments/"+commentID, notice: @reply.save!
+    #   # notice: 'Reply was not saved. Ensure you have entered a Reply'
+    # end
+  end
   
   def show
     if !@current_user
