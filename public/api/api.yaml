@@ -239,7 +239,7 @@ paths:
         type: string
         required: true
         description: Id of the Contribution
-      - body:
+      - name: body
         in: body
         schema:
           $ref: "#/definitions/CommentBody"
@@ -291,7 +291,6 @@ paths:
       operationId: updateComment
       produces:
       - application/json
-      parameters:
       parameters:
       - name: contribution_id
         in: path
