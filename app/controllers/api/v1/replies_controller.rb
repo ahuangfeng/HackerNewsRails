@@ -111,11 +111,15 @@ class Api::V1::RepliesController <  Api::V1::ApiController
         if @reply.nil?
           render json: { message: "This reply doesn't exist."}, status: 404 and return
         end
-        @reply.body = params[:body]
-        if @reply.save
-          render json: @reply, serializer: ReplySerializer, status: 200 and return
+        if @current_user.owns_reply?(@reply)
+          @reply.body = params[:body]
+          if @reply.save
+            render json: @reply, serializer: ReplySerializer, status: 200 and return
+          else
+            render json: @reply.errors, status: 500 and return
+          end
         else
-          render json: @reply.errors, status: 500 and return
+          render json: { message: "Not authorized to delete this reply" }, status: 403 and return
         end
       end
     end
@@ -137,13 +141,18 @@ class Api::V1::RepliesController <  Api::V1::ApiController
         if @reply.nil?
           render json: { message: "This reply doesn't exist."}, status: 404 and return
         end
-        elems_d = @reply.deep_count
-        elems_d += 1
-        @contribution.numComments -= (elems_d)
-        @contribution.save
-        @reply.replies.destroy_all
-        @reply.destroy
-        render json: { message: "This reply has been deleted"}, status: 200 and return
+
+        if @current_user.owns_reply?(@reply)
+          elems_d = @reply.deep_count
+          elems_d += 1
+          @contribution.numComments -= (elems_d)
+          @contribution.save
+          @reply.replies.destroy_all
+          @reply.destroy
+          render json: { message: "This reply has been deleted"}, status: 200 and return
+        else
+          render json: { message: "Not authorized to delete this reply"}, status: 403 and return
+        end
       end
     end
   end
