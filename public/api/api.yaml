@@ -266,6 +266,8 @@ paths:
           description: "Successful operation"
         401:
           description: "Not authorized"
+        404:
+          description: "User not found"
         403:
           description: "Forbidden"
       security:

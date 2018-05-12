@@ -47,7 +47,7 @@ Rails.application.routes.draw do
         end
       end
       
-      get 'users/:user_id/comments', to: 'users#threads'
+      get 'users/:id/comments', to: 'users#threads'
       
     end
   end
