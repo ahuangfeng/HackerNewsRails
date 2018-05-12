@@ -83,7 +83,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         else
           if @current_user.owns_comment?(@comment)
             
-            if params[:body] != nil
+            if params[:body] != nil or params[:body] != ''
               @comment.body = params[:body]
             end
             
