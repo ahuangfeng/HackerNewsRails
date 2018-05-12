@@ -1,4 +1,4 @@
-class Api::V1::ContributionsController <  ActionController::Base
+class Api::V1::ContributionsController <  Api::V1::ApiController
   protect_from_forgery with: :null_session
   before_action :current_user
 
@@ -154,14 +154,4 @@ class Api::V1::ContributionsController <  ActionController::Base
     render json: { message: "Invalid Token or missing token" }, status: 401
   end
 
-  private
-    def current_user
-      user = ::User.find_by_api_key(request.headers["Authorization"])
-      if user.nil?
-        false
-      else
-        @current_user = user
-      end
-    end
-  
 end
