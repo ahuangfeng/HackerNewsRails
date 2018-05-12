@@ -6,7 +6,17 @@ class Api::V1::RepliesController <  Api::V1::ApiController
     if !@current_user
       send_unauthorized
     else
-      notImplemented
+      @contribution = Contribution.find_by_id(params[:contribution_id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      else
+        # @comment = Comment.where('contribution_id = ? AND id = ?', params[:contribution_id], params[:comment_id])
+        @comment = @contribution.comments.find_by_id(params[:comment_id])
+        if @comment.nil?
+          render json: { message: "This comment doesn't exist"}, status: 404 and return
+        end
+        render json: @comment.replies, each_serializer: ReplySerializer, status: 200 and return
+      end
     end
   end
 
