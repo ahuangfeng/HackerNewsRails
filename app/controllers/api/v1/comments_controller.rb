@@ -33,7 +33,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         
         if @contribution.save
           if @comment.save
-            render json: @comment, serializer: CommentSimpleSerializer, status 201 and return
+            render json: @comment, serializer: CommentSimpleSerializer, status: 201 and return
           else
             render json: @comment.errors, status: 500 and return
           end
