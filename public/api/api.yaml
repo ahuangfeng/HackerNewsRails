@@ -294,6 +294,8 @@ paths:
           description: "Successfully created"
           schema:
             $ref: '#/definitions/Comment'
+        400:
+          description: "Bad request"
         401:
           description: "Not authorized"
         404:
