@@ -49,17 +49,16 @@ class RepliesController < ApplicationController
   end
 
   def destroy
-    reply = Reply.find_by(id: params[:id])
-    if current_user.owns_reply?(reply)
-      # @reply = reply
-      # @contribution = @reply.contribution
-      # @contribution.numComments -= @reply.deep_count
-      # @contribution.numComments -= 1
-      # @contribution.save
-      # @reply.replies.destroy
-      # @reply.destroy
+    @reply = Reply.find_by(id: params[:id])
+    if current_user.owns_reply?(@reply)
+      @contribution = @reply.contribution
+      @contribution.numComments -= @reply.deep_count
+      @contribution.numComments -= 1
+      @contribution.save
+      @reply.replies.destroy
+      @reply.destroy
       # redirect_back(fallback_location: root_path, notice: "Reply successful deleted")
-      render json: reply
+      # render json: reply
     else
       redirect_back(fallback_location: root_path, notice: "Not authorized to delete this reply")
     end
