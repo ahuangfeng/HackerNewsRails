@@ -260,7 +260,7 @@ paths:
         in: path
         type: string
         required: true
-        definition: Id of the User
+        description: Id of the Users
       responses:
         200:
           description: "Successful operation"
