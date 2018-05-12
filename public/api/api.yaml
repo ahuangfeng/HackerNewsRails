@@ -247,6 +247,29 @@ paths:
           description: "Not authorized"
       security:
       - api_key: []
+  /users/{id}/comments:
+    get:
+      tags:
+      - Users
+      summary: "Return all the comments and replies of a user"
+      operationId: getCommentsUser
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        definition: Id of the User
+      responses:
+        200:
+          description: "Successful operation"
+        401:
+          description: "Not authorized"
+        403:
+          description: "Forbidden"
+      security:
+      - api_key: []
   /contributions/{contribution_id}/comments:
     get:
       tags:

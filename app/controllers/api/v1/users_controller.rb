@@ -8,7 +8,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
     existant = User.find_by_name(params[:name])
     if existant != nil
-      render json: { message: "This name already exists"}, status: 400 and return
+      render json: { message: "This name already exists"}, status: 409 and return
     end
 
     @user = User.new
@@ -17,7 +17,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     @user.about = params[:about]
 
     if @user.save
-      render json: @user, serializer: UserSerializer, status: 200 and return
+      render json: @user, serializer: UserSerializer, status: 201 and return
     else
       render json: @user.errors, status: 500 and return
     end
@@ -77,20 +77,38 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
   
   def destroy
-    @user = User.find_by_id(params[:id])
-    if @user == @current_user
-      @user.contributions.destroy_all
-      @user.comments.destroy_all
-      @user.replies
-      @user.destroy
-      render json: { message: "All the data from this user has been deleted."}, status: 200 and return
+    if !@current_user
+      send_unauthorized
     else
-      render json: {message: "You don't have permissions to delete this user."}, status: 400 and return
+      @user = User.find_by_id(params[:id])
+      if @user == @current_user
+        @user.contributions.destroy_all
+        @user.comments.destroy_all
+        @user.replies
+        @user.destroy
+        render json: { message: "All the data from this user has been deleted."}, status: 200 and return
+      else
+        render json: {message: "You don't have permissions to delete this user."}, status: 403 and return
+      end
+    end
+  end
+  
+  def threads
+    if !@current_user
+      send_unauthorized
+    else
+      @user = User.find_by_id(params[:id])
+      if @user == @current_user
+        @comments = @user.comments
+        render json: @comment, serializer: CommentRepliesSerializer, status: 200 and return
+      else
+        render json: {message: "You don't have permissions to access this user."}, status: 403 and return
+      end
     end
   end
   
   def send_unauthorized
-    render json: { message: "Invalid Token or missing token" }, status: 401
+    render json: { message: "Invalid Token or missing token" }, status: 401 and return
   end
 
 end

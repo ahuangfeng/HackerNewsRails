@@ -46,6 +46,9 @@ Rails.application.routes.draw do
           resources :replies, only: [:index, :show, :create, :update, :destroy]
         end
       end
+      
+      get 'users/:user_id/comments', to: 'users#threads'
+      
     end
   end
   
