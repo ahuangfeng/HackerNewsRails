@@ -1,9 +1,9 @@
 <%= form_with model: Reply.new, url: '/replies/'+@reply.id.to_s do |form| %>
-  <% if reply.errors.any? %>
+  <% if @reply.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(reply.errors.count, "error") %> prohibited this reply from being saved:</h2>
+      <h2><%= pluralize(@reply.errors.count, "error") %> prohibited this reply from being saved:</h2>
       <ul>
-        <% reply.errors.full_messages.each do |message| %>
+        <% @reply.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>

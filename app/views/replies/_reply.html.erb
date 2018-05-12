@@ -19,8 +19,8 @@
     <p><%= rep.body %></p>
     <%= link_to "Reply", controller: "replies", action: "show", id: rep.id%>
     <% if logged_in? %>
-      <% if current_user.owns_reply?(reply) %>
-        <%= link_to 'Destroy', reply, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% if current_user.owns_reply?(rep) %>
+        <%= link_to 'Destroy', rep, method: :delete, data: { confirm: 'Are you sure?' } %>
       <% end %>
     <% end %>
     <%= render partial: "replies/reply", locals: { reply: rep } %>

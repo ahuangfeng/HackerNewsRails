@@ -1,11 +1,11 @@
 <h2>Add a reply to reply</h2>
 <p style="  font-family: Verdana, Geneva, sans-serif; color: #828282; font-size: 8pt;"><%= @reply.user.name%> 
   <%= time_ago_in_words(@reply.created_at) %> ago |  
-  <a href="/comments/<%=@reply.comment.id%>">
+  <a href="/replies/<%=@reply.id%>">
     parent
   </a> | on
-  <a href="/contributions/<%=@reply.comment.contribution.id%>">
-    <%= @reply.comment.contribution.title %>
+  <a href="/contributions/<%=@reply.contribution.id%>">
+    <%= @reply.contribution.title %>
   </a>
 </p>
 <p>

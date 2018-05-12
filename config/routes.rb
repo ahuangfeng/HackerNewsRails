@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
 
   resources :contributions, except: :index do
-    resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
-      resources :replies, only: [:create, :edit, :update, :destroy]
-    end
+    resources :replies, only: [:create, :edit, :update, :destroy]
+    # resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
+    # end
     post :upvote, on: :member
     post :upvotecomment, on: :member
     post :upvotereply, on: :member
@@ -28,12 +28,12 @@ Rails.application.routes.draw do
   
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
-  get '/comments' => 'comments#index'
-  get '/comments/:id' => 'comments#show'
-  post '/comments/:id' => 'replies#create'
+  # get '/comments' => 'comments#index'
+  # get '/comments/:id' => 'comments#show'
+  # post '/comments/:id' => 'replies#create'
   post '/replies/:id' => 'replies#createWithParent'
-  get '/replies/:id' => 'replies#show'
-  match '/replies/:id' => 'replies#destroy', :via => :delete
+  # get '/replies/:id' => 'replies#edit'
+  # match '/replies/:id' => 'replies#destroy', :via => :delete
   # post '/replies/:id' => 'replies#create'
   #s'hauria de canviar per un altre metode
 
@@ -49,6 +49,8 @@ Rails.application.routes.draw do
       
       get 'users/:id/comments', to: 'users#threads'
       post 'replies/:id/reply' => 'replies#createWithParent'
+
+      # post 'contributions/:id/vote' => 
       
     end
   end
