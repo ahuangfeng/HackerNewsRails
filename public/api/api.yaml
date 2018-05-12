@@ -596,8 +596,12 @@ paths:
         type: string
         required: true
         description: Id of the reply
+      - name: body
+        in: body
+        schema:
+          $ref: "#/definitions/ReplyBody"
       responses:
-        200:
+        201:
           description: "Successful operation"
           schema:
             $ref: '#/definitions/Reply'

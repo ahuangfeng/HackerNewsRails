@@ -63,21 +63,30 @@ class Api::V1::RepliesController <  Api::V1::ApiController
 
 
   def createWithParent
-    send_unauthorized
-    # @parentReply = Reply.find(reply_params[:id])
-    # @comment = @parentReply.comment
-    # contributionID = @comment.contribution.id.to_s
+    if !@current_user
+      send_unauthorized
+    else
+      @parentReply = Reply.find(params[:id])
+      if @parentReply.nil?
+        render json: { message: "The reply of this id doesn't exist."}, status: 404 and return
+      end
+      @comment = @parentReply.comment
+      contributionID = @comment.contribution.id.to_s
+      commentID = @comment.id.to_s
+      @reply = @parentReply.replies.new(user: @current_user, body: params[:body], comment: @comment)
 
-    # commentID = @comment.id.to_s
-    # @reply = @parentReply.replies.new(user: current_user, body: reply_params[:body],comment: @comment)
-    # if @reply.save
-    #   @comment.contribution.upComments()
-    #   @comment.contribution.save
-    #   redirect_to "/contributions/"+contributionID, notice: 'Reply created'
-    # else
-    #   redirect_to "/comments/"+commentID, notice: @reply.save!
-    #   # notice: 'Reply was not saved. Ensure you have entered a Reply'
-    # end
+      if @reply.save
+        @comment.contribution.numComments += 1
+        if @comment.contribution.save
+          render json: @reply, status: 201 and return
+        else
+          render json: { message: @comment.contribution.errors }, status: 500 and return
+        end
+      else
+        render json: { message: @reply.errors }, status: 500 and return
+      end
+    end
+
   end
   
   def show
