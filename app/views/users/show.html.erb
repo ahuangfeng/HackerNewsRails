@@ -11,14 +11,14 @@
 </p>
 
 <% if logged_in? and current_user.id==@user.id%>
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-<p>
-  <strong>Api-Key:</strong>
-  <%= @user.api_key %>
-</p>
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+  <p>
+    <strong>Api-Key:</strong>
+    <%= @user.api_key %>
+  </p>
 <% end %>
 
 <p>

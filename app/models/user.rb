@@ -32,7 +32,7 @@ class User < ApplicationRecord
   def owns_reply?(reply)
     self == reply.user
   end
-  
+
   def upvotecomment(comment)
      votecomments.create(upvotecom: 1, comment: comment)
   end

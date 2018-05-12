@@ -46,22 +46,6 @@ Rails.application.routes.draw do
           resources :replies, only: [:index, :show, :create, :update, :destroy]
         end
       end
-      
-      # resources :contributions, except: :index do
-      #   resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
-      #     resources :replies, only: [:create, :edit, :update, :destroy]
-      #   end
-      #   post :upvote, on: :member
-      #   post :upvotecomment, on: :member
-      #   post :upvotereply, on: :member
-      # end
-  
-      # resources :comments, except: :index do
-      #   post :downvotecomment, on: :member
-      # end
-      # get 'contributions', to: 'contributions#index'
-      # get 'contributions/:id', to: 'contributions#show'
-      # post 'contributions', to: 'contributions#create'
     end
   end
   

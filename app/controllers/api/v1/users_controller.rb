@@ -1,11 +1,9 @@
-class Api::V1::UsersController <  ActionController::Base
-  protect_from_forgery with: :null_session
+class Api::V1::UsersController < Api::V1::ApiController
   before_action :current_user
 
   def create
     
   end
-  
   
   def show
     if !@current_user
@@ -13,17 +11,16 @@ class Api::V1::UsersController <  ActionController::Base
     else
       @user = User.find_by_id(params[:id])
       if @user.nil?
-        render json: { message: "Contribution not found"}, status: 404 and return
+        render json: { message: "User not found"}, status: 404 and return
       else
         if @user.id == @current_user.id
           render json: @user, serializer: UserSerializer, status: 200 and return
         else
-          render json: @user, serializer: UserSimpleSerializer, status: 200 and return
+          render json: @user, serializer: UserSimpleSerializer, root: 'user', status: 200 and return
         end
       end
     end
   end
-
 
   def update
     if !@current_user
@@ -67,15 +64,5 @@ class Api::V1::UsersController <  ActionController::Base
   def send_unauthorized
     render json: { message: "Invalid Token or missing token" }, status: 401
   end
- 
-  private
-    def current_user
-      user = ::User.find_by_api_key(request.headers["Authorization"])
-      if user.nil?
-        false
-      else
-        @current_user = user
-      end
-    end
 
 end
