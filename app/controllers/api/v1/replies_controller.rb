@@ -92,7 +92,29 @@ class Api::V1::RepliesController <  Api::V1::ApiController
     if !@current_user
       send_unauthorized
     else
-      notImplemented
+      if params[:body] == nil or params[:body] == ""
+        render json: { message: "It should have a body to modify a comment."}, status: 400 and return
+      end
+
+      @contribution = Contribution.find_by_id(params[:contribution_id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      else
+        @comment = @contribution.comments.find_by_id(params[:comment_id])
+        if @comment.nil?
+          render json: { message: "This comment doesn't exist"}, status: 404 and return
+        end
+        @reply = @comment.replies.find_by_id(params[:id])
+        if @reply.nil?
+          render json: { message: "This reply doesn't exist."}, status: 404 and return
+        end
+        @reply.body = params[:body]
+        if @reply.save
+          render json: @reply, serializer: ReplySerializer, status: 200 and return
+        else
+          render json: @reply.errors, status: 500 and return
+        end
+      end
     end
   end
 
