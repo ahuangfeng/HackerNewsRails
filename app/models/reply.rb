@@ -9,4 +9,10 @@ class Reply < ApplicationRecord
   def upvotereplies
     votereplies.sum(:upvoterep)
   end
+
+  def deep_count
+    count = replies.count
+    replies.each { |reply| count += reply.deep_count }
+    count
+  end
 end

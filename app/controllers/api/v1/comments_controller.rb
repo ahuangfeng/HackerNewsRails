@@ -122,11 +122,11 @@ class Api::V1::CommentsController <  Api::V1::ApiController
             @contribution.numComments -= (elems_d + 1)
             if @contribution.save
               @comment.replies.destroy
-              @comment.votecomments.destroy
+              @comment.votecomments.destroy # ja es ondelete cascade crec pero ja va be
               @comment.destroy
               render json: { message: "Comment deleted successfully"}, status: 200 and return
             else
-               render json: @contribution.errors, status: 500 and return 
+              render json: @contribution.errors, status: 500 and return 
             end
           else
             render json: { message: "Not authorized to delete this comment"}, status: 403 and return

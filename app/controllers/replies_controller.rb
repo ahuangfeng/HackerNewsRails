@@ -37,7 +37,8 @@ class RepliesController < ApplicationController
       count = @reply.replies.size+1
       @contribution = @reply.comment.contribution
       # TODO: s'ha de baixar el numComments! (no funciona!)
-      @contribution.downComments(count)
+      # @contribution.downComments(count)
+      @contribution.numComments -= @reply.deep_count - 1
       @contribution.save
       @reply.replies.destroy
       #@reply.votes.destroy
