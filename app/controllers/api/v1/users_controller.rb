@@ -77,7 +77,16 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
   
   def destroy
-    
+    @user = User.find_by_id(params[:id])
+    if @user == @current_user
+      @user.contributions.destroy_all
+      @user.comments.destroy_all
+      @user.replies
+      @user.destroy
+      render json: { message: "All the data from this user has been deleted."}, status: 200 and return
+    else
+      render json: {message: "You don't have permissions to delete this user."}, status: 400 and return
+    end
   end
   
   def send_unauthorized

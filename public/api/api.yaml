@@ -170,8 +170,6 @@ paths:
           description: "User not found"
         401:
           description: "Not authorized"
-      security:
-      - api_key: []
   /users/{id}:
     get:
       tags:
