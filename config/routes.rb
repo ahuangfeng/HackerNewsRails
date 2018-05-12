@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :contributions
   resources :replies
 
-
   resources :contributions, except: :index do
     resources :replies, only: [:create, :edit, :update, :destroy]
     # resources :comments, only: [:create, :edit, :update, :destroy], except: :index do
@@ -17,10 +16,10 @@ Rails.application.routes.draw do
 
   end
   
-  resources :comments, except: :index do
-      post :destroy, on: :member
+  # resources :comments, except: :index do
+  #     post :destroy, on: :member
 
-  end
+  # end
   
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

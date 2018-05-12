@@ -4,7 +4,7 @@ class RepliesController < ApplicationController
 
   def index
     if params[:type] == 'threads'
-      @replies = Comment.order(id: :desc).all
+      @replies = Reply.order(id: :desc).all
     end
   end
 
@@ -43,7 +43,7 @@ class RepliesController < ApplicationController
         @comment.contribution.save
         redirect_to "/contributions/"+params[:contribution_id], notice: 'Reply created'
       else
-        redirect_to "/comments/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
+        redirect_to "/replies/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
       end
     end
   end
@@ -57,8 +57,7 @@ class RepliesController < ApplicationController
       @contribution.save
       @reply.replies.destroy
       @reply.destroy
-      # redirect_back(fallback_location: root_path, notice: "Reply successful deleted")
-      # render json: reply
+      redirect_back(fallback_location: root_path, notice: "Reply successful deleted")
     else
       redirect_back(fallback_location: root_path, notice: "Not authorized to delete this reply")
     end
