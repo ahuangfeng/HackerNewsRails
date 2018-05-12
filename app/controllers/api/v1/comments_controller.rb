@@ -34,16 +34,16 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         @comment.body = params[:body]
         @comment.user_id = @current_user.id
         @comment.contribution_id = params[:contribution_id]
-        @contribution.numComments += 1;
         
-        if @contribution.save
-          if @comment.save
+        if @comment.save
+          @contribution.numComments += 1;
+          if @contribution.save
             render json: @comment, serializer: CommentSerializer, status: 201 and return
           else
-            render json: @comment.errors, status: 500 and return
+            render json: @contribution.errors, status: 500 and return 
           end
         else
-          render json: @contribution.errors, status: 500 and return 
+          render json: @comment.errors, status: 500 and return
         end
       end
     end

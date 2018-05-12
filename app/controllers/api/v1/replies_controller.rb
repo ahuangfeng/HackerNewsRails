@@ -49,8 +49,11 @@ class Api::V1::RepliesController <  Api::V1::ApiController
 
         if @reply.save
           @contribution.numComments += 1
-          @contribution.save
-          render json: @reply, serializer: ReplySerializer, status: 201 and return
+          if @contribution.save
+            render json: @reply, serializer: ReplySerializer, status: 201 and return
+          else
+            render json: @contribution.errors, status: 500 and return
+          end
         else
           render json: @reply.errors, status: 500 and return
         end
@@ -134,6 +137,7 @@ class Api::V1::RepliesController <  Api::V1::ApiController
         if @reply.nil?
           render json: { message: "This reply doesn't exist."}, status: 404 and return
         end
+        elems_d = @comment.replies.count
         @reply.replies.destroy_all
         @reply.destroy
         render json: { message: "This reply has been deleted"}, status: 200 and return
