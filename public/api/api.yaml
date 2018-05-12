@@ -247,7 +247,7 @@ paths:
         201:
           description: "Successfully created"
           schema:
-            $ref: '#/definitions/Contribution'
+            $ref: '#/definitions/Comment'
         401:
           description: "Not authorized"
         404:
