@@ -104,7 +104,7 @@ class Api::V1::UsersController < Api::V1::ApiController
       
       if @user == @current_user
         @comments = @user.comments
-        render json: @comments, each_serializer: CommentRepliesSerializer, status: 200 and return
+        render json: @comments, each_serializer: CommentRepliesUserSerializer, status: 200 and return
       else
         render json: {message: "You don't have permissions to access this user."}, status: 403 and return
       end
