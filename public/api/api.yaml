@@ -77,7 +77,7 @@ paths:
     get:
       tags:
       - Contributions
-      summary: "Return a contribution by Id."
+      summary: "Return a contribution"
       operationId: getContributionById
       produces:
       - application/json
@@ -226,11 +226,39 @@ paths:
           description: "Contribution not found"
       security:
       - api_key: []
+    post:
+      tags:
+      - Comments
+      summary: "Create a new comment on a contribution"
+      operationId: createComment
+      produces:
+      - application/json
+      parameters:
+      - name: contribution_id
+        in: path
+        type: string
+        required: true
+        description: Id of the Contribution
+      - body:
+        in: body
+        schema:
+          $ref: "#/definitions/CommentBody"
+      responses:
+        201:
+          description: "Successfully created"
+          schema:
+            $ref: '#/definitions/Contribution'
+        401:
+          description: "Not authorized"
+        404:
+          description: "Contribution not found"
+      security:
+      - api_key: []
   /contributions/{contribution_id}/comments/{id}:
     get:
       tags:
       - Comments
-      summary: "Return a comment from a contribution."
+      summary: "Return a comment from a contribution"
       operationId: getCommetfromContribution
       produces:
       - application/json
@@ -256,10 +284,44 @@ paths:
           description: "Not found"
       security:
       - api_key: []
+    put:
+      tags:
+      - Comments
+      summary: "Update a comment from a contribution"
+      operationId: updateComment
+      produces:
+      - application/json
+      parameters:
+      parameters:
+      - name: contribution_id
+        in: path
+        type: string
+        required: true
+        description: Id of the Contribution
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the Comment
+      - name: body
+        in: body
+        schema:
+          $ref: "#/definitions/UpdateCommentBody"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/Comment'
+        404:
+          description: "Not found"
+        401:
+          description: "Not authorized"
+      security:
+      - api_key: []
     delete:
       tags:
       - Comments
-      summary: "Delete a Comment"
+      summary: "Delete a comment from a contribution"
       operationId: deleteComment
       produces:
       - application/json
@@ -298,6 +360,11 @@ definitions:
         type: "string"
       url:
         type: "string"
+  CommentBody:
+    type: "object"
+    properties:
+      body:
+        type: "string"
   UpdateContributionBody:
     type: "object"
     properties:
@@ -315,6 +382,11 @@ definitions:
       email:
         type: "string"
       about:
+        type: "string"
+  UpdateCommentBody:
+    type: "object"
+    properties:
+      body:
         type: "string"
   Contribution:
     type: "object"
