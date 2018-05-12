@@ -25,6 +25,11 @@ class Api::V1::CommentsController <  Api::V1::ApiController
       if @contribution.nil?
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       else
+        
+        if params[:body] == nil or params[:body] == ''
+          render json: {message: "The body field is required"}, status: 400 and return 
+        end
+        
         @comment = Comment.new
         @comment.body = params[:body]
         @comment.user_id = @current_user.id
@@ -77,7 +82,10 @@ class Api::V1::CommentsController <  Api::V1::ApiController
           render json: { message: "This comment doesn't exist"}, status: 404 and return
         else
           if @current_user.owns_comment?(@comment)
-            @comment.body = params[:body]
+            
+            if params[:body] != nil or params[:body] != ''
+              @comment.body = params[:body]
+            end
             
             if @comment.changed?
               if @comment.save
