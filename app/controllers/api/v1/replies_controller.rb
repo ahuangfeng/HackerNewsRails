@@ -3,33 +3,65 @@ class Api::V1::RepliesController <  Api::V1::ApiController
   before_action :current_user
  
   def index
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   # no hauria de entrar mai aqui
   def new
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   def create
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
   
   def show
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   # no hauria de entrar mai aqui
   def edit
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   def update
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
   end
 
   def destroy
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      notImplemented
+    end
+  end
+
+  def send_unauthorized
+    render json: { message: "Invalid Token or missing token" }, status: 401 and return
   end
 
   def notImplemented
