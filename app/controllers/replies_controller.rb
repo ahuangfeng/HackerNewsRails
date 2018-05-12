@@ -35,8 +35,6 @@ class RepliesController < ApplicationController
     if current_user.owns_reply?(reply)
       @reply = reply
       @contribution = @reply.comment.contribution
-      # TODO: s'ha de baixar el numComments! (no funciona!)
-      # @contribution.downComments(count)
       @contribution.numComments -= @reply.deep_count
       @contribution.numComments -= 1
       @contribution.save

@@ -82,7 +82,7 @@ class Api::V1::ContributionsController <  Api::V1::ApiController
       if @contribution.nil?
         render json: { message: "Contribution not found"}, status: 404 and return 
       else
-        render json: @contribution, each_serializer: ContributionSerializer, status: 200 and return
+        render json: @contribution, serializer: ContributionSerializer, status: 200 and return
       end
     end
   end
