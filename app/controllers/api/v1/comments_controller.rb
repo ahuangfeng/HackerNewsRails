@@ -16,14 +16,34 @@ class Api::V1::CommentsController <  ActionController::Base
     end
   end
 
-  # no hauria de entrar mai aqui
-  def new
-    notImplemented
-  end
 
   def create
-    notImplemented
+    if !@current_user
+      send_unauthorized
+    else
+      @contribution = Contribution.find_by_id(params[:contribution_id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      else
+        @comment = Comment.new
+        @comment.body = params[:body]
+        @comment.user_id = @current_user.id
+        @comment.contribution_id = params[:contribution_id]
+        @contribution.numComments += 1;
+        
+        if @contribution.save
+          if @comment.save
+            render json: @comment, serializer: CommentSimpleSerializer, status 201 and return
+          else
+            render json: @comment.errors, status: 500 and return
+          end
+        else
+          render json: @contribution.errors, status: 500 and return 
+        end
+      end
+    end
   end
+  
   
   def show
     if !@current_user
@@ -42,11 +62,7 @@ class Api::V1::CommentsController <  ActionController::Base
       end
     end
   end
-
-  # no hauria de entrar mai aqui
-  def edit
-    notImplemented
-  end
+  
 
   def update
     notImplemented
