@@ -2,7 +2,26 @@ class Api::V1::UsersController < Api::V1::ApiController
   before_action :current_user
 
   def create
-    
+    if params[:name] == nil or params[:name] == ""
+      render json: {message: "A user should have a name."}, status: 400 and return
+    end
+
+    existant = User.find_by_name(params[:name])
+    if existant != nil
+      render json: { message: "This name already exists"}, status: 400 and return
+    end
+
+    @user = User.new
+    @user.name = params[:name]
+    @user.email = params[:email]
+    @user.about = params[:about]
+
+    if @user.save
+      render json: @user, serializer: UserSerializer, status: 200 and return
+    else
+      render json: @user.errors, status: 500 and return
+    end
+
   end
   
   def show
