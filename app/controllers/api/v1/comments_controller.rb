@@ -77,7 +77,10 @@ class Api::V1::CommentsController <  Api::V1::ApiController
           render json: { message: "This comment doesn't exist"}, status: 404 and return
         else
           if @current_user.owns_comment?(@comment)
-            @comment.body = params[:body]
+            
+            if params[:body] != nil
+              @comment.body = params[:body]
+            end
             
             if @comment.changed?
               if @comment.save
