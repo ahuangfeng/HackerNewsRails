@@ -11,8 +11,12 @@ class Reply < ApplicationRecord
   end
 
   def deep_count
-    count = replies.count
-    replies.each { |reply| count += reply.deep_count }
-    count
+    if replies != nil
+      count = replies.count
+      replies.each { |reply| count += reply.deep_count }
+      count
+    else
+      0
+    end
   end
 end

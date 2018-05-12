@@ -138,6 +138,7 @@ class Api::V1::RepliesController <  Api::V1::ApiController
           render json: { message: "This reply doesn't exist."}, status: 404 and return
         end
         elems_d = @reply.deep_count
+        elems_d += 1
         @contribution.numComments -= (elems_d)
         @contribution.save
         @reply.replies.destroy_all
