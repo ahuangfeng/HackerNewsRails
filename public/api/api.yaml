@@ -666,8 +666,8 @@ paths:
     post:
       tags:
       - Replies
-      summary: "Vote a comment"
-      operationId: voteComment
+      summary: "Vote a reply"
+      operationId: voteReply
       produces:
       - application/json
       parameters:

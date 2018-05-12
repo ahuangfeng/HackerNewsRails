@@ -78,7 +78,7 @@ class Api::V1::RepliesController <  Api::V1::ApiController
       if @reply.save
         @comment.contribution.numComments += 1
         if @comment.contribution.save
-          render json: @reply, status: 201 and return
+          render json: @reply, serializer: ReplySerializer, status: 201 and return
         else
           render json: { message: @comment.contribution.errors }, status: 500 and return
         end
