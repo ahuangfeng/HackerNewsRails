@@ -26,7 +26,7 @@ class RepliesController < ApplicationController
   def create
     if params[:comment_id] == nil or params[:comment_id] == ""
       @contribution = Contribution.find(params[:contribution_id])
-      @reply = @contribution.replies.new(user: current_user, body: reply_params[:body])
+      @reply = @contribution.replies.new(user: current_user, body: reply_params[:body], contribution: @contribution)
       if @reply.save
         @contribution.upComments()
         @contribution.save
@@ -35,16 +35,17 @@ class RepliesController < ApplicationController
         redirect_to @contribution, notice: 'Comment was not saved. Ensure you have entered a comment'
       end
     else
-      @comment = Reply.find(params[:comment_id])
-      @contribution = @comment.contribution
-      @reply = @comment.replies.new(user: current_user, body: reply_params[:body])
-      if @reply.save
-        @comment.contribution.upComments()
-        @comment.contribution.save
-        redirect_to "/contributions/"+params[:contribution_id], notice: 'Reply created'
-      else
-        redirect_to "/replies/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
-      end
+      # @comment = Reply.find(params[:comment_id])
+      # @contribution = @comment.contribution
+      # @reply = @comment.replies.new(user: current_user, body: reply_params[:body], contribution: @contribution)
+      # if @reply.save
+      #   @comment.contribution.upComments()
+      #   @comment.contribution.save
+      #   redirect_to "/contributions/"+params[:contribution_id], notice: 'Reply created'
+      # else
+      #   redirect_to "/replies/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
+      # end
+      render json: {message: "HOLAA AQUI!"}
     end
   end
 
