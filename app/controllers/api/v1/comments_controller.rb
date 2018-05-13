@@ -118,8 +118,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
           render json: { message: "This comment doesn't exist"}, status: 404 and return
         else
           if @current_user.owns_comment?(@comment)
-            #TODO: num de comments no ho fa be
-            elems_d = @comment.replies.count
+            elems_d = @comment.deep_count
             @contribution.numComments -= (elems_d + 1)
             if @contribution.save
               @comment.replies.destroy
