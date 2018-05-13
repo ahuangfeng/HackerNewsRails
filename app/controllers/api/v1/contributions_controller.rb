@@ -86,6 +86,14 @@ class Api::V1::ContributionsController <  Api::V1::ApiController
       end
     end
   end
+
+  def vote
+    render json: { message: "Not Implemented" }, status: 501 and return
+  end
+
+  def unvote
+    render json: { message: "Not Implemented" }, status: 501 and return
+  end
   
 
   def update

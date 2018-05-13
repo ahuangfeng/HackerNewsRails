@@ -29,8 +29,10 @@ Rails.application.routes.draw do
       
       get 'users/:id/comments', to: 'users#threads'
 
-      # post 'contributions/:id/vote' => 
-      
+      post 'contributions/:id/vote' => 'contributions#vote'
+      post 'contributions/:id/unvote' => 'contributions#unvote'
+      post 'contributions/:contribution_id/comments/:id/vote' => 'comments#vote'
+      post 'contributions/:contribution_id/comments/:id/unvote' => 'comments#unvote'
     end
   end
   

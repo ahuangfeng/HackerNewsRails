@@ -62,12 +62,19 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         if @comment.nil?
           render json: { message: "This comment doesn't exist"}, status: 404 and return
         else
-          render json: @comment, serializer: CommentRepliesSerializer, status: 200 and return
+          render json: @comment, serializer: CommentRepliesSerializer,root: 'comment', status: 200 and return
         end
       end
     end
   end
   
+  def vote
+    render json: { message: "Not Implemented" }, status: 501 and return
+  end
+
+  def unvote
+    render json: { message: "Not Implemented" }, status: 501 and return
+  end
 
   def update
     if !@current_user

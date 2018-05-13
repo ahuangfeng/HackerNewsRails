@@ -171,6 +171,29 @@ paths:
           description: "Not found"
       security:
       - api_key: []
+  /contributions/{id}/unvote:
+    post:
+      tags:
+      - Contributions
+      summary: "Unvote a contribution"
+      operationId: unvoteContribution
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the contribution
+      responses:
+        201:
+          description: "Successful operation"
+        401:
+          description: "Not authorized"
+        404:
+          description: "Not found"
+      security:
+      - api_key: []
   /users:
     post:
       tags:
@@ -478,6 +501,34 @@ paths:
       - Comments
       summary: "Vote a comment"
       operationId: voteComment
+      produces:
+      - application/json
+      parameters:
+      - name: contribution_id
+        in: path
+        type: string
+        required: true
+        description: Id of the contribution
+      - name: id
+        in: path
+        type: string
+        required: true
+        description: Id of the comment
+      responses:
+        201:
+          description: "Successful operation"
+        401:
+          description: "Not authorized"
+        404:
+          description: "Not found"
+      security:
+      - api_key: []
+  /contributions/{contribution_id}/comments/{id}/unvote:
+    post:
+      tags:
+      - Comments
+      summary: "Unvote a comment"
+      operationId: unvoteComment
       produces:
       - application/json
       parameters:
