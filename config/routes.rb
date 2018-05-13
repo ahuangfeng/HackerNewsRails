@@ -33,6 +33,8 @@ Rails.application.routes.draw do
       post 'contributions/:id/unvote' => 'contributions#unvote'
       post 'contributions/:contribution_id/comments/:id/vote' => 'comments#vote'
       post 'contributions/:contribution_id/comments/:id/unvote' => 'comments#unvote'
+
+      post 'contributions/:contribution_id/comments/:id/reply' => 'comments#replyComment'
     end
   end
   

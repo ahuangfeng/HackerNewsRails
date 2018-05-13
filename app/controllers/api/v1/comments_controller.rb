@@ -49,6 +49,9 @@ class Api::V1::CommentsController <  Api::V1::ApiController
     end
   end
   
+  def replyComment
+    render json: { message: "Not Implemented" }, status: 501 and return
+  end
   
   def show
     if !@current_user
