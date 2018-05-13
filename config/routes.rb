@@ -24,13 +24,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:show, :create, :update, :destroy]
       resources :contributions, only: [:index, :show, :create, :update, :destroy] do # afegit aixo per a que no renderitzi els altres endpoints
-        resources :comments, only: [:index, :show, :create, :update, :destroy] do
-          resources :replies, only: [:index, :show, :create, :update, :destroy]
-        end
+        resources :comments, only: [:index, :show, :create, :update, :destroy] 
       end
       
       get 'users/:id/comments', to: 'users#threads'
-      post 'replies/:id/reply' => 'replies#createWithParent'
 
       # post 'contributions/:id/vote' => 
       
