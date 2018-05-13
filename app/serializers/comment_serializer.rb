@@ -5,7 +5,7 @@ class CommentSerializer < ActiveModel::Serializer
   attributes :id, :points, :username, :created_at, :body, :parent_id
   
   def points
-    object.votecomments.count
+    object.votecomment.count
   end
   
   def username
