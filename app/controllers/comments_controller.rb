@@ -23,28 +23,14 @@ class CommentsController < ApplicationController
   end
 
   def create
-    if params[:comment_id] == nil or params[:comment_id] == ""
-      @contribution = Contribution.find(params[:contribution_id])
-      @comment = @contribution.comments.new(user: current_user, body: comment_params[:body], contribution: @contribution)
-      if @comment.save
-        @contribution.upComments()
-        @contribution.save
-        redirect_to @contribution, notice: 'Comment created'
-      else
-        redirect_to @contribution, notice: 'Comment was not saved. Ensure you have entered a comment'
-      end
+    @contribution = Contribution.find(params[:contribution_id])
+    @comment = @contribution.comments.new(user: current_user, body: comment_params[:body], contribution: @contribution)
+    if @comment.save
+      @contribution.upComments()
+      @contribution.save
+      redirect_to @contribution, notice: 'Comment created'
     else
-      # @comment = Reply.find(params[:comment_id])
-      # @contribution = @comment.contribution
-      # @reply = @comment.replies.new(user: current_user, body: comment_params[:body], contribution: @contribution)
-      # if @reply.save
-      #   @comment.contribution.upComments()
-      #   @comment.contribution.save
-      #   redirect_to "/contributions/"+params[:contribution_id], notice: 'Reply created'
-      # else
-      #   redirect_to "/replies/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
-      # end
-      render json: {message: "ERROR MIRAR ESTO!"}
+      redirect_to @contribution, notice: 'Comment was not saved. Ensure you have entered a comment'
     end
   end
 
