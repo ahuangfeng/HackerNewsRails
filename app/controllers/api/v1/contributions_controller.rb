@@ -88,11 +88,41 @@ class Api::V1::ContributionsController <  Api::V1::ApiController
   end
 
   def vote
-    render json: { message: "Not Implemented" }, status: 501 and return
+    if !@current_user
+      send_unauthorized
+    else
+      @contribution = Contribution.find_by_id(params[:id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return 
+      else
+        if current_user.upvoted?(@contribution)
+          render json: { message: "You have already voted this contribution."}, status: 409 and return
+        else
+          current_user.upvote(@contribution)
+          @contribution.calc_hot_score
+          render json: { message: "You have voted this comment."}, status: 200 and return
+        end
+      end
+    end
   end
 
   def unvote
-    render json: { message: "Not Implemented" }, status: 501 and return
+    if !@current_user
+      send_unauthorized
+    else
+      @contribution = Contribution.find_by_id(params[:id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return 
+      else
+        if current_user.upvoted?(@contribution)
+          current_user.remove_vote(@contribution)
+          @contribution.calc_hot_score
+          render json: { message: "You have removed your vote from this contribution."}, status: 200 and return
+        else
+          render json: { message: "You can't unvote something you haven't voted."}, status: 409 and return
+        end
+      end
+    end
   end
   
 
