@@ -8,10 +8,10 @@ class CommentsController < ApplicationController
   end
 
   def createWithParent
-    @parentComment = Comment.find(reply_params[:parent_id])
+    @parentComment = Comment.find(comment_params[:parent_id])
     @contribution = @parentComment.contribution
     contributionID = @contribution.id.to_s
-    @reply = @parentComment.replies.new(user: current_user, body: reply_params[:body], contribution: @contribution, parent: @parentComment)
+    @reply = @parentComment.replies.new(user: current_user, body: comment_params[:body], contribution: @contribution, parent: @parentComment)
     if @reply.save
       @parentComment.contribution.upComments()
       @parentComment.contribution.save
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
   def create
     if params[:comment_id] == nil or params[:comment_id] == ""
       @contribution = Contribution.find(params[:contribution_id])
-      @comment = @contribution.comments.new(user: current_user, body: reply_params[:body], contribution: @contribution)
+      @comment = @contribution.comments.new(user: current_user, body: comment_params[:body], contribution: @contribution)
       if @comment.save
         @contribution.upComments()
         @contribution.save
@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
     else
       # @comment = Reply.find(params[:comment_id])
       # @contribution = @comment.contribution
-      # @reply = @comment.replies.new(user: current_user, body: reply_params[:body], contribution: @contribution)
+      # @reply = @comment.replies.new(user: current_user, body: comment_params[:body], contribution: @contribution)
       # if @reply.save
       #   @comment.contribution.upComments()
       #   @comment.contribution.save
@@ -69,12 +69,12 @@ class CommentsController < ApplicationController
   end
 
   def edit 
-    @newreply = Reply.new
-    @reply = Reply.find(params[:id])
+    @newreply = Comment.new
+    @reply = Comment.find(params[:id])
   end
 
   private
-    def reply_params
+    def comment_params
       params.require(:comment).permit(:body, :parent_id)
     end
 end
