@@ -39,18 +39,6 @@ class User < ApplicationRecord
     votecomments.find_by(comment: comment).destroy
   end
   
-  # def upvotereply(reply)
-  #    votereplies.create(upvoterep: 1, reply: reply)
-  # end
-  
-  # def upvotedreply?(reply)
-  #    votereplies.exists?(upvoterep: 1, reply: reply)
-  # end
-
-  # def remove_votereply(reply)
-  #   votereplies.find_by(reply: reply).destroy
-  # end
-  
   def upvote(contribution)
     votes.create(upvote: 1, contribution: contribution)
   end  
