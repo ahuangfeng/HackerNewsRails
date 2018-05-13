@@ -50,7 +50,32 @@ class Api::V1::CommentsController <  Api::V1::ApiController
   end
   
   def replyComment
-    render json: { message: "Not Implemented" }, status: 501 and return
+    if !@current_user
+      send_unauthorized
+    else
+      @contribution = Contribution.find_by_id(params[:contribution_id])
+      if @contribution.nil?
+        render json: { message: "This contribution doesn't exist"}, status: 404 and return
+      end
+
+      @parentComment = @contribution.comments.find_by_id(params[:id])
+      if @parentComment.nil?
+        render json: { message: "This Comment doesn't exist"}, status: 404 and return
+      end
+
+      if params[:body] == nil or params[:body] == ""
+        render json: { message: "It should have a body to reply a comment."}, status: 400 and return
+      end
+
+      @reply = @parentComment.replies.new(user: @current_user, body: params[:body], contribution: @contribution, parent: @parentComment)
+      if @reply.save
+        @parentComment.contribution.upComments()
+        @parentComment.contribution.save #Mirar lo de transactions
+        render json: @reply, status: 201 and return
+      else
+        render json: { message: @reply.errors }, status: 500 and return
+      end
+    end
   end
   
   def show
@@ -86,7 +111,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
       end
 
       if @current_user.upvotedcomment?(@comment)
-        render json: { message: "You have already voted this comment."}, status: 400 and return
+        render json: { message: "You have already voted this comment."}, status: 409 and return
       else
         @current_user.upvotecomment(@comment)
         render json: { message: "You have voted this comment."}, status: 200 and return
@@ -112,7 +137,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
         @current_user.remove_votecomment(@comment)
         render json: { message: "You have removed your vote from this comment."}, status: 200 and return
       else
-        render json: { message: "You can't unvote something you haven't voted."}, status: 400 and return
+        render json: { message: "You can't unvote something you haven't voted."}, status: 409 and return
       end
     end
   end

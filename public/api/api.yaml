@@ -461,7 +461,7 @@ paths:
           description: "Not found"
       security:
       - api_key: []
-  /contributions/{contribution_id}/comments/{comment_id}/reply:
+  /contributions/{contribution_id}/comments/{id}/reply:
     post:
       tags:
       - Comments
@@ -475,7 +475,7 @@ paths:
         type: string
         required: true
         description: Id of the Contribution
-      - name: comment_id
+      - name: id
         in: path
         type: string
         required: true
