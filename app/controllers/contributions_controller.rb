@@ -108,7 +108,7 @@ class ContributionsController < ApplicationController
 
     @contribution = Contribution.find_by(id: params[:id])
     if current_user.owns_contribution?(@contribution)
-      @contribution.replies.destroy
+      @contribution.comments.destroy
       @contribution.votes.destroy
       @contribution.destroy
       redirect_back(fallback_location: root_path, notice: "Contribution successful deleted")
