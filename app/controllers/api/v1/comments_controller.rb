@@ -72,11 +72,41 @@ class Api::V1::CommentsController <  Api::V1::ApiController
   end
   
   def vote
-    render json: { message: "Not Implemented" }, status: 501 and return
+    @contribution = Contribution.find_by_id(params[:contribution_id])
+    if @contribution.nil?
+      render json: { message: "This contribution doesn't exist."}, status: 404 and return
+    end
+
+    @comment = @contribution.comments.find_by_id(params[:id])
+    if @comment.nil?
+      render json: { message: "This comment doesn't exits."}, status: 404 and return
+    end
+
+    if current_user.upvotedcomment?(@comment)
+      render json: { message: "You have already voted this comment."}, status: 400 and return
+    else
+      current_user.upvotecomment(@comment)
+      render json: { message: "You have voted this comment."}, status: 200 and return
+    end
   end
 
   def unvote
-    render json: { message: "Not Implemented" }, status: 501 and return
+    @contribution = Contribution.find_by_id(params[:contribution_id])
+    if @contribution.nil?
+      render json: { message: "This contribution doesn't exist."}, status: 404 and return
+    end
+
+    @comment = @contribution.comments.find_by_id(params[:id])
+    if @comment.nil?
+      render json: { message: "This comment doesn't exits."}, status: 404 and return
+    end
+
+    if current_user.upvotedcomment?(@comment)
+      current_user.remove_votecomment(@comment)
+      render json: { message: "You have removed your vote from this comment."}, status: 200 and return
+    else
+      render json: { message: "You can't unvote something you haven't voted."}, status: 400 and return
+    end
   end
 
   def update
