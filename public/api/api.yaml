@@ -670,7 +670,7 @@ definitions:
     example:
       id: 1
       title: "Ask HN: Teniu examen?"
-      url: null
+      url: "null"
       text: ups
       username: pep
       createdAt: 2 days ago
