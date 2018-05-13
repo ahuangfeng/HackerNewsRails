@@ -589,15 +589,21 @@ definitions:
     properties:
       title:
         type: "string"
-      text:
-        type: "string"
+        example: "Google"
       url:
         type: "string"
+      text:
+        type: "string"
+    example:
+      title: Google
+      url: https://www.google.com
   CommentBody:
     type: "object"
     properties:
       body:
         type: "string"
+    example:
+      body: hola :D
   CreateUserBody:
     type: "object"
     properties:
@@ -607,6 +613,10 @@ definitions:
         type: "string"
       about:
         type: "string"
+    example:
+      name: pep
+      email: pep@gmail.com
+      about: hola!
   UpdateContributionBody:
     type: "object"
     properties:
@@ -616,20 +626,25 @@ definitions:
         type: "string"
       text:
         type: "string"
+    example:
+      text: he canviat el text
   UpdateUserBody:
     type: "object"
     properties:
-      name:
-        type: "string"
       email:
         type: "string"
       about:
         type: "string"
+    example:
+      email: pep@gmail.com
+      about: hola!
   UpdateCommentBody:
     type: "object"
     properties:
       body:
         type: "string"
+    example:
+      body: vull canviar el body del meu comment
   Contribution:
     type: "object"
     properties:
@@ -652,6 +667,15 @@ definitions:
         type: "number"
     xml:
       name: "Contribution"
+    example:
+      id: 1
+      title: "Ask HN: Teniu examen?"
+      url: null
+      text: ups
+      username: pep
+      createdAt: 2 days ago
+      numComments: 2
+      points: 1
   User:
     type: "object"
     properties:
@@ -659,19 +683,26 @@ definitions:
         type: "number"
       name:
         type: "string"
-      email:
-        type: "string"
       about:
         type: "string"
       createdAt:
         type: "string"
       api-key:
         type: "string"
+      email:
+        type: "string"
+    example:
+      id: 1
+      name: pep
+      about: hola!
+      createdAt: 2 days ago
+      api-key: 18fcc59cc21af05e1f4bdaee41eda0e0
+      email: pep@gmail.com
   Comment: 
     type: "object"
     properties:
       id:
-        type: "string"
+        type: "number"
       points: 
         type: "number"
       username:
@@ -680,3 +711,15 @@ definitions:
         type: "string"
       body:
         type: "string"
+      parent_id:
+        type: "number"
+      contribution_id:
+        type: "number"
+    example:
+        id: 3
+        points: 0
+        username: pep
+        createdAt: 2 days ago
+        body: hola :D
+        parent_id: 2
+        contribution_id: 1

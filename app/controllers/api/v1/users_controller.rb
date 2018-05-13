@@ -53,9 +53,6 @@ class Api::V1::UsersController < Api::V1::ApiController
         render json: { message: "Not authorized to update this user"}, status: 403 and return
       end
       
-      if params[:name] != nil
-        @user.name = params[:name]
-      end
       if params[:email] != nil
         @user.email = params[:email]
       end
