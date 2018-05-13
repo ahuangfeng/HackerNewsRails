@@ -83,7 +83,6 @@ class Api::V1::UsersController < Api::V1::ApiController
       if @user == @current_user
         @user.contributions.destroy_all
         @user.comments.destroy_all
-        @user.replies
         @user.destroy
         render json: { message: "All the data from this user has been deleted."}, status: 200 and return
       else
@@ -103,8 +102,7 @@ class Api::V1::UsersController < Api::V1::ApiController
       
       if @user == @current_user
         @comments = @user.comments
-        @replies = @user.replies
-        render :json => {:comments => @comments, :replies => @replies}, status: 200 and return
+        render json: @comments, each_serializer: CommentSerializer, status: 200 and return
       else
         render json: {message: "You don't have permissions to access this user."}, status: 403 and return
       end
