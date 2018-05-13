@@ -13,7 +13,7 @@ produces:
 externalDocs:
   description: "Bitbucket repository"
   url: "https://bitbucket.org/ahuangfeng/g11d_hackernews/"
-host: localhost:3000 
+host: g11d-hackernews.herokuapp.com 
 basePath: "/api/v1"
 tags:
   - name: Contributions
