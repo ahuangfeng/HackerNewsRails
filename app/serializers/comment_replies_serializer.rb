@@ -2,9 +2,6 @@ require 'action_view'
 require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 class CommentRepliesSerializer < CommentSerializer
-  attributes :replies
+  has_many :replies, serializer: ReplySerializer
 
-  def replies
-    object.replies
-  end
 end
