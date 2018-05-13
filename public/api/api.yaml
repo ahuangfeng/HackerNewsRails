@@ -10,6 +10,9 @@ produces:
   - application/json
   - application/octet-stream
   - text/plain
+externalDocs:
+  description: "Bitbucket repository"
+  url: "https://bitbucket.org/ahuangfeng/g11d_hackernews/"
 host: localhost:3000 
 basePath: "/api/v1"
 tags:
