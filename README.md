@@ -11,7 +11,7 @@
 [Aplicació a Heroku](https://g11d-hackernews.herokuapp.com/)
 
 ## YAML per al swagger
-[Swagger](https://bitbucket.org/ahuangfeng/g11d_hackernews/src/master/public/api/api.yaml)
+[Swagger](https://g11d-hackernews.herokuapp.com/api/api.yaml)
 
 ### Per a fer deploy a Heroku
 - Si s'ha creat una nova taula a la BD : `heroku run rake db:migrate`
