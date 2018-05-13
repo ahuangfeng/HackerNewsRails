@@ -12,6 +12,19 @@
 
 ActiveRecord::Schema.define(version: 20180509155256) do
 
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "contributions_id"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "contribution_id"
+    t.integer "parent_id"
+    t.index ["contribution_id"], name: "index_comments_on_contribution_id"
+    t.index ["contributions_id"], name: "index_comments_on_contributions_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "contributions", force: :cascade do |t|
     t.string "title"
     t.string "url"
@@ -23,19 +36,6 @@ ActiveRecord::Schema.define(version: 20180509155256) do
     t.integer "points"
     t.float "hot_score"
     t.index ["user_id"], name: "index_contributions_on_user_id"
-  end
-
-  create_table "replies", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "contributions_id"
-    t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "contribution_id"
-    t.integer "parent_id"
-    t.index ["contribution_id"], name: "index_replies_on_contribution_id"
-    t.index ["contributions_id"], name: "index_replies_on_contributions_id"
-    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,15 +51,15 @@ ActiveRecord::Schema.define(version: 20180509155256) do
     t.string "api_key", default: ""
   end
 
-  create_table "votereplies", force: :cascade do |t|
+  create_table "votecomments", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "reply_id"
-    t.integer "upvoterep", default: 0
-    t.integer "downvoterep", default: 0
+    t.integer "comment_id"
+    t.integer "upvotecom", default: 0
+    t.integer "downvotecom", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["reply_id"], name: "index_votereplies_on_reply_id"
-    t.index ["user_id"], name: "index_votereplies_on_user_id"
+    t.index ["comment_id"], name: "index_votecomments_on_comment_id"
+    t.index ["user_id"], name: "index_votecomments_on_user_id"
   end
 
   create_table "votes", force: :cascade do |t|

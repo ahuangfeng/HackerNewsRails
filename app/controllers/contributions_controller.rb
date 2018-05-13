@@ -118,28 +118,25 @@ class ContributionsController < ApplicationController
     end
   end
   
-   def upvotereply
+  def upvotereply
     @reply = Reply.find(params[:id])
 
-  if current_user.upvotedreply?(@reply)
-    current_user.remove_votereply(@reply)
-  else
-    current_user.upvotereply(@reply)
+    if current_user.upvotedreply?(@reply)
+      current_user.remove_votereply(@reply)
+    else
+      current_user.upvotereply(@reply)
+    end
+    redirect_back(fallback_location: root_path)
   end
-   redirect_back(fallback_location: root_path)
-   end
   
   def upvotecomment
     @comment = Comment.find(params[:id])
-
-  if current_user.upvotedcomment?(@comment)
-    current_user.remove_votecomment(@comment)
-  else
-    current_user.upvotecomment(@comment)
-  end
-  redirect_back(fallback_location: root_path)
-
-
+    if current_user.upvotedcomment?(@comment)
+      current_user.remove_votecomment(@comment)
+    else
+      current_user.upvotecomment(@comment)
+    end
+    redirect_back(fallback_location: root_path)
   end
 
   def upvote
@@ -158,7 +155,7 @@ class ContributionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_contribution
       @contribution = Contribution.find(params[:id])
-      @replies = @contribution.replies
+      @comments = @contribution.comments
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

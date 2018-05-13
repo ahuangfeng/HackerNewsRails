@@ -26,7 +26,7 @@
 <% if logged_in? %>
     <div class="add-comment row">
       <div class="col-sm-6">
-        <%= form_for :reply, url: contribution_replies_path(@contribution) do |f| %>
+        <%= form_for :comment, url: contribution_comments_path(@contribution) do |f| %>
           <div class="form-group">
             <%= f.text_area :body, class: "form-control", placeholder: "The quick brown fox...", rows: 10, required: true %>
           </div>
@@ -41,22 +41,22 @@
 
 <div class="all-comments row">
     <div class="col-sm-12">
-      <% if @contribution.replies.present? %>
+      <% if @contribution.comments.present? %>
         <h3>
           Comments
         </h3>
       <% end %>
       
-      <% @contribution.replies.each do |reply| %>
+      <% @contribution.comments.each do |reply| %>
         <div>
           <% if reply.parent == nil %>
             <p class="comment-owner">
-              <% if logged_in? && current_user.upvotedreply?(reply) %>
-                <%= link_to "▼", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
+              <% if logged_in? && current_user.upvotedcomment?(reply) %>
+                <%= link_to "▼", upvotecomment_contribution_path(reply), method: :post, class: "votearrow" %>
               <% else %>
-                <%= link_to "▲", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
+                <%= link_to "▲", upvotecomment_contribution_path(reply), method: :post, class: "votearrow" %>
               <% end %>
-              <%= reply.upvotereplies %>
+              <%= reply.upvotecomments %>
               <strong>
                 @<%= link_to reply.user.name, reply.user%>
               </strong>
@@ -66,13 +66,13 @@
               </span>
             </p>
             <p><%= reply.body %></p>
-            <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
+            <%= link_to "Reply", controller: "comments", action: "show", id: reply.id%>
             <% if logged_in? %>
-              <% if current_user.owns_reply?(reply) %>
+              <% if current_user.owns_comment?(reply) %>
                 <%= link_to 'Destroy', reply, method: :delete, data: { confirm: 'Are you sure?' } %>
               <% end %>
             <% end %>
-            <%= render partial: "replies/reply", locals: { reply: reply } %>
+            <%= render partial: "comments/comment", locals: { reply: reply } %>
           <% end %>
         </div>
       <% end %>

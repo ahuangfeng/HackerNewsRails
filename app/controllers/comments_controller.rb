@@ -1,24 +1,23 @@
-class RepliesController < ApplicationController
+class CommentsController < ApplicationController
   before_action :prevent_unauthorized_user_access, except: :index
   
-
   def index
     if params[:type] == 'threads'
-      @replies = Reply.order(id: :desc).all
+      @comments = Comment.order(id: :desc).all
     end
   end
 
   def createWithParent
-    @parentReply = Reply.find(reply_params[:parent_id])
-    @contribution = @parentReply.contribution
+    @parentComment = Comment.find(reply_params[:parent_id])
+    @contribution = @parentComment.contribution
     contributionID = @contribution.id.to_s
-    @reply = @parentReply.replies.new(user: current_user, body: reply_params[:body], contribution: @contribution, parent: @parentReply)
+    @reply = @parentComment.replies.new(user: current_user, body: reply_params[:body], contribution: @contribution, parent: @parentComment)
     if @reply.save
-      @parentReply.contribution.upComments()
-      @parentReply.contribution.save
+      @parentComment.contribution.upComments()
+      @parentComment.contribution.save
       redirect_to "/contributions/"+contributionID, notice: 'Reply created'
     else
-      redirect_to "/replies/"+@parentReply.id.to_s, notice: @reply.save!
+      redirect_to "/comments/"+@parentComment.id.to_s, notice: @reply.save!
       # notice: 'Reply was not saved. Ensure you have entered a Reply'
     end
   end
@@ -26,8 +25,8 @@ class RepliesController < ApplicationController
   def create
     if params[:comment_id] == nil or params[:comment_id] == ""
       @contribution = Contribution.find(params[:contribution_id])
-      @reply = @contribution.replies.new(user: current_user, body: reply_params[:body], contribution: @contribution)
-      if @reply.save
+      @comment = @contribution.comments.new(user: current_user, body: reply_params[:body], contribution: @contribution)
+      if @comment.save
         @contribution.upComments()
         @contribution.save
         redirect_to @contribution, notice: 'Comment created'
@@ -45,19 +44,19 @@ class RepliesController < ApplicationController
       # else
       #   redirect_to "/replies/"+params[:comment_id], notice: 'Reply was not saved. Ensure you have entered a Reply'
       # end
-      render json: {message: "HOLAA AQUI!"}
+      render json: {message: "ERROR MIRAR ESTO!"}
     end
   end
 
   def destroy
-    @reply = Reply.find_by(id: params[:id])
-    if current_user.owns_reply?(@reply)
-      @contribution = @reply.contribution
-      @contribution.numComments -= @reply.deep_count
+    @comment = Comment.find_by(id: params[:id])
+    if current_user.owns_comment?(@comment)
+      @contribution = @comment.contribution
+      @contribution.numComments -= @comment.deep_count
       @contribution.numComments -= 1
       @contribution.save
-      @reply.replies.destroy
-      @reply.destroy
+      @comment.replies.destroy
+      @comment.destroy
       redirect_back(fallback_location: root_path, notice: "Reply successful deleted")
     else
       redirect_back(fallback_location: root_path, notice: "Not authorized to delete this reply")
@@ -65,8 +64,8 @@ class RepliesController < ApplicationController
   end
 
   def show 
-    @reply = Reply.find(params[:id])
-    @contribution = @reply.contribution;
+    @comment = Comment.find(params[:id])
+    @contribution = @comment.contribution;
   end
 
   def edit 
@@ -76,6 +75,6 @@ class RepliesController < ApplicationController
 
   private
     def reply_params
-      params.require(:reply).permit(:body, :parent_id)
+      params.require(:comment).permit(:body, :parent_id)
     end
 end

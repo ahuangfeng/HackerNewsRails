@@ -2,12 +2,12 @@
   <% reply.replies.each do |rep| %>
   <div style="margin-left: 40px;">
     <p class="comment-owner">
-      <% if logged_in? && current_user.upvotedreply?(rep) %>
-        <%= link_to "▼", upvotereply_contribution_path(rep), method: :post, class: "votearrow" %>
+      <% if logged_in? && current_user.upvotedcomment?(rep) %>
+        <%= link_to "▼", upvotecomment_contribution_path(rep), method: :post, class: "votearrow" %>
       <% else %>
-        <%= link_to "▲", upvotereply_contribution_path(rep), method: :post, class: "votearrow" %>
+        <%= link_to "▲", upvotecomment_contribution_path(rep), method: :post, class: "votearrow" %>
       <% end %>
-      <%= rep.upvotereplies %>
+      <%= rep.upvotecomments %>
       <strong>
         @<%= link_to rep.user.name, rep.user%>
       </strong>
@@ -17,13 +17,13 @@
       </span>
     </p>
     <p><%= rep.body %></p>
-    <%= link_to "Reply", controller: "replies", action: "show", id: rep.id%>
+    <%= link_to "Reply", controller: "comments", action: "show", id: rep.id%>
     <% if logged_in? %>
-      <% if current_user.owns_reply?(rep) %>
+      <% if current_user.owns_comment?(rep) %>
         <%= link_to 'Destroy', rep, method: :delete, data: { confirm: 'Are you sure?' } %>
       <% end %>
     <% end %>
-    <%= render partial: "replies/reply", locals: { reply: rep } %>
+    <%= render partial: "comments/comment", locals: { reply: rep } %>
   </div>
   <% end %>
 </div>

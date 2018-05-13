@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   resources :users
   resources :contributions
-  resources :replies
+  resources :comments
 
   resources :contributions, except: :index do
-    resources :replies, only: [:create, :edit, :update, :destroy]
+    resources :comments, only: [:create, :edit, :update, :destroy]
 
     post :upvote, on: :member
-    post :upvotereply, on: :member
+    post :upvotecomment, on: :member
     post :destroy, on: :member
 
   end
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
-  post '/replies/:id' => 'replies#createWithParent'
+  post '/comments/:id' => 'comments#createWithParent'
 
   #api
   namespace :api do
