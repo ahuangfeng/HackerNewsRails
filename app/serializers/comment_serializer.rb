@@ -2,7 +2,7 @@ require 'action_view'
 require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 class CommentSerializer < ActiveModel::Serializer
-  attributes :id, :points, :username, :created_at, :body
+  attributes :id, :points, :username, :created_at, :body, :parent_id
   
   def points
     object.votecomments.count
