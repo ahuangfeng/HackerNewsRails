@@ -80,6 +80,10 @@ class Api::V1::UsersController < Api::V1::ApiController
       send_unauthorized
     else
       @user = User.find_by_id(params[:id])
+      if @user.nil?
+        render json: { message: "This user doesn't exist"}, status: 404 and return
+      end
+      
       if @user == @current_user
         @user.contributions.destroy_all
         @user.comments.destroy_all

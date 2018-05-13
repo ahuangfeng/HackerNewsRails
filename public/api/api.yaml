@@ -43,7 +43,7 @@ paths:
           schema:
             $ref: '#/definitions/Contribution'
         400:
-          description: "Invalid query"
+          description: "Bad Request"
         401:
           description: "Not authorized"
       security:
@@ -70,7 +70,7 @@ paths:
         401:
           description: "Not authorized"
         409:
-          description: "Contribution already exists"
+          description: "Conflict"
       security:
       - api_key: []
   /contributions/{id}:
@@ -120,10 +120,12 @@ paths:
           description: "Successful operation"
           schema:
             $ref: '#/definitions/Contribution'
-        404:
-          description: "Contribution not found"
         401:
           description: "Not authorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Contribution not found"
       security:
       - api_key: []
     delete:
@@ -144,6 +146,8 @@ paths:
           description: "Successful operation"
         401:
           description: "Not authorized"
+        403:
+          description: "Forbidden"
         404:
           description: "Contribution not found"
       security:
@@ -168,7 +172,9 @@ paths:
         401:
           description: "Not authorized"
         404:
-          description: "Not found"
+          description: "Contribution not found"
+        409:
+          description: "Conflict"
       security:
       - api_key: []
   /contributions/{id}/unvote:
@@ -191,7 +197,9 @@ paths:
         401:
           description: "Not authorized"
         404:
-          description: "Not found"
+          description: "Contribution not found"
+        409:
+          description: "Conflict"
       security:
       - api_key: []
   /users:
@@ -208,14 +216,18 @@ paths:
         schema:
           $ref: "#/definitions/CreateUserBody"
       responses:
-        200:
+        201:
           description: "Successful operation"
           schema:
             $ref: '#/definitions/User'
-        404:
-          description: "User not found"
+        400:
+          description: "Bad request"
         401:
           description: "Not authorized"
+        404:
+          description: "User not found"
+        409:
+          description: "Conflict"
   /users/{id}:
     get:
       tags:
@@ -235,10 +247,10 @@ paths:
           description: "Successful operation"
           schema:
             $ref: '#/definitions/User'
-        400:
-          description: "Invalid query"
         401:
           description: "Not authorized"
+        404:
+          description: "User not found"
       security:
       - api_key: []
     put:
@@ -263,16 +275,18 @@ paths:
           description: "Successful operation"
           schema:
             $ref: '#/definitions/User'
-        404:
-          description: "User not found"
         401:
           description: "Not authorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "User not found"
       security:
       - api_key: []
     delete:
       tags:
       - Users
-      summary: "Deletes a user and all its data"
+      summary: "Delete a user and all its data"
       operationId: deleteUser
       produces:
       - application/json
@@ -285,10 +299,12 @@ paths:
       responses:
         200:
           description: "Successful operation"
-        404:
-          description: "User not found"
         401:
           description: "Not authorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "User not found"
       security:
       - api_key: []
   /users/{id}/comments:
@@ -310,17 +326,17 @@ paths:
           description: "Successful operation"
         401:
           description: "Not authorized"
-        404:
-          description: "User not found"
         403:
           description: "Forbidden"
+        404:
+          description: "User not found"
       security:
       - api_key: []
   /contributions/{contribution_id}/comments:
     get:
       tags:
       - Comments
-      summary: "Return all the comments from a contribution."
+      summary: "Return all the comments"
       operationId: getCommetsfromContributions
       produces:
       - application/json
@@ -344,7 +360,7 @@ paths:
     post:
       tags:
       - Comments
-      summary: "Create a new comment on a contribution"
+      summary: "Create a new comment"
       operationId: createComment
       produces:
       - application/json
@@ -375,7 +391,7 @@ paths:
     get:
       tags:
       - Comments
-      summary: "Return a comment from a contribution"
+      summary: "Return a comment"
       operationId: getCommetfromContribution
       produces:
       - application/json
@@ -398,13 +414,13 @@ paths:
         401:
           description: "Not authorized"
         404:
-          description: "Not found"
+          description: "Contribution/Comment not found"
       security:
       - api_key: []
     put:
       tags:
       - Comments
-      summary: "Update a comment from a contribution"
+      summary: "Update a comment"
       operationId: updateComment
       produces:
       - application/json
@@ -428,16 +444,18 @@ paths:
           description: "Successful operation"
           schema:
             $ref: '#/definitions/Comment'
-        404:
-          description: "Not found"
         401:
           description: "Not authorized"
+        403:
+          description: "Forbidden"
+        404:
+          description: "Contribution/Comment not found"
       security:
       - api_key: []
     delete:
       tags:
       - Comments
-      summary: "Delete a comment from a contribution"
+      summary: "Delete a comment"
       operationId: deleteComment
       produces:
       - application/json
@@ -457,8 +475,10 @@ paths:
           description: "Successful operation"
         401:
           description: "Not authorized"
+        403:
+          description: "Forbidden"
         404:
-          description: "Not found"
+          description: "Contribution/Comment not found"
       security:
       - api_key: []
   /contributions/{contribution_id}/comments/{id}/reply:
@@ -489,10 +509,12 @@ paths:
           description: "Successfully created"
           schema:
             $ref: '#/definitions/Comment'
+        400:
+          description: "Bad Request"
         401:
           description: "Not authorized"
         404:
-          description: "Not found"
+          description: "Contribution/Comment not found"
       security:
       - api_key: []
   /contributions/{contribution_id}/comments/{id}/vote:
@@ -520,7 +542,9 @@ paths:
         401:
           description: "Not authorized"
         404:
-          description: "Not found"
+          description: "Contribution/Comment not found"
+        409:
+          description: "Conflict"
       security:
       - api_key: []
   /contributions/{contribution_id}/comments/{id}/unvote:
@@ -548,7 +572,9 @@ paths:
         401:
           description: "Not authorized"
         404:
-          description: "Not found"
+          description: "Contribution/Comment not found"
+        409:
+          description: "Conflict"
       security:
       - api_key: []
   
