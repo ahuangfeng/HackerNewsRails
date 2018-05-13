@@ -163,7 +163,7 @@ paths:
         required: true
         description: Id of the contribution
       responses:
-        201:
+        200:
           description: "Successful operation"
         401:
           description: "Not authorized"
@@ -186,7 +186,7 @@ paths:
         required: true
         description: Id of the contribution
       responses:
-        201:
+        200:
           description: "Successful operation"
         401:
           description: "Not authorized"
