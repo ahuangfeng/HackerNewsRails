@@ -1,0 +1,29 @@
+<div>
+  <% reply.replies.each do |rep| %>
+  <div style="margin-left: 40px;">
+    <p class="comment-owner">
+      <% if logged_in? && current_user.upvotedcomment?(rep) %>
+        <%= link_to "▼", upvotecomment_contribution_path(rep), method: :post, class: "votearrow" %>
+      <% else %>
+        <%= link_to "▲", upvotecomment_contribution_path(rep), method: :post, class: "votearrow" %>
+      <% end %>
+      <%= rep.upvotecomments %>
+      <strong>
+        @<%= link_to rep.user.name, rep.user%>
+      </strong>
+
+      <span class="comment-created small">
+        <%= time_ago_in_words(rep.created_at) %> ago
+      </span>
+    </p>
+    <p><%= rep.body %></p>
+    <%= link_to "Reply", controller: "comments", action: "show", id: rep.id%>
+    <% if logged_in? %>
+      <% if current_user.owns_comment?(rep) %>
+        <%= link_to 'Destroy', rep, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    <% end %>
+    <%= render partial: "comments/comment", locals: { reply: rep } %>
+  </div>
+  <% end %>
+</div>

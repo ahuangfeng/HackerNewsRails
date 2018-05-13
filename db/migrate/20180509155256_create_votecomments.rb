@@ -1,6 +1,6 @@
 class CreateVotecomments < ActiveRecord::Migration[5.1]
   def change
-    create_table :votecomments do |t|
+    create_table :votecomments do |t| #nose si sha de canviar el nom
       t.belongs_to :user, foreign_key: true
       t.belongs_to :comment, foreign_key: true
       t.integer :upvotecom, default: 0

@@ -5,6 +5,5 @@ class AddDetailsToUsers < ActiveRecord::Migration[5.1]
     add_column :users, :uid, :string
     add_column :users, :token, :string
     add_column :users, :secret, :string
-    add_column :users, :auth_token, :string
   end
 end

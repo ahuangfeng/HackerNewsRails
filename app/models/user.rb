@@ -2,12 +2,10 @@ class User < ApplicationRecord
   
   has_many :contributions, dependent: :destroy
   has_many :comments
-  has_many :replies
   validates :name, presence: true
   validates :api_key, uniqueness: true
   has_many :votes
   has_many :votecomments
-  has_many :votereplies
   before_create :generate_api_key
   
   # poder alguns camps que es guarden no ens faran falta o haurem d'afegir mes
@@ -29,12 +27,8 @@ class User < ApplicationRecord
     self == comment.user
   end
 
-  def owns_reply?(reply)
-    self == reply.user
-  end
-
   def upvotecomment(comment)
-     votecomments.create(upvotecom: 1, comment: comment)
+    votecomments.create(upvotecom: 1, comment: comment)
   end
   
   def upvotedcomment?(comment)
@@ -43,18 +37,6 @@ class User < ApplicationRecord
 
   def remove_votecomment(comment)
     votecomments.find_by(comment: comment).destroy
-  end
-  
-  def upvotereply(reply)
-     votereplies.create(upvoterep: 1, reply: reply)
-  end
-  
-  def upvotedreply?(reply)
-     votereplies.exists?(upvoterep: 1, reply: reply)
-  end
-
-  def remove_votereply(reply)
-    votereplies.find_by(reply: reply).destroy
   end
   
   def upvote(contribution)

@@ -3,6 +3,7 @@
 
   <% @comments.each do |comment| %>
     <% if comment.user == current_user %>
+      <% if comment.parent == nil %>
         <tr class='athing' id='myIdTODO'>
         <td align="right" valign="top" class="title">
         </td> 
@@ -13,6 +14,7 @@
           <span><%= comment.body %></span>
         </td>
         </tr>
+      <% end %>
     <%end%>
   <%end%>
 </table>
@@ -28,8 +30,8 @@
       </td> 
       <td>
         <span><%= link_to reply.user.name, reply.user %></span>
-        <span><%= link_to time_ago_in_words(reply.created_at), reply.comment.contribution %> ago</span> | on:
-        <span><%= link_to reply.comment.contribution.title, reply.comment.contribution%></span> | 
+        <span><%= link_to time_ago_in_words(reply.created_at), reply.contribution %> ago</span> | on:
+        <span><%= link_to reply.contribution.title, reply.contribution%></span> | 
         <span><%= reply.body %></span>
       </td>
       </tr>

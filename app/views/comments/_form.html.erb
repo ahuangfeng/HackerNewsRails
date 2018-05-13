@@ -1,0 +1,23 @@
+<%= form_with model: Comment.new, url: '/comments/'+@comment.id.to_s do |form| %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this reply from being saved:</h2>
+      <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :parent_id, value: @comment.id %>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_field :body%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

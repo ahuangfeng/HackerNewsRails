@@ -47,65 +47,32 @@
         </h3>
       <% end %>
       
-      <% @contribution.comments.each do |comment| %>
-        <div class="comment">
-          <p class="comment-owner">
-            <% if logged_in? && current_user.upvotedcomment?(comment) %>
-              <%= link_to "▼", upvotecomment_contribution_path(comment), method: :post, class: "votearrow" %>
-            <% else %>
-              <%= link_to "▲", upvotecomment_contribution_path(comment), method: :post, class: "votearrow" %>
-            <% end %>
-            <%= comment.upvotecomments %>
-            <strong>
-              @<%= link_to comment.user.name, comment.user%>
-            </strong>
-
-            <span class="comment-created small">
-              <%= time_ago_in_words(comment.created_at) %> ago
-            </span>
-          </p>
-
-          <p>
-            <%= comment.body %>
-          </p>
-          <%= link_to "Reply", controller: "comments", action: "show", id: comment.id %>
-          <% if logged_in?%>
-            <% if current_user.owns_comment?(comment) %>
-               <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
-             <% end %>
-          <% end %>
-        </div>
+      <% @contribution.comments.each do |reply| %>
         <div>
-          <% comment.replies.each do |reply| %>
-            <% if reply.parent == nil %>
-              <div style="margin-left: 40px;">
-                <p class="comment-owner">
-                  <% if logged_in? && current_user.upvotedreply?(reply) %>
-                    <%= link_to "▼", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
-                  <% else %>
-                    <%= link_to "▲", upvotereply_contribution_path(reply), method: :post, class: "votearrow" %>
-                  <% end %>
-                  <%= reply.upvotereplies %>
-                  <strong>
-                    @<%= link_to reply.user.name, reply.user%>
-                  </strong>
+          <% if reply.parent == nil %>
+            <p class="comment-owner">
+              <% if logged_in? && current_user.upvotedcomment?(reply) %>
+                <%= link_to "▼", upvotecomment_contribution_path(reply), method: :post, class: "votearrow" %>
+              <% else %>
+                <%= link_to "▲", upvotecomment_contribution_path(reply), method: :post, class: "votearrow" %>
+              <% end %>
+              <%= reply.upvotecomments %>
+              <strong>
+                @<%= link_to reply.user.name, reply.user%>
+              </strong>
 
-                  <span class="comment-created small">
-                    <%= time_ago_in_words(reply.created_at) %> ago
-                  </span>
-                </p>
-                <p><%= reply.body %></p>
-                <%= link_to "Reply", controller: "replies", action: "show", id: reply.id%>
-                <% if logged_in?%>
-                  <% if current_user.owns_reply?(reply) %>
-                  <%= link_to 'Destroy', reply, method: :delete, data: { confirm: 'Are you sure?' } %>
-                  
-                  <% end %>
-                <% end %>
-
-                <%= render partial: "replies/reply", locals: { reply: reply } %>
-              </div>
+              <span class="comment-created small">
+                <%= time_ago_in_words(reply.created_at) %> ago
+              </span>
+            </p>
+            <p><%= reply.body %></p>
+            <%= link_to "Reply", controller: "comments", action: "show", id: reply.id%>
+            <% if logged_in? %>
+              <% if current_user.owns_comment?(reply) %>
+                <%= link_to 'Destroy', reply, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% end %>
             <% end %>
+            <%= render partial: "comments/comment", locals: { reply: reply } %>
           <% end %>
         </div>
       <% end %>
