@@ -100,7 +100,7 @@ class Api::V1::ContributionsController <  Api::V1::ApiController
         else
           current_user.upvote(@contribution)
           @contribution.calc_hot_score
-          render json: { message: "You have voted this comment."}, status: 200 and return
+          render json: { message: "You have voted this contribution."}, status: 200 and return
         end
       end
     end
