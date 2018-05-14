@@ -3,12 +3,13 @@
 
 ## Integrants del equip
 - Alex Huang Feng
-- Pau Gonz√°lez Montiel
+- Pau Gonz·lez Montiel
 - Carla Varea Parra
 - Sergi Ventura
+- Sara Bourjila
 
-## Aplicaci√≥ desplegada a Heroku
-[Aplicaci√≥ a Heroku](https://g11d-hackernews.herokuapp.com/)
+## AplicaciÛ desplegada a Heroku
+[AplicaciÛ a Heroku](https://g11d-hackernews.herokuapp.com/)
 
 ## YAML per al swagger
 [Swagger](https://g11d-hackernews.herokuapp.com/api/api.yaml)
