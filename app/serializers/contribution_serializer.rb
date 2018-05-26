@@ -2,7 +2,7 @@ require 'action_view'
 require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 class ContributionSerializer < ActiveModel::Serializer
-  attributes :id, :title, :url, :text, :username, :created_at, :numComments, :points
+  attributes :id, :title, :url, :text, :username, :user_id, :created_at, :numComments, :points
   has_many :comments
   
   
