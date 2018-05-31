@@ -580,7 +580,23 @@ paths:
           description: "Conflict"
       security:
       - api_key: []
-  
+  /login:
+    post:
+      tags:
+      - Users
+      summary: "Login to get the API"
+      operationId: login
+      produces:
+      - application/json
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: "#/definitions/loginBody"
+      responses:
+        200:
+          description: "Successful operation"
+
 securityDefinitions:
   api_key:
     type: apiKey
@@ -600,6 +616,19 @@ definitions:
     example:
       title: Google
       url: https://www.google.com
+  loginBody:
+    type: "object"
+    properties:
+      provider:
+        type: "string"
+      uid:
+        type: "string"
+      nickname:
+        type: "string"
+      token:
+        type: "string"
+      secret:
+        type: "string"
   CommentBody:
     type: "object"
     properties:

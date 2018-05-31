@@ -35,6 +35,9 @@ Rails.application.routes.draw do
       post 'contributions/:contribution_id/comments/:id/unvote' => 'comments#unvote'
 
       post 'contributions/:contribution_id/comments/:id/reply' => 'comments#replyComment'
+
+      post 'login' => 'sessions#getSession'
+
     end
   end
   

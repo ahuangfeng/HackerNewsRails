@@ -19,6 +19,16 @@ class User < ApplicationRecord
     user
   end
 
+  def self.find_by_auth_params(provider, uid, nickname, token, secret)
+    user = where(provider: provider, uid: uid).first_or_create
+    user.update(
+      name: nickname,
+      token: token,
+      secret: secret
+    )
+    user
+  end
+
   def owns_contribution?(contribution)
     self == contribution.user
   end
