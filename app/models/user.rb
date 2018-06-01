@@ -45,6 +45,10 @@ class User < ApplicationRecord
      votecomments.exists?(upvotecom: 1, comment: comment)
   end
 
+  def hasvotedcomment?(comment)
+    votecomments.exists?(comment: comment)
+  end
+
   def remove_votecomment(comment)
     votecomments.find_by(comment: comment).destroy
   end

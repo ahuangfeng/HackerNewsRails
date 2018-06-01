@@ -2,12 +2,16 @@ require 'action_view'
 require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 class ReplySerializer < ActiveModel::Serializer
-  attributes :id, :username, :created_at, :body, :parent_id, :user_id
+  attributes :id, :username, :created_at, :body, :parent_id, :user_id, :hasVoted
 
   has_many :replies, serializer: ReplySerializer
 
   def user_id
     object.user.id
+  end
+
+  def hasVoted
+    scope.current_user.hasvotedcomment?(object)
   end
   
   def username
