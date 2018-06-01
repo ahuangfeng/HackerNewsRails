@@ -2,13 +2,17 @@ require 'action_view'
 require 'action_view/helpers'
 include ActionView::Helpers::DateHelper
 class ContributionSerializer < ActiveModel::Serializer
-  attributes :id, :title, :url, :text, :username, :user_id, :created_at, :numComments, :points
+  attributes :id, :title, :url, :text, :username, :user_id, :created_at, :numComments, :points, :hasVoted
   has_many :comments
   
   
   def username
     #object es el this o self en C
     object.user.name
+  end
+
+  def hasVoted
+    scope.current_user.hasvoted?(object)
   end
   
   def created_at
