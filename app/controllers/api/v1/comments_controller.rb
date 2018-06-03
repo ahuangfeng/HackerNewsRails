@@ -10,7 +10,7 @@ class Api::V1::CommentsController <  Api::V1::ApiController
       if @contribution.nil?
         render json: { message: "This contribution doesn't exist"}, status: 404 and return
       else
-        @comments = Comment.where(contribution_id: params[:contribution_id])
+        @comments = Comment.where(contribution_id: params[:contribution_id]).order(id: :desc)
         render json: @comments, each_serializer: CommentSerializer, status: 200 and return
       end
     end
