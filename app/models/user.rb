@@ -10,9 +10,10 @@ class User < ApplicationRecord
   
   # poder alguns camps que es guarden no ens faran falta o haurem d'afegir mes
   def self.find_or_create_from_auth_hash(auth_hash)
-    user = where(provider: auth_hash.provider, uid: auth_hash.uid).first_or_create
+    user = where(name: auth_hash.info.nickname).first_or_create
     user.update(
-      name: auth_hash.info.nickname,
+      provider: auth_hash.provider, 
+      uid: auth_hash.uid,
       token: auth_hash.credentials.token,
       secret: auth_hash.credentials.secret
     )
@@ -20,9 +21,10 @@ class User < ApplicationRecord
   end
 
   def self.find_by_auth_params(provider, uid, nickname, token, secret)
-    user = where(provider: provider, uid: uid).first_or_create
+    user = where(name: nickname).first_or_create
     user.update(
-      name: nickname,
+      provider: provider, 
+      uid: uid,
       token: token,
       secret: secret
     )
