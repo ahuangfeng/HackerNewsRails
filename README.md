@@ -2,17 +2,18 @@
 # Hacker News with Ruby on Rails
 
 ## Integrants del equip
-- Alex Huang Feng
-- Pau Gonz·lez Montiel
-- Carla Varea Parra
-- Sergi Ventura
-- Sara Bourjila
+- [Alex Huang Feng](https://github.com/ahuangfeng)
+- [Pau Gonz√°lez Montiel](https://github.com/pgonzalez96)
+- [Carla Varea Parra](https://github.com/carlavarea)
 
-## AplicaciÛ desplegada a Heroku
-[AplicaciÛ a Heroku](https://g11d-hackernews.herokuapp.com/)
+## Aplicaci√≥ desplegada a Heroku
+[Aplicaci√≥ a Heroku](https://g11d-hackernews.herokuapp.com/)
 
 ## YAML per al swagger
 [Swagger](https://g11d-hackernews.herokuapp.com/api/api.yaml)
+
+## Segona versi√≥ Fron-End fet amb Angular
+[Repo Github](https://github.com/ahuangfeng/HackerNewsAngular)
 
 ### Per a fer deploy a Heroku
 - Si s'ha creat una nova taula a la BD : `heroku run rake db:migrate`
